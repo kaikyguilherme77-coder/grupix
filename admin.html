@@ -4,165 +4,193 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grupix Admin</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --green:#22c55e;--green-h:#16a34a;--green-dim:#f0fdf4;
-  --orange:#f97316;--red:#ef4444;--red-h:#dc2626;
-  --blue:#3b82f6;--blue-dim:#eff6ff;
-  --bg:#f8f9fa;--white:#fff;
-  --dark:#111827;--mid:#6b7280;--light:#e5e7eb;--lighter:#f3f4f6;
+  --orange:#f97316;--orange-h:#ea6c0a;
+  --red:#ef4444;--red-h:#dc2626;
+  --blue:#3b82f6;--purple:#8b5cf6;
+  --bg:#f1f5f9;--white:#fff;
+  --dark:#0f172a;--mid:#64748b;--light:#e2e8f0;--lighter:#f8fafc;
   --r:10px;
 }
 body{background:var(--bg);color:var(--dark);font-family:'Inter',sans-serif;min-height:100vh}
-button{cursor:pointer;font-family:'Inter',sans-serif;border:none}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
 input,select,textarea{font-family:'Inter',sans-serif}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
 
-/* ── LOGIN ── */
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg)}
-.login-card{background:var(--white);border:1px solid var(--light);border-radius:16px;padding:36px 32px;width:100%;max-width:380px;text-align:center}
-.login-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px}
-.login-mark{width:36px;height:36px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.login-name{font-weight:800;font-size:20px;letter-spacing:-.5px}
-.login-card h2{font-size:18px;font-weight:700;margin-bottom:4px}
-.login-card p{font-size:13px;color:var(--mid);margin-bottom:24px}
-.login-input{width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:14px;outline:none;margin-bottom:12px;color:var(--dark);transition:border-color .2s}
-.login-input:focus{border-color:var(--green)}
-.login-btn{width:100%;padding:12px;background:var(--green);color:#fff;border-radius:8px;font-size:14px;font-weight:700;transition:background .15s;margin-top:4px}
-.login-btn:hover{background:var(--green-h)}
-.login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.lcard{background:var(--white);border:1px solid var(--light);border-radius:16px;padding:40px 32px;width:360px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.llogo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px}
+.lmark{width:36px;height:36px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.lname{font-weight:800;font-size:20px;letter-spacing:-.5px}
+.lcard h2{font-size:17px;font-weight:700;margin-bottom:6px}
+.lcard p{font-size:13px;color:var(--mid);margin-bottom:24px}
+.li{width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:14px;outline:none;color:var(--dark);margin-bottom:10px;transition:border-color .2s}
+.li:focus{border-color:var(--green)}
+.lbtn{width:100%;padding:12px;background:var(--green);color:#fff;border-radius:8px;font-size:14px;font-weight:700;transition:background .15s;margin-top:4px}
+.lbtn:hover{background:var(--green-h)}
+.lerr{font-size:12px;color:var(--red);margin-top:10px;display:none}
 
-/* ── SHELL ── */
+/* APP */
 #app{display:none}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:var(--white);border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .tlogo{display:flex;align-items:center;gap:8px}
-.tmark{width:28px;height:28px;background:var(--green);border-radius:7px;display:flex;align-items:center;justify-content:center}
-.tname{font-weight:800;font-size:16px;letter-spacing:-.3px}
-.tadmin{font-size:11px;font-weight:600;background:var(--lighter);color:var(--mid);padding:2px 8px;border-radius:4px;margin-left:4px}
-.tright{display:flex;align-items:center;gap:12px}
-.tuser{font-size:13px;color:var(--mid)}
-.logout-btn{font-size:12px;color:var(--mid);background:transparent;padding:6px 12px;border-radius:7px;border:1px solid var(--light);transition:all .15s}
-.logout-btn:hover{border-color:#ccc;color:var(--dark)}
+.tmark{width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tname{font-weight:800;font-size:16px}
+.tbadge{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;margin-left:2px}
+.tright{display:flex;align-items:center;gap:10px}
+.tuser{font-size:12px;color:var(--mid)}
+.tbtn{font-size:12px;color:var(--mid);background:transparent;padding:6px 12px;border-radius:7px;border:1px solid var(--light);transition:all .15s}
+.tbtn:hover{border-color:#94a3b8;color:var(--dark)}
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 .shell{display:flex;padding-top:56px;min-height:100vh}
-.sidebar{width:200px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--light);padding:16px 0;overflow-y:auto}
-.sb-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 16px;background:transparent;color:var(--mid);font-size:13px;font-weight:500;text-align:left;transition:all .15s;position:relative}
-.sb-item:hover{background:var(--lighter);color:var(--dark)}
-.sb-item.active{background:var(--green-dim);color:var(--green);font-weight:600}
-.sb-item svg{flex-shrink:0;opacity:.6}
-.sb-item.active svg{opacity:1}
-.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
-.sb-section{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px;padding:14px 16px 4px}
-.main{margin-left:200px;flex:1;padding:24px;max-width:calc(100% - 200px)}
+.sidebar{width:210px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--light);overflow-y:auto;padding:12px 0}
+.sb-sec{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 5px}
+.sbi{display:flex;align-items:center;gap:9px;width:100%;padding:8px 16px;background:transparent;color:var(--mid);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent}
+.sbi:hover{background:var(--lighter);color:var(--dark)}
+.sbi.on{background:var(--green-dim);color:var(--green);font-weight:600;border-left-color:var(--green)}
+.sbi .ic{width:16px;height:16px;flex-shrink:0;opacity:.5}
+.sbi.on .ic{opacity:1}
+.sbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center}
 
-/* ── TABS ── */
-.tab{display:none}.tab.active{display:block}
+/* MAIN */
+.main{margin-left:210px;flex:1;padding:20px;max-width:calc(100% - 210px);min-height:calc(100vh - 56px)}
+.tab{display:none}.tab.on{display:block}
 
-/* ── METRIC CARDS ── */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}}
-.metric{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:16px 18px}
-.metric-num{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.metric-label{font-size:12px;color:var(--mid)}
-.metric-sub{font-size:11px;color:var(--mid);margin-top:4px}
-.dot-green{color:var(--green)}.dot-orange{color:var(--orange)}.dot-blue{color:var(--blue)}.dot-red{color:var(--red)}
+/* SECTION HEADER */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sh-title{font-size:17px;font-weight:800;letter-spacing:-.3px}
 
-/* ── TABLE ── */
-.table-wrap{background:var(--white);border:1px solid var(--light);border-radius:var(--r);overflow:hidden}
-.table-head{padding:14px 18px;border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.table-title{font-size:14px;font-weight:700}
-.table-search{padding:8px 12px;border:1.5px solid var(--light);border-radius:7px;font-size:13px;outline:none;width:220px;transition:border-color .2s}
-.table-search:focus{border-color:var(--green)}
+/* METRICS GRID */
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:1000px){.mg{grid-template-columns:repeat(2,1fr)}}
+.mc{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mc.c-green::before{background:var(--green)}
+.mc.c-orange::before{background:var(--orange)}
+.mc.c-blue::before{background:var(--blue)}
+.mc.c-purple::before{background:var(--purple)}
+.mc.c-red::before{background:var(--red)}
+.mc-n{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.mc-l{font-size:12px;color:var(--mid);font-weight:500}
+.mc-sub{font-size:11px;color:#94a3b8;margin-top:3px}
+
+/* CARDS ROW */
+.cr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:1000px){.cr{grid-template-columns:1fr}}
+
+/* TABLE */
+.tw{background:var(--white);border:1px solid var(--light);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.thead{padding:12px 16px;border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--white)}
+.ttitle{font-size:13px;font-weight:700}
+.tsearch{padding:7px 11px;border:1.5px solid var(--light);border-radius:7px;font-size:12px;outline:none;width:200px;transition:border-color .2s}
+.tsearch:focus{border-color:var(--green)}
 table{width:100%;border-collapse:collapse}
-th{font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;padding:10px 16px;text-align:left;border-bottom:1px solid var(--light);background:var(--lighter)}
-td{padding:12px 16px;font-size:13px;border-bottom:1px solid var(--lighter);vertical-align:middle}
+th{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;background:var(--lighter);border-bottom:1px solid var(--light)}
+td{padding:11px 14px;font-size:13px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafafa}
-.g-name{font-weight:600;color:var(--dark);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.g-desc{color:var(--mid);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
-.tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
-.tag-wa{background:#dcfce7;color:#16a34a}
-.tag-tg{background:#dbeafe;color:#1d4ed8}
-.tag-pending{background:#fef9c3;color:#a16207}
-.tag-approved{background:#dcfce7;color:#16a34a}
-.tag-rejected{background:#fee2e2;color:#dc2626}
-.tag-featured{background:#ffedd5;color:#ea580c}
-.tag-cat{background:var(--lighter);color:var(--mid)}
+tr:hover td{background:#fafbfc}
+.gname{font-weight:600;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gdesc{color:var(--mid);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;margin-top:1px}
 
-/* ── ACTION BTNS ── */
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.btn-sm{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap}
-.btn-approve{background:#dcfce7;color:#16a34a}.btn-approve:hover{background:var(--green);color:#fff}
-.btn-reject{background:#fee2e2;color:var(--red)}.btn-reject:hover{background:var(--red);color:#fff}
-.btn-feature{background:#ffedd5;color:var(--orange)}.btn-feature:hover{background:var(--orange);color:#fff}
-.btn-unfeature{background:var(--lighter);color:var(--mid)}.btn-unfeature:hover{background:#e5e7eb;color:var(--dark)}
-.btn-delete{background:#fee2e2;color:var(--red)}.btn-delete:hover{background:var(--red);color:#fff}
-.btn-edit{background:var(--blue-dim);color:var(--blue)}.btn-edit:hover{background:var(--blue);color:#fff}
-.btn-view{background:var(--lighter);color:var(--mid)}.btn-view:hover{background:#e5e7eb;color:var(--dark)}
-.btn-primary{background:var(--green);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
-.btn-primary:hover{background:var(--green-h)}
-.btn-danger{background:var(--red);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
-.btn-danger:hover{background:var(--red-h)}
+/* TAGS */
+.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.tw-a{background:#dcfce7;color:#16a34a}
+.tw-tg{background:#dbeafe;color:#1d4ed8}
+.tw-pend{background:#fef9c3;color:#a16207}
+.tw-feat{background:#ffedd5;color:#ea580c}
+.tw-cat{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}
+.tw-paid{background:#f3e8ff;color:#7c3aed}
 
-/* ── EMPTY ── */
-.empty-row td{text-align:center;padding:40px;color:var(--mid);font-size:13px}
+/* ACTION BTNS */
+.acts{display:flex;gap:5px;flex-wrap:wrap}
+.bs{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap}
+.b-green{background:#dcfce7;color:#16a34a}.b-green:hover{background:var(--green);color:#fff}
+.b-red{background:#fee2e2;color:var(--red)}.b-red:hover{background:var(--red);color:#fff}
+.b-orange{background:#ffedd5;color:var(--orange)}.b-orange:hover{background:var(--orange);color:#fff}
+.b-gray{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}.b-gray:hover{background:#e2e8f0;color:var(--dark)}
+.b-blue{background:#dbeafe;color:var(--blue)}.b-blue:hover{background:var(--blue);color:#fff}
+.b-purple{background:#f3e8ff;color:var(--purple)}.b-purple:hover{background:var(--purple);color:#fff}
+.btn-p{background:var(--green);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
+.btn-p:hover{background:var(--green-h)}
 
-/* ── MODAL ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;padding:20px}
-.overlay.open{display:flex}
-.modal{background:var(--white);border-radius:14px;padding:24px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
-@keyframes mIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.mtitle{font-size:16px;font-weight:800}
-.mclose{background:var(--lighter);border:none;width:28px;height:28px;border-radius:6px;font-size:16px;color:var(--mid);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.mclose:hover{background:var(--light)}
-.fg{margin-bottom:14px}
-.fl{display:block;font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.fi,.fs,.ft{width:100%;padding:10px 12px;border:1.5px solid var(--light);border-radius:8px;font-size:14px;outline:none;color:var(--dark);background:var(--white);transition:border-color .2s}
-.fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
-.ft{resize:none}
-.fs option{background:#fff}
-.modal-actions{display:flex;gap:10px;margin-top:18px}
-.modal-actions button{flex:1}
+/* FILTERS */
+.filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.fb{padding:5px 12px;border-radius:20px;border:1.5px solid var(--light);background:var(--white);color:var(--mid);font-size:12px;font-weight:500;transition:all .15s}
+.fb:hover{border-color:#94a3b8;color:var(--dark)}
+.fb.on{background:var(--dark);border-color:var(--dark);color:#fff}
 
-/* ── CONFIRM ── */
-.confirm-modal{max-width:360px}
-.confirm-icon{font-size:36px;text-align:center;margin-bottom:12px}
-.confirm-text{font-size:14px;color:var(--mid);text-align:center;margin-bottom:20px;line-height:1.6}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;transition:all .25s;pointer-events:none;opacity:0;transform:translateY(8px)}
-.toast.show{opacity:1;transform:translateY(0)}
-.toast.success{background:#15803d}
-.toast.error{background:var(--red)}
-
-/* ── LOADING ── */
-.loading{text-align:center;padding:40px;color:var(--mid);font-size:13px}
-.spinner{width:20px;height:20px;border:2px solid var(--light);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px}
+/* EMPTY / LOADING */
+.empty{text-align:center;padding:40px;color:var(--mid);font-size:13px;grid-column:1/-1}
+.load-cell{text-align:center;padding:32px;color:var(--mid);font-size:13px}
+.spin{width:18px;height:18px;border:2px solid var(--light);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── SECTION HEAD ── */
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.sec-title{font-size:16px;font-weight:800;letter-spacing:-.3px}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--white);border-radius:14px;padding:24px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .2s ease}
+.modal.sm{max-width:360px}
+@keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-size:16px;font-weight:800}
+.mcl{background:var(--lighter);border:none;width:28px;height:28px;border-radius:7px;font-size:16px;color:var(--mid);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mcl:hover{background:var(--light);color:var(--dark)}
+.fg{margin-bottom:13px}
+.fl{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fi,.fs,.ft{width:100%;padding:9px 12px;border:1.5px solid var(--light);border-radius:8px;font-size:13px;outline:none;color:var(--dark);background:var(--white);transition:border-color .2s}
+.fi::placeholder,.ft::placeholder{color:#94a3b8}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
+.fs option{background:#fff}
+.ft{resize:vertical}
+.ma{display:flex;gap:8px;margin-top:16px}
+.ma button{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600}
+.cb-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cb-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--green)}
+.cb-row label{font-size:13px;font-weight:500;cursor:pointer}
 
-/* ── FILTERS ROW ── */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.filter-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--light);background:var(--white);color:var(--mid);font-size:12px;font-weight:500;transition:all .15s}
-.filter-btn:hover{border-color:#ccc;color:var(--dark)}
-.filter-btn.active{background:var(--dark);border-color:var(--dark);color:#fff}
+/* PLAN CARDS */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.pc{border:2px solid var(--light);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;position:relative}
+.pc:hover{border-color:var(--orange)}
+.pc.on{border-color:var(--orange);background:#fff7ed}
+.pc-pop{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.pc-n{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.pc-p{font-size:20px;font-weight:800;color:var(--dark)}
+.pc-s{font-size:10px;color:var(--mid);margin-top:1px}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;transition:all .25s;pointer-events:none;opacity:0;transform:translateY(6px);max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.ok{background:#15803d;color:#fff}
+.toast.err{background:var(--red);color:#fff}
+.toast.info{background:var(--dark);color:#fff}
+
+/* CHART BAR */
+.bar-wrap{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.bar-label{width:100px;color:var(--mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--lighter);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:var(--green);transition:width .5s ease}
+.bar-val{width:36px;text-align:right;font-weight:600;color:var(--dark);flex-shrink:0}
+
+/* REVENUE TABLE */
+.rev-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--lighter);font-size:13px}
+.rev-row:last-child{border-bottom:none}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">
-      <div class="login-mark">
+  <div class="lcard">
+    <div class="llogo">
+      <div class="lmark">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
           <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
           <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
@@ -171,14 +199,14 @@ tr:hover td{background:#fafafa}
           <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
         </svg>
       </div>
-      <span class="login-name">Grupix</span>
+      <span class="lname">Grupix</span>
     </div>
-    <h2>Painel Admin</h2>
-    <p>Acesso restrito à equipe Grupix</p>
-    <input class="login-input" id="login-email" type="email" placeholder="Email" onkeydown="if(event.key==='Enter')doLogin()">
-    <input class="login-input" id="login-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Entrar</button>
-    <div class="login-err" id="login-err">Email ou senha incorretos.</div>
+    <h2>Painel Administrativo</h2>
+    <p>Acesso restrito à equipe</p>
+    <input class="li" id="l-email" type="email" placeholder="Email" onkeydown="if(event.key==='Enter')login()">
+    <input class="li" id="l-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
+    <button class="lbtn" onclick="login()">Entrar no painel</button>
+    <div class="lerr" id="lerr">Email ou senha incorretos.</div>
   </div>
 </div>
 
@@ -187,7 +215,7 @@ tr:hover td{background:#fafafa}
   <div class="topbar">
     <div class="tlogo">
       <div class="tmark">
-        <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
           <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
           <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
           <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
@@ -196,154 +224,321 @@ tr:hover td{background:#fafafa}
         </svg>
       </div>
       <span class="tname">Grupix</span>
-      <span class="tadmin">ADMIN</span>
+      <span class="tbadge">ADMIN</span>
     </div>
     <div class="tright">
-      <span class="tuser" id="top-user"></span>
-      <button class="logout-btn" onclick="doLogout()">Sair</button>
+      <span class="tuser" id="tuser"></span>
+      <button class="tbtn" onclick="window.open('/','_blank')">↗ Ver site</button>
+      <button class="tbtn" onclick="logout()">Sair</button>
     </div>
   </div>
 
   <div class="shell">
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sb-section">Visão Geral</div>
-      <button class="sb-item active" onclick="goTab('dashboard',this)">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      <div class="sb-sec">Visão Geral</div>
+      <button class="sbi on" onclick="nav('dashboard',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
         Dashboard
       </button>
-
-      <div class="sb-section">Grupos</div>
-      <button class="sb-item" onclick="goTab('pending',this)">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>
-        Pendentes
-        <span class="sb-badge" id="badge-pending">0</span>
+      <button class="sbi" onclick="nav('analytics',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><polyline points="1,12 5,7 8,9 12,4 15,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Analytics
       </button>
-      <button class="sb-item" onclick="goTab('all-groups',this)">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2.5" rx="1" fill="currentColor" opacity=".3"/><rect x="1" y="7" width="14" height="2.5" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="11" width="14" height="2.5" rx="1" fill="currentColor"/></svg>
+
+      <div class="sb-sec">Grupos</div>
+      <button class="sbi" onclick="nav('pending',this)" id="nav-pending">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="currentColor"/></svg>
+        Pendentes
+        <span class="sbadge" id="badge-p" style="display:none">0</span>
+      </button>
+      <button class="sbi" onclick="nav('groups',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="2.5" width="14" height="2" rx="1" fill="currentColor" opacity=".3"/><rect x="1" y="7" width="14" height="2" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="11.5" width="14" height="2" rx="1" fill="currentColor"/></svg>
         Todos os grupos
       </button>
-      <button class="sb-item" onclick="goTab('featured',this)">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        Em destaque
+      <button class="sbi" onclick="nav('destaques',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Destaques
       </button>
 
-      <div class="sb-section">Sistema</div>
-      <button class="sb-item" onclick="window.open('/','_blank')">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5C6 4 5 6 5 8s1 4 3 6.5M8 1.5C10 4 11 6 11 8s-1 4-3 6.5M1.5 8h13" stroke="currentColor" stroke-width="1.3"/></svg>
-        Ver site
+      <div class="sb-sec">Financeiro</div>
+      <button class="sbi" onclick="nav('pagamentos',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="3.5" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="1" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="9.5" width="3" height="1.5" rx=".5" fill="currentColor" opacity=".5"/></svg>
+        Pagamentos
       </button>
     </aside>
 
-    <!-- MAIN -->
     <main class="main">
 
       <!-- DASHBOARD -->
-      <div id="tab-dashboard" class="tab active">
-        <div class="sec-head" style="margin-bottom:20px">
-          <span class="sec-title">Dashboard</span>
-          <button class="btn-primary" onclick="loadAll()">↻ Atualizar</button>
+      <div id="tab-dashboard" class="tab on">
+        <div class="sh">
+          <span class="sh-title">Dashboard</span>
+          <button class="btn-p" onclick="loadAll()">↻ Atualizar</button>
         </div>
-        <div class="metrics">
-          <div class="metric">
-            <div class="metric-num dot-green" id="m-total">—</div>
-            <div class="metric-label">Total de grupos</div>
-            <div class="metric-sub">publicados no site</div>
+
+        <div class="mg" id="dash-metrics">
+          <div class="mc c-green"><div class="spin" style="width:16px;height:16px;margin:4px 0"></div></div>
+          <div class="mc c-orange"></div>
+          <div class="mc c-blue"></div>
+          <div class="mc c-purple"></div>
+        </div>
+
+        <div class="mg" style="grid-template-columns:repeat(3,1fr)">
+          <div class="mc c-green">
+            <div class="mc-n" id="d-views">—</div>
+            <div class="mc-l">Visitas ao site</div>
+            <div class="mc-sub">total acumulado</div>
           </div>
-          <div class="metric">
-            <div class="metric-num dot-orange" id="m-pending">—</div>
-            <div class="metric-label">Pendentes</div>
-            <div class="metric-sub">aguardando aprovação</div>
+          <div class="mc c-blue">
+            <div class="mc-n" id="d-clicks">—</div>
+            <div class="mc-l">Cliques em grupos</div>
+            <div class="mc-sub">botão "Entrar"</div>
           </div>
-          <div class="metric">
-            <div class="metric-num dot-blue" id="m-featured">—</div>
-            <div class="metric-label">Em destaque</div>
-            <div class="metric-sub">grupos pagos ativos</div>
-          </div>
-          <div class="metric">
-            <div class="metric-num" id="m-views">—</div>
-            <div class="metric-label">Total de views</div>
-            <div class="metric-sub">todas as páginas</div>
+          <div class="mc c-purple">
+            <div class="mc-n" id="d-revenue">—</div>
+            <div class="mc-l">Faturamento</div>
+            <div class="mc-sub">total recebido</div>
           </div>
         </div>
 
-        <!-- RECENT -->
-        <div class="table-wrap">
-          <div class="table-head">
-            <span class="table-title">Grupos recentes</span>
+        <!-- TOP GRUPOS -->
+        <div class="tw">
+          <div class="thead"><span class="ttitle">🏆 Top grupos por cliques</span></div>
+          <div style="padding:16px" id="top-clicks-chart">
+            <div class="load-cell"><div class="spin"></div>Carregando...</div>
           </div>
+        </div>
+
+        <!-- RECENTES -->
+        <div class="tw">
+          <div class="thead"><span class="ttitle">Grupos recentes</span></div>
           <table>
-            <thead><tr>
-              <th>Grupo</th><th>Categoria</th><th>Plataforma</th><th>Views</th><th>Ações</th>
-            </tr></thead>
-            <tbody id="recent-tbody">
-              <tr><td colspan="5" class="loading"><div class="spinner"></div>Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Cliques</th><th>Views</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="dash-recent"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div id="tab-analytics" class="tab">
+        <div class="sh"><span class="sh-title">Analytics</span></div>
+
+        <div class="mg">
+          <div class="mc c-green">
+            <div class="mc-n" id="an-total">—</div>
+            <div class="mc-l">Total de grupos</div>
+          </div>
+          <div class="mc c-blue">
+            <div class="mc-n" id="an-wa">—</div>
+            <div class="mc-l">WhatsApp</div>
+          </div>
+          <div class="mc c-orange">
+            <div class="mc-n" id="an-tg">—</div>
+            <div class="mc-l">Telegram</div>
+          </div>
+          <div class="mc c-purple">
+            <div class="mc-n" id="an-cats">—</div>
+            <div class="mc-l">Categorias ativas</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div class="tw">
+            <div class="thead"><span class="ttitle">Grupos por categoria</span></div>
+            <div style="padding:16px" id="cat-chart"></div>
+          </div>
+          <div class="tw">
+            <div class="thead"><span class="ttitle">Top 5 mais clicados</span></div>
+            <div style="padding:16px" id="click-chart"></div>
+          </div>
+        </div>
+
+        <div class="tw">
+          <div class="thead"><span class="ttitle">Todos os grupos — métricas</span></div>
+          <table>
+            <thead><tr><th>Grupo</th><th>Categoria</th><th>Plataforma</th><th>Cliques</th><th>Views</th><th>Membros</th><th>Destaque</th></tr></thead>
+            <tbody id="analytics-tbody"></tbody>
           </table>
         </div>
       </div>
 
       <!-- PENDENTES -->
       <div id="tab-pending" class="tab">
-        <div class="sec-head">
-          <span class="sec-title">Grupos Pendentes</span>
-          <span id="pending-count" style="font-size:13px;color:var(--mid)"></span>
+        <div class="sh">
+          <span class="sh-title">Grupos Pendentes</span>
+          <span id="pend-count" style="font-size:13px;color:var(--mid)"></span>
         </div>
-        <div class="table-wrap">
+        <div class="tw">
           <table>
-            <thead><tr>
-              <th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Link</th><th>Data</th><th>Ações</th>
-            </tr></thead>
-            <tbody id="pending-tbody">
-              <tr><td colspan="6" class="loading"><div class="spinner"></div>Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Link</th><th>Data</th><th>Ações</th></tr></thead>
+            <tbody id="pend-tbody"><tr><td colspan="6" class="load-cell"><div class="spin"></div>Carregando...</td></tr></tbody>
           </table>
         </div>
       </div>
 
       <!-- TODOS OS GRUPOS -->
-      <div id="tab-all-groups" class="tab">
-        <div class="sec-head">
-          <span class="sec-title">Todos os grupos</span>
-          <button class="btn-primary" onclick="openAddGroup()">+ Adicionar</button>
+      <div id="tab-groups" class="tab">
+        <div class="sh">
+          <span class="sh-title">Todos os grupos</span>
+          <button class="btn-p" onclick="openAdd()">+ Adicionar grupo</button>
         </div>
-        <div class="filters" id="cat-filters">
-          <button class="filter-btn active" data-filter="todos" onclick="filterGroups('todos',this)">Todos</button>
-          <button class="filter-btn" data-filter="whatsapp" onclick="filterGroups('whatsapp',this)">WhatsApp</button>
-          <button class="filter-btn" data-filter="telegram" onclick="filterGroups('telegram',this)">Telegram</button>
-          <button class="filter-btn" data-filter="featured" onclick="filterGroups('featured',this)">⭐ Destaque</button>
+        <div class="filters">
+          <button class="fb on" onclick="setFilter('all',this)">Todos</button>
+          <button class="fb" onclick="setFilter('wa',this)">WhatsApp</button>
+          <button class="fb" onclick="setFilter('tg',this)">Telegram</button>
+          <button class="fb" onclick="setFilter('feat',this)">⭐ Destaque</button>
         </div>
-        <div class="table-wrap">
-          <div class="table-head">
-            <span class="table-title" id="all-count"></span>
-            <input class="table-search" type="text" placeholder="Buscar grupos..." oninput="searchGroups(this.value)">
+        <div class="tw">
+          <div class="thead">
+            <span class="ttitle" id="groups-count"></span>
+            <input class="tsearch" type="text" placeholder="Buscar..." oninput="setSearch(this.value)">
           </div>
           <table>
-            <thead><tr>
-              <th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Membros</th><th>Views</th><th>Status</th><th>Ações</th>
-            </tr></thead>
-            <tbody id="all-tbody">
-              <tr><td colspan="7" class="loading"><div class="spinner"></div>Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Membros</th><th>Cliques</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="groups-tbody"></tbody>
           </table>
         </div>
       </div>
 
       <!-- DESTAQUES -->
-      <div id="tab-featured" class="tab">
-        <div class="sec-head">
-          <span class="sec-title">Grupos em Destaque</span>
-          <span id="featured-count" style="font-size:13px;color:var(--mid)"></span>
+      <div id="tab-destaques" class="tab">
+        <div class="sh">
+          <span class="sh-title">Grupos em Destaque</span>
+          <button class="btn-p" onclick="openDestaque()">+ Destacar grupo</button>
         </div>
-        <div class="table-wrap">
+
+        <!-- ESCOLHER DESTAQUE -->
+        <div class="tw" style="margin-bottom:20px">
+          <div class="thead"><span class="ttitle">📌 Escolher grupos para o topo</span></div>
+          <div style="padding:16px">
+            <p style="font-size:13px;color:var(--mid);margin-bottom:14px">Marque quais grupos aparecem no topo do site. Sem necessidade de pagamento para grupos que você mesmo escolher.</p>
+            <div id="pick-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto"></div>
+            <button class="btn-p" style="width:100%;margin-top:14px" onclick="saveDestaques()">Salvar destaques selecionados</button>
+          </div>
+        </div>
+
+        <div class="tw">
+          <div class="thead"><span class="ttitle">Destaques ativos</span><span id="dest-count" style="font-size:12px;color:var(--mid)"></span></div>
           <table>
-            <thead><tr>
-              <th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Destaque até</th><th>Views</th><th>Ações</th>
-            </tr></thead>
-            <tbody id="featured-tbody">
-              <tr><td colspan="6" class="loading"><div class="spinner"></div>Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Cliques</th><th>Válido até</th><th>Tipo</th><th>Ações</th></tr></thead>
+            <tbody id="dest-tbody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- PAGAMENTOS -->
+      <div id="tab-pagamentos" class="tab">
+        <div class="sh"><span class="sh-title">Pagamentos & Faturamento</span></div>
+
+        <div class="mg" style="grid-template-columns:repeat(4,1fr)">
+          <div class="mc c-green">
+            <div class="mc-n" id="pay-total">R$0</div>
+            <div class="mc-l">Faturamento total</div>
+          </div>
+          <div class="mc c-blue">
+            <div class="mc-n" id="pay-month">R$0</div>
+            <div class="mc-l">Este mês</div>
+          </div>
+          <div class="mc c-purple">
+            <div class="mc-n" id="pay-active">0</div>
+            <div class="mc-l">Assinaturas ativas</div>
+          </div>
+          <div class="mc c-orange">
+            <div class="mc-n" id="pay-avg">R$0</div>
+            <div class="mc-l">Ticket médio</div>
+          </div>
+        </div>
+
+        <!-- PLANOS -->
+        <div class="tw" style="margin-bottom:20px">
+          <div class="thead"><span class="ttitle">Planos de destaque disponíveis</span></div>
+          <div style="padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div style="border:1.5px solid var(--light);border-radius:10px;padding:16px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Semanal</div>
+              <div style="font-size:28px;font-weight:800;color:var(--dark)">R$10</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">7 dias de destaque</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">R$1,43/dia</div>
+            </div>
+            <div style="border:2px solid var(--orange);border-radius:10px;padding:16px;text-align:center;background:#fff7ed;position:relative">
+              <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:4px">MAIS POPULAR</div>
+              <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Quinzenal</div>
+              <div style="font-size:28px;font-weight:800;color:var(--dark)">R$20</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">15 dias de destaque</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">R$1,33/dia</div>
+            </div>
+            <div style="border:1.5px solid var(--light);border-radius:10px;padding:16px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Mensal</div>
+              <div style="font-size:28px;font-weight:800;color:var(--dark)">R$25</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">30 dias de destaque</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">R$0,83/dia — melhor custo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMO RECEBER PAGAMENTOS -->
+        <div class="tw" style="margin-bottom:20px">
+          <div class="thead"><span class="ttitle">🔧 Como configurar pagamentos</span></div>
+          <div style="padding:20px">
+            <div style="display:flex;flex-direction:column;gap:16px">
+
+              <div style="border:1px solid var(--light);border-radius:10px;padding:16px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:32px;height:32px;background:#fff3f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">💳</div>
+                  <div>
+                    <div style="font-size:14px;font-weight:700">Mercado Pago (recomendado)</div>
+                    <div style="font-size:12px;color:var(--mid)">Aceita PIX, cartão e boleto. Taxa: 4,99%</div>
+                  </div>
+                </div>
+                <div style="font-size:12px;color:var(--mid);line-height:1.8">
+                  <b style="color:var(--dark)">1.</b> Acesse <a href="https://developers.mercadopago.com" target="_blank" style="color:var(--blue)">developers.mercadopago.com</a><br>
+                  <b style="color:var(--dark)">2.</b> Crie um app → copie o <b>Access Token</b><br>
+                  <b style="color:var(--dark)">3.</b> Adicione na Vercel: <code style="background:var(--lighter);padding:1px 5px;border-radius:4px">MP_ACCESS_TOKEN=seu_token</code><br>
+                  <b style="color:var(--dark)">4.</b> Configure webhook: <code style="background:var(--lighter);padding:1px 5px;border-radius:4px">grupix.site/api/webhook-mp</code><br>
+                  <b style="color:var(--dark)">5.</b> O arquivo <code style="background:var(--lighter);padding:1px 5px;border-radius:4px">api/create-payment.js</code> já está configurado ✅
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--light);border-radius:10px;padding:16px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <div style="width:32px;height:32px;background:#f0f9ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⚡</div>
+                  <div>
+                    <div style="font-size:14px;font-weight:700">Fluxo de pagamento no site</div>
+                    <div style="font-size:12px;color:var(--mid)">Como o usuário paga</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px">
+                  <span style="background:var(--lighter);padding:4px 10px;border-radius:6px">Usuário clica 🔥 Destacar</span>
+                  <span style="color:var(--mid)">→</span>
+                  <span style="background:var(--lighter);padding:4px 10px;border-radius:6px">Escolhe plano</span>
+                  <span style="color:var(--mid)">→</span>
+                  <span style="background:var(--lighter);padding:4px 10px;border-radius:6px">Paga no MP (PIX/cartão)</span>
+                  <span style="color:var(--mid)">→</span>
+                  <span style="background:#dcfce7;padding:4px 10px;border-radius:6px;color:#16a34a">Grupo vai pro topo automaticamente ✅</span>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--light);border-radius:10px;padding:16px;background:var(--lighter)">
+                <div style="font-size:13px;font-weight:700;margin-bottom:8px">📊 Projeção de receita</div>
+                <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--mid)">
+                  <div style="display:flex;justify-content:space-between"><span>10 grupos pagando plano semanal (R$10):</span><b style="color:var(--dark)">R$100/semana</b></div>
+                  <div style="display:flex;justify-content:space-between"><span>20 grupos pagando plano mensal (R$25):</span><b style="color:var(--dark)">R$500/mês</b></div>
+                  <div style="display:flex;justify-content:space-between"><span>50 grupos pagando plano mensal (R$25):</span><b style="color:var(--dark)">R$1.250/mês</b></div>
+                  <div style="display:flex;justify-content:space-between;border-top:1px solid var(--light);padding-top:6px;margin-top:2px"><span>AdSense (50k visitas/mês):</span><b style="color:var(--dark)">+R$1.500/mês</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTÓRICO -->
+        <div class="tw">
+          <div class="thead"><span class="ttitle">Histórico de pagamentos</span></div>
+          <div id="pay-history" style="padding:16px">
+            <div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">
+              Nenhum pagamento registrado ainda.<br>
+              <span style="font-size:12px">Os pagamentos aparecerão aqui após configurar o webhook do Mercado Pago.</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -351,15 +546,12 @@ tr:hover td{background:#fafafa}
   </div>
 </div>
 
-<!-- MODAL EDITAR GRUPO -->
-<div class="overlay" id="modal-edit" onclick="overlayClose(event,'modal-edit')">
+<!-- MODAL EDITAR -->
+<div class="ov" id="ov-edit" onclick="ovClose(event,'ov-edit')">
   <div class="modal">
-    <div class="mhead">
-      <span class="mtitle" id="edit-title">Editar grupo</span>
-      <button class="mclose" onclick="closeModal('modal-edit')">×</button>
-    </div>
+    <div class="mh"><span class="mt" id="edit-mt">Editar grupo</span><button class="mcl" onclick="closeOv('ov-edit')">×</button></div>
     <div class="fg"><label class="fl">Nome *</label><input class="fi" id="e-name" type="text"></div>
-    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="e-desc" rows="3"></textarea></div>
+    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="e-desc" rows="2"></textarea></div>
     <div class="fg"><label class="fl">Categoria</label>
       <select class="fs" id="e-cat">
         <option value="marketing">📈 Marketing Digital</option>
@@ -377,28 +569,72 @@ tr:hover td{background:#fafafa}
         <option value="outros">⭐ Outros</option>
       </select>
     </div>
-    <div class="fg"><label class="fl">Link de convite</label><input class="fi" id="e-link" type="url"></div>
-    <div class="fg"><label class="fl">Membros</label><input class="fi" id="e-members" type="number" min="0"></div>
-    <div class="fg" style="display:flex;align-items:center;gap:10px">
-      <input type="checkbox" id="e-featured" style="width:16px;height:16px;accent-color:var(--orange)">
-      <label for="e-featured" style="font-size:13px;font-weight:500;cursor:pointer">🔥 Marcar como destaque</label>
+    <div class="fg"><label class="fl">Link do grupo</label><input class="fi" id="e-link" type="url"></div>
+    <div class="fg"><label class="fl">Membros</label><input class="fi" id="e-mem" type="number" min="0"></div>
+    <div class="cb-row">
+      <input type="checkbox" id="e-feat">
+      <label for="e-feat">🔥 Marcar como destaque</label>
     </div>
-    <div class="modal-actions">
-      <button class="btn-primary" onclick="saveEdit()">Salvar alterações</button>
-      <button style="flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--light);background:transparent;font-size:13px;font-weight:600;color:var(--mid)" onclick="closeModal('modal-edit')">Cancelar</button>
+    <div class="ma">
+      <button class="btn-p" onclick="saveEdit()">Salvar</button>
+      <button style="background:var(--lighter);color:var(--mid);border:1px solid var(--light);border-radius:8px;font-size:13px;font-weight:600" onclick="closeOv('ov-edit')">Cancelar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL CONFIRM DELETE -->
-<div class="overlay" id="modal-confirm" onclick="overlayClose(event,'modal-confirm')">
-  <div class="modal confirm-modal">
-    <div class="confirm-icon">🗑️</div>
-    <div class="mtitle" style="text-align:center;margin-bottom:8px" id="confirm-title">Excluir grupo?</div>
-    <div class="confirm-text" id="confirm-text">Essa ação não pode ser desfeita.</div>
-    <div class="modal-actions">
-      <button class="btn-danger" id="confirm-ok">Confirmar</button>
-      <button style="flex:1;padding:8px;border-radius:8px;border:1.5px solid var(--light);background:transparent;font-size:13px;font-weight:600;color:var(--mid)" onclick="closeModal('modal-confirm')">Cancelar</button>
+<!-- MODAL ADD GRUPO -->
+<div class="ov" id="ov-add" onclick="ovClose(event,'ov-add')">
+  <div class="modal">
+    <div class="mh"><span class="mt">Adicionar grupo</span><button class="mcl" onclick="closeOv('ov-add')">×</button></div>
+    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="a-name" type="text" placeholder="Nome do grupo"></div>
+    <div class="fg"><label class="fl">Plataforma *</label>
+      <select class="fs" id="a-plat">
+        <option value="whatsapp">WhatsApp</option>
+        <option value="telegram">Telegram</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Categoria *</label>
+      <select class="fs" id="a-cat">
+        <option value="marketing">📈 Marketing Digital</option>
+        <option value="renda">💰 Renda Extra</option>
+        <option value="cripto">₿ Criptomoedas</option>
+        <option value="investimentos">📊 Investimentos</option>
+        <option value="tecnologia">💻 Tecnologia</option>
+        <option value="jogos">🎮 Jogos</option>
+        <option value="relacionamentos">❤️ Relacionamentos</option>
+        <option value="amizades">🤝 Amizades</option>
+        <option value="educacao">📚 Educação</option>
+        <option value="negocios">🚀 Negócios</option>
+        <option value="musica">🎵 Música</option>
+        <option value="empregos">💼 Empregos</option>
+        <option value="outros">⭐ Outros</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Link de convite *</label><input class="fi" id="a-link" type="url" placeholder="https://chat.whatsapp.com/..."></div>
+    <div class="fg"><label class="fl">Membros</label><input class="fi" id="a-mem" type="number" min="0" placeholder="0"></div>
+    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="a-desc" rows="2" placeholder="Sobre o que é esse grupo?"></textarea></div>
+    <div class="cb-row">
+      <input type="checkbox" id="a-feat">
+      <label for="a-feat">🔥 Já colocar em destaque</label>
+    </div>
+    <div class="ma">
+      <button class="btn-p" id="a-btn" onclick="addGroup()">Adicionar grupo</button>
+      <button style="background:var(--lighter);color:var(--mid);border:1px solid var(--light);border-radius:8px;font-size:13px;font-weight:600" onclick="closeOv('ov-add')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAR -->
+<div class="ov" id="ov-confirm" onclick="ovClose(event,'ov-confirm')">
+  <div class="modal sm">
+    <div style="text-align:center;padding:8px 0">
+      <div style="font-size:36px;margin-bottom:10px" id="conf-icon">🗑️</div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px" id="conf-title"></div>
+      <div style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6" id="conf-text"></div>
+      <div class="ma">
+        <button class="btn-p" id="conf-ok" style="background:var(--red)">Confirmar</button>
+        <button style="flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--light);background:transparent;font-size:13px;font-weight:600;color:var(--mid)" onclick="closeOv('ov-confirm')">Cancelar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -413,256 +649,400 @@ const sb = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
 )
 
-// ── CONFIG ADMIN ──
-// Troque a senha abaixo ou use Supabase Auth em produção
-const ADMIN_EMAIL    = 'admin@grupix.site'
-const ADMIN_PASSWORD = 'grupix@admin2025'
+// ── CREDENCIAIS ADMIN ──
+const ADMIN_EMAIL = 'admin@grupix.site'
+const ADMIN_PASS  = 'grupix@admin2025'
+const SESSION_KEY = 'grupix_admin_session'
 
 const CATS={marketing:'Marketing Digital',renda:'Renda Extra',cripto:'Criptomoedas',investimentos:'Investimentos',tecnologia:'Tecnologia',jogos:'Jogos',relacionamentos:'Relacionamentos',amizades:'Amizades',educacao:'Educação',negocios:'Negócios',musica:'Música',empregos:'Empregos',outros:'Outros'}
 
-let allGroups=[], pendingGroups=[], editingId=null, filterMode='todos', searchQ=''
+let groups=[], pending=[], editId=null, gFilter='all', gSearch='', destPicked=new Set()
 
-// ── LOGIN ──
-window.doLogin=async function(){
-  const email=document.getElementById('login-email').value.trim()
-  const pass=document.getElementById('login-pass').value
-  const err=document.getElementById('login-err')
+// ── SESSION PERSISTENTE ──
+function checkSession(){
+  try{
+    const s=localStorage.getItem(SESSION_KEY)
+    if(s){const d=JSON.parse(s);if(d.email&&Date.now()<d.exp)return d}
+  }catch{}
+  return null
+}
+
+function saveSession(email){
+  localStorage.setItem(SESSION_KEY,JSON.stringify({email,exp:Date.now()+8*60*60*1000}))
+}
+
+window.login=function(){
+  const email=document.getElementById('l-email').value.trim()
+  const pass=document.getElementById('l-pass').value
+  const err=document.getElementById('lerr')
   err.style.display='none'
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASSWORD){
-    document.getElementById('login-screen').style.display='none'
-    document.getElementById('app').style.display='block'
-    document.getElementById('top-user').textContent=email
-    loadAll()
+  if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){
+    saveSession(email)
+    showApp(email)
   } else {
     err.style.display='block'
   }
 }
 
-window.doLogout=function(){
+window.logout=function(){
+  localStorage.removeItem(SESSION_KEY)
   document.getElementById('app').style.display='none'
   document.getElementById('login-screen').style.display='flex'
-  document.getElementById('login-pass').value=''
+  document.getElementById('l-pass').value=''
 }
+
+function showApp(email){
+  document.getElementById('login-screen').style.display='none'
+  document.getElementById('app').style.display='block'
+  document.getElementById('tuser').textContent=email
+  loadAll()
+}
+
+// Verifica sessão ao carregar
+const sess=checkSession()
+if(sess) showApp(sess.email)
 
 // ── TABS ──
-window.goTab=function(tab,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
-  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'))
-  document.getElementById('tab-'+tab).classList.add('active')
-  btn.classList.add('active')
+window.nav=function(tab,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'))
+  document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('on'))
+  document.getElementById('tab-'+tab).classList.add('on')
+  btn.classList.add('on')
   if(tab==='pending')renderPending()
-  if(tab==='all-groups')renderAll()
-  if(tab==='featured')renderFeatured()
+  if(tab==='groups')renderGroups()
+  if(tab==='destaques')renderDestaques()
+  if(tab==='analytics')renderAnalytics()
   if(tab==='dashboard')renderDashboard()
+  if(tab==='pagamentos'){}
 }
 
-// ── LOAD ALL ──
+// ── LOAD ──
 window.loadAll=async function(){
-  const [g,p]=await Promise.all([
+  const [{data:g},{data:p}]=await Promise.all([
     sb.from('groups').select('*').order('created_at',{ascending:false}),
     sb.from('group_submissions').select('*').order('created_at',{ascending:false})
   ])
-  allGroups=g.data||[]
-  pendingGroups=(p.data||[]).filter(x=>x.status==='pending')
+  groups=g||[]
+  pending=(p||[]).filter(x=>x.status==='pending')
+  // Pega destPicked dos grupos já marcados
+  destPicked=new Set(groups.filter(g=>g.is_featured).map(g=>g.id))
   updateBadge()
   renderDashboard()
 }
 
 function updateBadge(){
-  const n=pendingGroups.length
-  document.getElementById('badge-pending').textContent=n
-  document.getElementById('badge-pending').style.display=n?'inline':'none'
+  const n=pending.length
+  const b=document.getElementById('badge-p')
+  b.textContent=n; b.style.display=n?'inline':'none'
 }
 
 // ── DASHBOARD ──
 function renderDashboard(){
-  const total=allGroups.length
-  const pend=pendingGroups.length
-  const feat=allGroups.filter(g=>g.is_featured).length
-  const views=allGroups.reduce((s,g)=>s+(g.views||0),0)
-  document.getElementById('m-total').textContent=total
-  document.getElementById('m-pending').textContent=pend
-  document.getElementById('m-featured').textContent=feat
-  document.getElementById('m-views').textContent=views.toLocaleString('pt-BR')
+  const total=groups.length
+  const pend=pending.length
+  const feat=groups.filter(g=>g.is_featured).length
+  const views=groups.reduce((s,g)=>s+(g.views||0),0)
+  const clicks=groups.reduce((s,g)=>s+(g.clicks||g.views||0),0)
 
-  const recent=allGroups.slice(0,8)
-  document.getElementById('recent-tbody').innerHTML=recent.length
+  document.getElementById('dash-metrics').innerHTML=`
+    <div class="mc c-green"><div class="mc-n">${total}</div><div class="mc-l">Total de grupos</div><div class="mc-sub">publicados no site</div></div>
+    <div class="mc c-orange"><div class="mc-n">${pend}</div><div class="mc-l">Pendentes</div><div class="mc-sub">aguardando revisão</div></div>
+    <div class="mc c-blue"><div class="mc-n">${feat}</div><div class="mc-l">Em destaque</div><div class="mc-sub">aparecem no topo</div></div>
+    <div class="mc c-purple"><div class="mc-n">${new Set(groups.map(g=>g.category)).size}</div><div class="mc-l">Categorias</div><div class="mc-sub">ativas no site</div></div>
+  `
+  document.getElementById('d-views').textContent=views.toLocaleString('pt-BR')
+  document.getElementById('d-clicks').textContent=clicks.toLocaleString('pt-BR')
+  document.getElementById('d-revenue').textContent='R$0'
+
+  // Top cliques chart
+  const top=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,6)
+  const max=top[0]?.views||1
+  document.getElementById('top-clicks-chart').innerHTML=`<div class="bar-wrap">${top.map(g=>`
+    <div class="bar-row">
+      <span class="bar-label" title="${g.name}">${g.name}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/max)*100)}%"></div></div>
+      <span class="bar-val">${(g.views||0).toLocaleString('pt-BR')}</span>
+    </div>`).join('')||'<div style="text-align:center;color:var(--mid);font-size:13px;padding:16px">Nenhum dado ainda</div>'}</div>`
+
+  // Recentes
+  const recent=groups.slice(0,6)
+  document.getElementById('dash-recent').innerHTML=recent.length
     ? recent.map(g=>`<tr>
-        <td><div class="g-name">${g.name}</div><div class="g-desc">${g.description||'—'}</div></td>
-        <td><span class="tag tag-cat">${CATS[g.category]||g.category}</span></td>
-        <td><span class="tag ${g.platform==='whatsapp'?'tag-wa':'tag-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
+        <td><div class="gname">${g.name}</div><div class="gdesc">${g.description||'—'}</div></td>
+        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
+        <td><span class="tag tw-cat">${CATS[g.category]||g.category}</span></td>
+        <td style="font-weight:600">${(g.views||0).toLocaleString('pt-BR')}</td>
         <td>${(g.views||0).toLocaleString('pt-BR')}</td>
-        <td class="actions">
-          <button class="btn-sm btn-edit" onclick="openEdit('${g.id}')">Editar</button>
-          <button class="btn-sm btn-delete" onclick="confirmDelete('${g.id}','${escHtml(g.name)}')">Excluir</button>
+        <td>${g.is_featured?'<span class="tag tw-feat">⭐ Destaque</span>':'<span style="font-size:11px;color:var(--mid)">Normal</span>'}</td>
+        <td class="acts">
+          <button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button>
+          <button class="bs b-red" onclick="delGroup('${g.id}','${esc(g.name)}')">Excluir</button>
         </td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="5">Nenhum grupo ainda</td></tr>'
+    : '<tr><td colspan="7" class="load-cell">Nenhum grupo ainda</td></tr>'
+}
+
+// ── ANALYTICS ──
+function renderAnalytics(){
+  const total=groups.length
+  const wa=groups.filter(g=>g.platform==='whatsapp').length
+  const tg=groups.filter(g=>g.platform==='telegram').length
+  const cats=new Set(groups.map(g=>g.category)).size
+  document.getElementById('an-total').textContent=total
+  document.getElementById('an-wa').textContent=wa
+  document.getElementById('an-tg').textContent=tg
+  document.getElementById('an-cats').textContent=cats
+
+  // Por categoria
+  const catCounts={}
+  groups.forEach(g=>{catCounts[g.category]=(catCounts[g.category]||0)+1})
+  const sortedCats=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])
+  const maxCat=sortedCats[0]?.[1]||1
+  document.getElementById('cat-chart').innerHTML=`<div class="bar-wrap">${sortedCats.map(([k,v])=>`
+    <div class="bar-row">
+      <span class="bar-label">${CATS[k]||k}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round((v/maxCat)*100)}%;background:var(--blue)"></div></div>
+      <span class="bar-val">${v}</span>
+    </div>`).join('')}</div>`
+
+  // Top cliques
+  const top=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5)
+  const maxV=top[0]?.views||1
+  document.getElementById('click-chart').innerHTML=`<div class="bar-wrap">${top.map(g=>`
+    <div class="bar-row">
+      <span class="bar-label" title="${g.name}">${g.name}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/maxV)*100)}%"></div></div>
+      <span class="bar-val">${g.views||0}</span>
+    </div>`).join('')}</div>`
+
+  // Tabela completa
+  const sorted=[...groups].sort((a,b)=>(b.views||0)-(a.views||0))
+  document.getElementById('analytics-tbody').innerHTML=sorted.length
+    ? sorted.map(g=>`<tr>
+        <td><div class="gname">${g.name}</div></td>
+        <td><span class="tag tw-cat">${CATS[g.category]||g.category}</span></td>
+        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
+        <td style="font-weight:700;color:var(--green)">${(g.views||0).toLocaleString('pt-BR')}</td>
+        <td>${(g.views||0).toLocaleString('pt-BR')}</td>
+        <td>${g.members?Number(g.members).toLocaleString('pt-BR'):'—'}</td>
+        <td>${g.is_featured?'<span class="tag tw-feat">⭐</span>':'—'}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="7" class="load-cell">Nenhum dado</td></tr>'
 }
 
 // ── PENDENTES ──
 function renderPending(){
-  document.getElementById('pending-count').textContent=`${pendingGroups.length} pendente${pendingGroups.length!==1?'s':''}`
-  document.getElementById('pending-tbody').innerHTML=pendingGroups.length
-    ? pendingGroups.map(s=>`<tr>
-        <td><div class="g-name">${s.name}</div></td>
-        <td><span class="tag ${s.platform==='whatsapp'?'tag-wa':'tag-tg'}">${s.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
-        <td><span class="tag tag-cat">${CATS[s.category]||s.category}</span></td>
-        <td><a href="${s.invite_link}" target="_blank" style="color:var(--blue);font-size:12px;text-decoration:none">Ver link ↗</a></td>
-        <td style="font-size:12px;color:var(--mid)">${fmtDate(s.created_at)}</td>
-        <td class="actions">
-          <button class="btn-sm btn-approve" onclick="approveSubmission('${s.id}','${escHtml(s.name)}','${s.category}','${s.platform}','${s.invite_link}','${escHtml(s.description||'')}')">✓ Aprovar</button>
-          <button class="btn-sm btn-reject" onclick="rejectSubmission('${s.id}')">✗ Rejeitar</button>
+  document.getElementById('pend-count').textContent=`${pending.length} pendente${pending.length!==1?'s':''}`
+  document.getElementById('pend-tbody').innerHTML=pending.length
+    ? pending.map(s=>`<tr>
+        <td><div class="gname">${s.name}</div></td>
+        <td><span class="tag ${s.platform==='whatsapp'?'tw-a':'tw-tg'}">${s.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
+        <td><span class="tag tw-cat">${CATS[s.category]||s.category}</span></td>
+        <td><a href="${s.invite_link}" target="_blank" style="color:var(--blue);font-size:12px">Ver ↗</a></td>
+        <td style="font-size:11px;color:var(--mid)">${fmtDate(s.created_at)}</td>
+        <td class="acts">
+          <button class="bs b-green" onclick="approve('${s.id}','${esc(s.name)}','${s.category}','${s.platform}','${esc(s.invite_link)}','${esc(s.description||'')}')">✓ Aprovar</button>
+          <button class="bs b-red" onclick="reject('${s.id}')">✗ Rejeitar</button>
         </td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="6">✅ Nenhum grupo pendente!</td></tr>'
+    : '<tr><td colspan="6" class="load-cell">✅ Nenhum grupo pendente!</td></tr>'
+}
+
+window.approve=async function(sid,name,cat,plat,link,desc){
+  const {error}=await sb.from('groups').insert({name,category:cat,platform:plat,invite_link:link,description:desc||null,is_featured:false,views:0})
+  if(error){toast('Erro ao aprovar: '+error.message,'err');return}
+  await sb.from('group_submissions').update({status:'approved'}).eq('id',sid)
+  toast(`✅ "${name}" aprovado!`,'ok')
+  await loadAll(); renderPending()
+}
+
+window.reject=function(sid){
+  confirm2('Rejeitar grupo?','Será marcado como rejeitado.',async()=>{
+    await sb.from('group_submissions').update({status:'rejected'}).eq('id',sid)
+    toast('Grupo rejeitado','err')
+    await loadAll(); renderPending()
+  })
 }
 
 // ── TODOS OS GRUPOS ──
-function renderAll(){
-  let list=allGroups
-  if(filterMode==='whatsapp')list=list.filter(g=>g.platform==='whatsapp')
-  else if(filterMode==='telegram')list=list.filter(g=>g.platform==='telegram')
-  else if(filterMode==='featured')list=list.filter(g=>g.is_featured)
-  if(searchQ)list=list.filter(g=>g.name.toLowerCase().includes(searchQ)||(g.description||'').toLowerCase().includes(searchQ)||(CATS[g.category]||'').toLowerCase().includes(searchQ))
-  document.getElementById('all-count').textContent=`${list.length} grupo${list.length!==1?'s':''}`
-  document.getElementById('all-tbody').innerHTML=list.length
+window.setFilter=function(f,btn){
+  gFilter=f
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'))
+  btn.classList.add('on')
+  renderGroups()
+}
+window.setSearch=function(q){gSearch=q.toLowerCase().trim();renderGroups()}
+
+function renderGroups(){
+  let list=groups
+  if(gFilter==='wa')list=list.filter(g=>g.platform==='whatsapp')
+  else if(gFilter==='tg')list=list.filter(g=>g.platform==='telegram')
+  else if(gFilter==='feat')list=list.filter(g=>g.is_featured)
+  if(gSearch)list=list.filter(g=>g.name.toLowerCase().includes(gSearch)||(CATS[g.category]||'').toLowerCase().includes(gSearch))
+  document.getElementById('groups-count').textContent=`${list.length} grupo${list.length!==1?'s':''}`
+  document.getElementById('groups-tbody').innerHTML=list.length
     ? list.map(g=>`<tr>
-        <td>
-          <div class="g-name">${g.name}</div>
-          <div class="g-desc">${g.description||'—'}</div>
-        </td>
-        <td><span class="tag ${g.platform==='whatsapp'?'tag-wa':'tag-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
-        <td><span class="tag tag-cat">${CATS[g.category]||g.category}</span></td>
+        <td><div class="gname">${g.name}</div><div class="gdesc">${g.description||'—'}</div></td>
+        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
+        <td><span class="tag tw-cat">${CATS[g.category]||g.category}</span></td>
         <td>${g.members?Number(g.members).toLocaleString('pt-BR'):'—'}</td>
-        <td>${(g.views||0).toLocaleString('pt-BR')}</td>
-        <td>${g.is_featured?'<span class="tag tag-featured">⭐ Destaque</span>':'<span style="font-size:12px;color:var(--mid)">Normal</span>'}</td>
-        <td class="actions">
-          <button class="btn-sm btn-edit" onclick="openEdit('${g.id}')">Editar</button>
+        <td style="font-weight:600">${(g.views||0).toLocaleString('pt-BR')}</td>
+        <td>${g.is_featured?'<span class="tag tw-feat">⭐ Destaque</span>':'<span style="font-size:11px;color:var(--mid)">Normal</span>'}</td>
+        <td class="acts">
+          <button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button>
           ${g.is_featured
-            ?`<button class="btn-sm btn-unfeature" onclick="toggleFeatured('${g.id}',false)">Remover</button>`
-            :`<button class="btn-sm btn-feature" onclick="toggleFeatured('${g.id}',true)">⭐</button>`}
-          <button class="btn-sm btn-delete" onclick="confirmDelete('${g.id}','${escHtml(g.name)}')">Excluir</button>
+            ?`<button class="bs b-gray" onclick="toggleFeat('${g.id}',false)">Remover ⭐</button>`
+            :`<button class="bs b-orange" onclick="toggleFeat('${g.id}',true)">⭐ Destacar</button>`}
+          <button class="bs b-red" onclick="delGroup('${g.id}','${esc(g.name)}')">Excluir</button>
         </td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="7">Nenhum grupo encontrado</td></tr>'
-}
-
-window.filterGroups=function(mode,btn){
-  filterMode=mode
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'))
-  btn.classList.add('active')
-  renderAll()
-}
-
-window.searchGroups=function(q){
-  searchQ=q.toLowerCase().trim()
-  renderAll()
+    : '<tr><td colspan="7" class="load-cell">Nenhum grupo encontrado</td></tr>'
 }
 
 // ── DESTAQUES ──
-function renderFeatured(){
-  const list=allGroups.filter(g=>g.is_featured)
-  document.getElementById('featured-count').textContent=`${list.length} grupo${list.length!==1?'s':''} em destaque`
-  document.getElementById('featured-tbody').innerHTML=list.length
-    ? list.map(g=>`<tr>
-        <td><div class="g-name">${g.name}</div></td>
-        <td><span class="tag ${g.platform==='whatsapp'?'tag-wa':'tag-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span></td>
-        <td><span class="tag tag-cat">${CATS[g.category]||g.category}</span></td>
-        <td style="font-size:12px;color:var(--mid)">${g.featured_until?fmtDate(g.featured_until):'Sem data'}</td>
-        <td>${(g.views||0).toLocaleString('pt-BR')}</td>
-        <td class="actions">
-          <button class="btn-sm btn-unfeature" onclick="toggleFeatured('${g.id}',false)">Remover destaque</button>
-          <button class="btn-sm btn-edit" onclick="openEdit('${g.id}')">Editar</button>
+function renderDestaques(){
+  // Lista para escolher
+  document.getElementById('pick-list').innerHTML=groups.map(g=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--light);border-radius:8px;background:${destPicked.has(g.id)?'#fff7ed':'var(--white)'}">
+      <input type="checkbox" id="dp-${g.id}" ${destPicked.has(g.id)?'checked':''} onchange="togglePick('${g.id}',this.checked)" style="width:15px;height:15px;accent-color:var(--orange)">
+      <label for="dp-${g.id}" style="flex:1;cursor:pointer">
+        <span style="font-size:13px;font-weight:600">${g.name}</span>
+        <span style="font-size:11px;color:var(--mid);margin-left:6px">${CATS[g.category]||g.category}</span>
+      </label>
+      <span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span>
+    </div>`).join('')
+
+  // Tabela destaques ativos
+  const feat=groups.filter(g=>g.is_featured)
+  document.getElementById('dest-count').textContent=`${feat.length} ativo${feat.length!==1?'s':''}`
+  document.getElementById('dest-tbody').innerHTML=feat.length
+    ? feat.map(g=>`<tr>
+        <td><div class="gname">${g.name}</div></td>
+        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
+        <td><span class="tag tw-cat">${CATS[g.category]||g.category}</span></td>
+        <td style="font-weight:600">${(g.views||0).toLocaleString('pt-BR')}</td>
+        <td style="font-size:12px;color:var(--mid)">${g.featured_until?fmtDate(g.featured_until):'Manual'}</td>
+        <td>${g.mp_subscription_id?'<span class="tag tw-paid">💳 Pago</span>':'<span class="tag tw-feat">Admin</span>'}</td>
+        <td class="acts">
+          <button class="bs b-gray" onclick="toggleFeat('${g.id}',false)">Remover</button>
+          <button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button>
         </td>
       </tr>`).join('')
-    : '<tr class="empty-row"><td colspan="6">Nenhum grupo em destaque ainda</td></tr>'
+    : '<tr><td colspan="7" class="load-cell">Nenhum destaque ativo</td></tr>'
 }
 
-// ── APROVAR SUBMISSÃO ──
-window.approveSubmission=async function(subId,name,cat,platform,link,desc){
-  const {error}=await sb.from('groups').insert({
-    name,category:cat,platform,invite_link:link,
-    description:desc||null,is_featured:false,views:0
-  })
-  if(error){showToast('Erro ao aprovar: '+error.message,true);return}
-  await sb.from('group_submissions').update({status:'approved'}).eq('id',subId)
-  showToast(`✅ "${name}" aprovado e publicado!`,'success')
-  await loadAll()
-  renderPending()
+window.togglePick=function(id,checked){
+  if(checked)destPicked.add(id); else destPicked.delete(id)
 }
 
-// ── REJEITAR SUBMISSÃO ──
-window.rejectSubmission=async function(subId){
-  confirm2('Rejeitar esse grupo?','Ele será marcado como rejeitado e removido da fila.',async()=>{
-    await sb.from('group_submissions').update({status:'rejected'}).eq('id',subId)
-    showToast('Grupo rejeitado','error')
-    await loadAll()
-    renderPending()
-  })
+window.saveDestaques=async function(){
+  // Remove destaque de todos, depois adiciona nos selecionados
+  const allIds=groups.map(g=>g.id)
+  // Atualiza em batch — desativa todos primeiro
+  for(const g of groups){
+    const shouldBeFeat=destPicked.has(g.id)
+    if(g.is_featured!==shouldBeFeat){
+      await sb.from('groups').update({
+        is_featured:shouldBeFeat,
+        featured_until:shouldBeFeat?new Date(Date.now()+365*24*60*60*1000).toISOString():null
+      }).eq('id',g.id)
+    }
+  }
+  toast(`✅ ${destPicked.size} grupo${destPicked.size!==1?'s':''} em destaque!`,'ok')
+  await loadAll(); renderDestaques()
 }
 
-// ── TOGGLE DESTAQUE ──
-window.toggleFeatured=async function(id,val){
+// ── TOGGLE DESTAQUE INDIVIDUAL ──
+window.toggleFeat=async function(id,val){
   const until=val?new Date(Date.now()+30*24*60*60*1000).toISOString():null
   const {error}=await sb.from('groups').update({is_featured:val,featured_until:until}).eq('id',id)
-  if(error){showToast('Erro: '+error.message,true);return}
-  showToast(val?'⭐ Destaque ativado!':'Destaque removido',val?'success':'')
-  await loadAll()
-  renderAll(); renderFeatured()
+  if(error){toast('Erro: '+error.message,'err');return}
+  if(val)destPicked.add(id); else destPicked.delete(id)
+  toast(val?'⭐ Destaque ativado!':'Destaque removido',val?'ok':'info')
+  await loadAll(); renderGroups(); renderDestaques()
 }
 
 // ── EDITAR ──
 window.openEdit=function(id){
-  const g=allGroups.find(x=>x.id===id); if(!g)return
-  editingId=id
-  document.getElementById('edit-title').textContent='Editar: '+g.name
+  const g=groups.find(x=>x.id===id); if(!g)return
+  editId=id
+  document.getElementById('edit-mt').textContent='Editar: '+g.name
   document.getElementById('e-name').value=g.name||''
   document.getElementById('e-desc').value=g.description||''
   document.getElementById('e-cat').value=g.category||'outros'
   document.getElementById('e-link').value=g.invite_link||''
-  document.getElementById('e-members').value=g.members||''
-  document.getElementById('e-featured').checked=g.is_featured||false
-  document.getElementById('modal-edit').classList.add('open')
+  document.getElementById('e-mem').value=g.members||''
+  document.getElementById('e-feat').checked=!!g.is_featured
+  document.getElementById('ov-edit').classList.add('open')
 }
 
 window.saveEdit=async function(){
   const name=document.getElementById('e-name').value.trim()
-  if(!name){showToast('Nome obrigatório',true);return}
-  const updates={
+  if(!name){toast('Nome obrigatório','err');return}
+  const feat=document.getElementById('e-feat').checked
+  const {error}=await sb.from('groups').update({
     name,
     description:document.getElementById('e-desc').value.trim()||null,
     category:document.getElementById('e-cat').value,
     invite_link:document.getElementById('e-link').value.trim(),
-    members:parseInt(document.getElementById('e-members').value)||null,
-    is_featured:document.getElementById('e-featured').checked,
-    featured_until:document.getElementById('e-featured').checked?new Date(Date.now()+30*24*60*60*1000).toISOString():null
-  }
-  const {error}=await sb.from('groups').update(updates).eq('id',editingId)
-  if(error){showToast('Erro: '+error.message,true);return}
-  closeModal('modal-edit')
-  showToast('Alterações salvas!','success')
-  await loadAll()
-  renderAll(); renderDashboard()
+    members:parseInt(document.getElementById('e-mem').value)||null,
+    is_featured:feat,
+    featured_until:feat?new Date(Date.now()+30*24*60*60*1000).toISOString():null
+  }).eq('id',editId)
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('ov-edit')
+  toast('Salvo com sucesso!','ok')
+  await loadAll(); renderGroups(); renderDashboard()
 }
 
-// ── DELETAR ──
-window.confirmDelete=function(id,name){
-  confirm2(`Excluir "${name}"?`,'Essa ação não pode ser desfeita. O grupo será removido do site.',async()=>{
+// ── ADD GRUPO ──
+window.openAdd=function(){
+  ;['a-name','a-link','a-desc'].forEach(i=>document.getElementById(i).value='')
+  document.getElementById('a-mem').value=''
+  document.getElementById('a-feat').checked=false
+  document.getElementById('ov-add').classList.add('open')
+}
+
+window.addGroup=async function(){
+  const name=document.getElementById('a-name').value.trim()
+  const plat=document.getElementById('a-plat').value
+  const cat=document.getElementById('a-cat').value
+  const link=document.getElementById('a-link').value.trim()
+  const mem=parseInt(document.getElementById('a-mem').value)||null
+  const desc=document.getElementById('a-desc').value.trim()
+  const feat=document.getElementById('a-feat').checked
+  if(!name||!link){toast('Nome e link obrigatórios','err');return}
+  const btn=document.getElementById('a-btn')
+  btn.disabled=true; btn.textContent='Adicionando...'
+  const {error}=await sb.from('groups').insert({
+    name,platform:plat,category:cat,invite_link:link,
+    description:desc||null,members:mem,
+    is_featured:feat,featured_until:feat?new Date(Date.now()+30*24*60*60*1000).toISOString():null,
+    views:0
+  })
+  btn.disabled=false; btn.textContent='Adicionar grupo'
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('ov-add')
+  toast('Grupo adicionado!','ok')
+  await loadAll(); renderGroups(); renderDashboard()
+}
+
+// ── DELETE ──
+window.delGroup=function(id,name){
+  confirm2(`Excluir "${name}"?`,'Essa ação não pode ser desfeita.',async()=>{
     const {error}=await sb.from('groups').delete().eq('id',id)
-    if(error){showToast('Erro: '+error.message,true);return}
-    showToast('Grupo excluído','error')
-    await loadAll()
-    renderAll(); renderDashboard()
+    if(error){toast('Erro ao excluir: '+error.message,'err');return}
+    toast('Grupo excluído','info')
+    await loadAll(); renderGroups(); renderDashboard()
   })
 }
 
 // ── HELPERS ──
 function confirm2(title,text,onOk){
-  document.getElementById('confirm-title').textContent=title
-  document.getElementById('confirm-text').textContent=text
-  document.getElementById('confirm-ok').onclick=()=>{closeModal('modal-confirm');onOk()}
-  document.getElementById('modal-confirm').classList.add('open')
+  document.getElementById('conf-title').textContent=title
+  document.getElementById('conf-text').textContent=text
+  document.getElementById('conf-ok').onclick=()=>{closeOv('ov-confirm');onOk()}
+  document.getElementById('ov-confirm').classList.add('open')
 }
 
 function fmtDate(iso){
@@ -670,21 +1050,17 @@ function fmtDate(iso){
   return new Date(iso).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})
 }
 
-function escHtml(s){return (s||'').replace(/'/g,"&#39;").replace(/"/g,'&quot;')}
+function esc(s){return(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/\n/g,' ')}
 
-window.closeModal=id=>document.getElementById(id).classList.remove('open')
-window.overlayClose=(e,id)=>{if(e.target.id===id)closeModal(id)}
+window.closeOv=id=>document.getElementById(id).classList.remove('open')
+window.ovClose=(e,id)=>{if(e.target.id===id)closeOv(id)}
+window.openDestaque=()=>nav('destaques',document.querySelector('.sbi[onclick*="destaques"]'))
 
-window.showToast=function(msg,type=''){
+window.toast=function(msg,type='info'){
   const t=document.getElementById('toast')
-  t.textContent=msg; t.className='toast show'
-  if(type==='success')t.classList.add('success')
-  if(type==='error')t.classList.add('error')
+  t.textContent=msg; t.className='toast show '+type
   setTimeout(()=>t.classList.remove('show'),3000)
 }
-
-// Carrega ao abrir se já logado (dev mode)
-// loadAll()
 </script>
 </body>
 </html>
