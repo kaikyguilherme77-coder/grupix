@@ -3,200 +3,242 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grupix Admin</title>
+<title>Grupix — Descubra Grupos de WhatsApp e Telegram</title>
+<meta name="description" content="Encontre e divulgue grupos de WhatsApp e Telegram. Marketing digital, renda extra, tecnologia e muito mais.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --green:#22c55e;--green-h:#16a34a;--green-dim:#f0fdf4;
-  --orange:#f97316;--orange-h:#ea6c0a;
-  --red:#ef4444;--red-h:#dc2626;
-  --blue:#3b82f6;--purple:#8b5cf6;
-  --bg:#f1f5f9;--white:#fff;
-  --dark:#0f172a;--mid:#64748b;--light:#e2e8f0;--lighter:#f8fafc;
-  --r:10px;
-}
-body{background:var(--bg);color:var(--dark);font-family:'Inter',sans-serif;min-height:100vh}
+:root{--gr:#22c55e;--grh:#16a34a;--or:#f97316;--orh:#ea6c0a;--bg:#f8f9fa;--wh:#fff;--dk:#111827;--md:#6b7280;--lt:#e5e7eb;--ltr:#f3f4f6;--r:12px}
+body{background:var(--bg);color:var(--dk);font-family:'Inter',sans-serif;min-height:100vh}
 button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
 input,select,textarea{font-family:'Inter',sans-serif}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}
+.page{display:none}.page.active{display:block}
 
-/* LOGIN */
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
-.lcard{background:var(--white);border:1px solid var(--light);border-radius:16px;padding:40px 32px;width:360px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06)}
-.llogo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px}
-.lmark{width:36px;height:36px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.lname{font-weight:800;font-size:20px;letter-spacing:-.5px}
-.li{width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:8px;font-size:14px;outline:none;color:var(--dark);margin-bottom:10px;transition:border-color .2s}
-.li:focus{border-color:var(--green)}
-.lbtn{width:100%;padding:12px;background:var(--green);color:#fff;border-radius:8px;font-size:14px;font-weight:700;transition:background .15s;margin-top:4px}
-.lbtn:hover{background:var(--green-h)}
-.lerr{font-size:12px;color:var(--red);margin-top:10px;display:none}
-
-/* APP */
-#app{display:none}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
-.tlogo{display:flex;align-items:center;gap:8px}
-.tmark{width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.tname{font-weight:800;font-size:16px}
-.tbadge{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;margin-left:2px}
-.tright{display:flex;align-items:center;gap:10px}
-.tuser{font-size:12px;color:var(--mid)}
-.tbtn{font-size:12px;color:var(--mid);background:transparent;padding:6px 12px;border-radius:7px;border:1px solid var(--light);transition:all .15s}
-.tbtn:hover{border-color:#94a3b8;color:var(--dark)}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--wh);border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer}
+.lmark{width:30px;height:30px;background:var(--gr);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.lname{font-weight:800;font-size:18px;letter-spacing:-.5px}
+.btn-add{background:var(--gr);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:all .15s}
+.btn-add:hover{background:var(--grh)}
 
 /* LAYOUT */
 .shell{display:flex;padding-top:56px;min-height:100vh}
-.sidebar{width:210px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--light);overflow-y:auto;padding:12px 0}
-.sb-sec{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 5px}
-.sbi{display:flex;align-items:center;gap:9px;width:100%;padding:8px 16px;background:transparent;color:var(--mid);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent}
-.sbi:hover{background:var(--lighter);color:var(--dark)}
-.sbi.on{background:var(--green-dim);color:var(--green);font-weight:600;border-left-color:var(--green)}
-.sbi .ic{width:16px;height:16px;flex-shrink:0;opacity:.5}
-.sbi.on .ic{opacity:1}
-.sbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px}
+
+/* SIDEBAR */
+.sidebar{width:220px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--wh);border-right:1px solid var(--lt);overflow-y:auto;padding:16px 0}
+.sb-sec{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.6px;padding:12px 16px 4px}
+.sb-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 16px;background:transparent;color:var(--md);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent}
+.sb-btn:hover{background:var(--ltr);color:var(--dk)}
+.sb-btn.on{background:#f0fdf4;color:var(--gr);font-weight:600;border-left-color:var(--gr)}
+.sb-emoji{width:24px;height:24px;border-radius:6px;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.sb-btn.on .sb-emoji{background:#dcfce7}
+.sb-count{margin-left:auto;font-size:11px;color:#d1d5db;font-weight:400}
+.sb-btn.on .sb-count{color:#86efac}
 
 /* MAIN */
-.main{margin-left:210px;flex:1;padding:20px;max-width:calc(100% - 210px)}
-.tab{display:none}.tab.on{display:block}
-.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
-.sh-title{font-size:17px;font-weight:800;letter-spacing:-.3px}
+.main{margin-left:220px;flex:1;padding:20px}
 
-/* METRICS */
-.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-@media(max-width:900px){.mg{grid-template-columns:repeat(2,1fr)}}
-.mc{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.mc.c-green::before{background:var(--green)}.mc.c-orange::before{background:var(--orange)}
-.mc.c-blue::before{background:var(--blue)}.mc.c-purple::before{background:var(--purple)}
-.mc-n{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.mc-l{font-size:12px;color:var(--mid);font-weight:500}
-.mc-sub{font-size:11px;color:#94a3b8;margin-top:3px}
+/* SEARCH */
+.search-box{position:relative;max-width:500px;margin-bottom:24px}
+.search-box input{width:100%;padding:12px 44px 12px 16px;border:1.5px solid var(--lt);border-radius:10px;font-size:14px;outline:none;color:var(--dk);background:var(--wh);transition:border-color .2s}
+.search-box input:focus{border-color:var(--gr)}
+.search-box input::placeholder{color:#9ca3af}
+.search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:#9ca3af}
 
-/* TABLE */
-.tw{background:var(--white);border:1px solid var(--light);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
-.thead{padding:12px 16px;border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.ttitle{font-size:13px;font-weight:700}
-.tsearch{padding:7px 11px;border:1.5px solid var(--light);border-radius:7px;font-size:12px;outline:none;width:200px;transition:border-color .2s}
-.tsearch:focus{border-color:var(--green)}
-table{width:100%;border-collapse:collapse}
-th{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;background:var(--lighter);border-bottom:1px solid var(--light)}
-td{padding:11px 14px;font-size:13px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafbfc}
-.gname{font-weight:600;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gdesc{color:var(--mid);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;margin-top:1px}
+/* FEATURED */
+.feat-sec{margin-bottom:24px}
+.sec-lbl{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.feat-strip{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.feat-strip::-webkit-scrollbar{display:none}
+.feat-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0;transition:transform .15s}
+.feat-item:hover{transform:translateY(-2px)}
+.feat-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid var(--or);background:var(--ltr);overflow:hidden;flex-shrink:0}
+.feat-av img{width:100%;height:100%;object-fit:cover}
+.feat-name{font-size:11px;font-weight:600;max-width:60px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* TAGS */
-.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
-.tw-a{background:#dcfce7;color:#16a34a}.tw-tg{background:#dbeafe;color:#1d4ed8}
-.tw-feat{background:#ffedd5;color:#ea580c}.tw-cat{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}
+/* GRID */
+.grid-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.grid-title{font-size:14px;font-weight:700}
+.grid-count{font-size:12px;color:var(--md)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
 
-/* BTNS */
-.acts{display:flex;gap:5px;flex-wrap:wrap}
-.bs{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap}
-.b-green{background:#dcfce7;color:#16a34a}.b-green:hover{background:var(--green);color:#fff}
-.b-red{background:#fee2e2;color:var(--red)}.b-red:hover{background:var(--red);color:#fff}
-.b-orange{background:#ffedd5;color:var(--orange)}.b-orange:hover{background:var(--orange);color:#fff}
-.b-gray{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}.b-gray:hover{background:#e2e8f0;color:var(--dark)}
-.b-blue{background:#dbeafe;color:var(--blue)}.b-blue:hover{background:var(--blue);color:#fff}
-.btn-p{background:var(--green);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
-.btn-p:hover{background:var(--green-h)}
-.btn-o{background:var(--orange);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
-.btn-o:hover{background:var(--orange-h)}
+/* CARD */
+.card{background:var(--wh);border:1px solid var(--lt);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:box-shadow .2s,transform .15s;animation:fu .3s ease both}
+.card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
+.card.feat{border:2px solid var(--or);background:#fffbf7}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card-top{display:flex;align-items:center;gap:12px}
+.card-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
+.card-av img{width:100%;height:100%;object-fit:cover}
+.card-name{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.t-cat{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+.t-feat{background:#ffedd5;color:#ea580c}
+.status-box{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px}
+.status-open{background:#f0fdf4;border:1px solid #bbf7d0}
+.status-closed{background:#fef2f2;border:1px solid #fecaca}
+.status-txt{font-size:11px;font-weight:700}
+.status-sub{font-size:10px}
+.card-members{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px}
+.card-actions{display:flex;flex-direction:column;gap:8px}
+.btn-enter{width:100%;padding:11px;background:var(--gr);color:#fff;border-radius:10px;font-size:13px;font-weight:700;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-enter:hover{background:var(--grh)}
+.btn-dest{width:100%;padding:11px;background:var(--or);color:#fff;border-radius:10px;font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-dest:hover{background:var(--orh)}
+.btn-feat-badge{width:100%;padding:10px;background:#fff7ed;color:var(--or);border-radius:10px;font-size:12px;font-weight:700;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:5px;cursor:default}
+.skel{background:var(--wh);border:1px solid var(--lt);border-radius:16px;height:220px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.8}}
+.empty-grid{grid-column:1/-1;text-align:center;padding:48px;color:var(--md);font-size:14px}
 
-/* FILTERS */
-.filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.fb{padding:5px 12px;border-radius:20px;border:1.5px solid var(--light);background:var(--white);color:var(--mid);font-size:12px;font-weight:500;transition:all .15s}
-.fb.on{background:var(--dark);border-color:var(--dark);color:#fff}
+/* CTA */
+.cta{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #bbf7d0;border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.cta h3{font-size:17px;font-weight:800;margin-bottom:4px}
+.cta p{font-size:13px;color:var(--md)}
+.btn-cta{background:var(--gr);color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;transition:all .15s;white-space:nowrap}
+.btn-cta:hover{background:var(--grh)}
 
-/* EMPTY/LOAD */
-.load-cell{text-align:center;padding:32px;color:var(--mid);font-size:13px}
-.spin{width:18px;height:18px;border:2px solid var(--light);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* GROUP PAGE */
+.gpage{max-width:640px;margin:0 auto;padding:24px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--md);font-size:13px;margin-bottom:20px;padding:0;transition:color .15s;cursor:pointer}
+.back-btn:hover{color:var(--dk)}
+.gcard{background:var(--wh);border:1px solid var(--lt);border-radius:16px;overflow:hidden;margin-bottom:20px}
+.gbanner{height:100px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.gbody{padding:22px}
+.gbody h2{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.gtags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.gdesc{font-size:14px;color:var(--md);line-height:1.7;margin-bottom:20px}
+.gstats{display:flex;gap:24px;margin-bottom:20px}
+.gsn{font-size:18px;font-weight:700}.gsl{font-size:11px;color:var(--md)}
+.btn-enter-big{width:100%;padding:14px;background:var(--gr);color:#fff;border-radius:10px;font-size:15px;font-weight:700;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-enter-big:hover{background:var(--grh)}
 
-/* MODAL */
-.ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px}
+/* CAT PAGE */
+.cpage{max-width:900px;margin:0 auto;padding:24px}
+
+/* OVERLAY */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px}
 .ov.open{display:flex}
-.modal{background:var(--white);border-radius:14px;padding:24px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .2s ease}
-.modal.sm{max-width:360px}
-.modal.lg{max-width:600px}
+.modal{background:var(--wh);border-radius:16px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;animation:mIn .2s ease}
 @keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.mt{font-size:16px;font-weight:800}
-.mcl{background:var(--lighter);border:none;width:28px;height:28px;border-radius:7px;font-size:16px;color:var(--mid);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mpad{padding:24px}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mtitle{font-size:16px;font-weight:800}
+.mcl{background:var(--ltr);border:none;width:28px;height:28px;border-radius:7px;font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mcl:hover{background:var(--lt)}
 .fg{margin-bottom:13px}
-.fl{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.fi,.fs,.ft{width:100%;padding:9px 12px;border:1.5px solid var(--light);border-radius:8px;font-size:13px;outline:none;color:var(--dark);background:var(--white);transition:border-color .2s}
-.fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
+.fl{display:block;font-size:10px;font-weight:700;color:var(--md);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fi,.fs,.ft{width:100%;padding:10px 12px;border:1.5px solid var(--lt);border-radius:8px;font-size:13px;outline:none;color:var(--dk);background:var(--wh);transition:border-color .2s}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--gr)}
 .fs option{background:#fff}
-.ft{resize:vertical}
-.ma{display:flex;gap:8px;margin-top:16px}
-.ma button{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600}
-.cb-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.cb-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--green);cursor:pointer}
-.cb-row label{font-size:13px;font-weight:500;cursor:pointer}
+.ft{resize:none}
+.plat-row{display:flex;gap:8px}
+.pp{flex:1;padding:9px;border:1.5px solid var(--lt);border-radius:8px;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--md);background:var(--wh);cursor:pointer;transition:all .15s}
+.pp.on{border-color:var(--gr);background:#f0fdf4;color:var(--dk)}
+.btn-sub{width:100%;padding:13px;background:var(--gr);color:#fff;font-size:14px;font-weight:700;border-radius:10px;transition:all .15s;margin-top:6px}
+.btn-sub:hover{background:var(--grh)}
+.btn-sub:disabled{opacity:.5;cursor:not-allowed}
+.mnote{text-align:center;font-size:11px;color:#9ca3af;margin-top:8px}
+.status-row{display:flex;gap:8px}
+.status-pick{flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:all .2s}
+.sp-open{border:2px solid var(--gr);background:#f0fdf4;color:#16a34a}
+.sp-closed{border:2px solid var(--lt);background:var(--wh);color:var(--md)}
 
-/* SETTINGS CARDS */
-.set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
-.set-card{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:18px}
-.set-card h3{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.set-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--lighter);font-size:13px}
-.set-row:last-child{border-bottom:none}
-.set-label{color:var(--mid);font-size:12px}
-.toggle{width:36px;height:20px;background:var(--light);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
-.toggle.on{background:var(--green)}
-.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.toggle.on::after{left:19px}
+/* DESTAQUE MODAL */
+.dest-modal{max-width:500px;padding:0;border-radius:20px;overflow:hidden}
+.dest-header{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:22px 24px 18px;text-align:center;position:relative}
+.dest-group-card{background:var(--wh);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-top:12px}
+.dest-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.dest-ben{background:var(--ltr);border-radius:12px;padding:12px 8px;text-align:center}
+.dest-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.dplan{border:2px solid var(--lt);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.dplan.sel-basico{border-color:#9ca3af;background:#f9fafb}
+.dplan.sel-vip{border-color:var(--gr);background:#f0fdf4;transform:scale(1.03)}
+.dplan.sel-boost{border-color:#6366f1;background:#eef2ff}
+.dpop{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
 
-/* BANNER PREVIEW */
-.banner-preview{border:2px dashed var(--light);border-radius:10px;padding:16px;text-align:center;margin-bottom:12px;min-height:80px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--mid);cursor:pointer;transition:border-color .2s;background:var(--lighter)}
-.banner-preview:hover{border-color:var(--green)}
-.banner-preview img{max-width:100%;max-height:80px;border-radius:6px;object-fit:contain}
+/* BOTÃO DE PAGAMENTO COM PIX */
+.btn-pay{width:100%;padding:14px;background:#22c55e;color:#fff;font-size:14px;font-weight:800;border-radius:12px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-pay:hover{background:#16a34a}
+.btn-pay:disabled{opacity:.6;cursor:not-allowed}
+.pix-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 8px;font-size:11px}
 
-/* COLOR PICKER ROW */
-.color-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.color-swatch{width:32px;height:32px;border-radius:8px;border:2px solid var(--light);cursor:pointer;flex-shrink:0}
-.color-label{font-size:12px;color:var(--mid);flex:1}
-.color-input{width:80px;padding:5px 8px;border:1.5px solid var(--light);border-radius:6px;font-size:12px;outline:none}
+/* MODAL PIX QR */
+.pix-modal{max-width:380px;text-align:center}
+.qr-container{background:#f8f9fa;border-radius:16px;padding:20px;margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.qr-container canvas,.qr-container img{border-radius:8px}
+.pix-copy-code{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:10px 14px;font-size:12px;color:#16a34a;font-family:monospace;word-break:break-all;text-align:left;cursor:pointer;transition:all .15s;width:100%}
+.pix-copy-code:hover{background:#dcfce7}
+.pix-timer{font-size:13px;font-weight:700;color:var(--or)}
+.pix-status{padding:12px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;margin-top:10px}
+.pix-waiting{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.pix-approved{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
 
-/* CAT ITEM */
-.cat-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--white);border:1px solid var(--light);border-radius:8px;margin-bottom:6px}
-.cat-emoji-edit{width:32px;height:32px;border-radius:8px;background:var(--lighter);border:1px solid var(--light);font-size:16px;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cat-name-edit{flex:1;padding:5px 8px;border:1.5px solid var(--light);border-radius:6px;font-size:13px;outline:none}
-.cat-name-edit:focus{border-color:var(--green)}
+/* DRAWER */
+.drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+.drawer-ov.open{display:block}
+.drawer{position:fixed;top:0;left:-250px;bottom:0;width:240px;background:var(--wh);z-index:151;transition:left .25s ease;overflow-y:auto}
+.drawer.open{left:0}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--lt)}
+.drawer-logo{font-weight:800;font-size:16px}
+.drawer-cl{background:var(--ltr);border:none;width:28px;height:28px;border-radius:7px;font-size:18px;cursor:pointer}
 
-/* PLAN CARD */
-.plan-edit{background:var(--white);border:1.5px solid var(--light);border-radius:10px;padding:14px;margin-bottom:10px}
-.plan-edit-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.plan-edit-name{font-size:13px;font-weight:700}
-.plan-edit-row{display:flex;gap:10px;margin-bottom:8px}
-.plan-edit-row .fi{padding:7px 10px;font-size:13px}
-
-/* BAR CHART */
-.bar-wrap{display:flex;flex-direction:column;gap:8px}
-.bar-row{display:flex;align-items:center;gap:10px;font-size:12px}
-.bar-label{width:110px;color:var(--mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
-.bar-track{flex:1;height:8px;background:var(--lighter);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;background:var(--green);transition:width .5s ease}
-.bar-val{width:36px;text-align:right;font-weight:600;color:var(--dark);flex-shrink:0}
+/* FOOTER */
+footer{margin-left:220px;border-top:1px solid var(--lt);padding:20px 24px;background:var(--wh)}
+.fcats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.fcat{font-size:11px;color:#9ca3af;cursor:pointer;transition:color .15s}
+.fcat:hover{color:var(--gr)}
+footer p{font-size:11px;color:#9ca3af}
 
 /* TOAST */
-.toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;transition:all .25s;pointer-events:none;opacity:0;transform:translateY(6px);max-width:300px}
-.toast.show{opacity:1;transform:translateY(0)}
-.toast.ok{background:#15803d;color:#fff}
-.toast.err{background:var(--red);color:#fff}
-.toast.info{background:var(--dark);color:#fff}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;pointer-events:none;background:#111827;color:#fff;opacity:0;transition:all .3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:#22c55e}
+.toast.err{background:#ef4444}
+
+/* MOBILE */
+.menu-mob{display:none;background:transparent;padding:4px;cursor:pointer}
+@media(max-width:680px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:14px}
+  footer{margin-left:0}
+  nav{padding:0 14px}
+  .menu-mob{display:flex;align-items:center;justify-content:center}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card{padding:13px;gap:10px;border-radius:12px}
+  .card-av{width:46px;height:46px;font-size:20px}
+  .card-name{font-size:13px}
+  .tag{font-size:10px;padding:2px 6px}
+  .status-box{padding:7px 10px}
+  .status-sub{display:none}
+  .btn-enter,.btn-dest{padding:9px;font-size:12px;border-radius:8px}
+  .dest-plans{grid-template-columns:1fr}
+  .dplan.sel-vip{transform:none}
+  .cta{padding:16px 18px}
+  .cta h3{font-size:15px}
+  .dest-benefits{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="lcard">
-    <div class="llogo">
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="menu-mob" onclick="toggleDrawer()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <line x1="2" y1="5" x2="18" y2="5" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="2" y1="10" x2="18" y2="10" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="2" y1="15" x2="18" y2="15" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="logo" onclick="goHome()">
       <div class="lmark">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
           <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
           <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
           <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
@@ -206,408 +248,264 @@ tr:hover td{background:#fafbfc}
       </div>
       <span class="lname">Grupix</span>
     </div>
-    <h2 style="font-size:17px;font-weight:700;margin-bottom:6px">Painel Administrativo</h2>
-    <p style="font-size:13px;color:var(--mid);margin-bottom:24px">Acesso restrito à equipe</p>
-    <input class="li" id="l-email" type="email" placeholder="Email" onkeydown="if(event.key==='Enter')login()">
-    <input class="li" id="l-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
-    <button class="lbtn" onclick="login()">Entrar no painel</button>
-    <div class="lerr" id="lerr">Email ou senha incorretos.</div>
   </div>
+  <button class="btn-add" onclick="openModal('ov-submit')">+ Adicionar seu grupo</button>
+</nav>
+
+<!-- DRAWER MOBILE -->
+<div class="drawer-ov" id="drawer-ov" onclick="toggleDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <span class="drawer-logo">Grupix</span>
+    <button class="drawer-cl" onclick="toggleDrawer()">×</button>
+  </div>
+  <div id="drawer-list"></div>
 </div>
 
-<!-- APP -->
-<div id="app">
-  <div class="topbar">
-    <div class="tlogo">
-      <div class="tmark">
-        <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-          <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
-          <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
-          <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
-          <line x1="6.5" y1="7.9" x2="11.5" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
-          <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sb-sec">Categorias</div>
+    <div id="sidebar-list"></div>
+  </aside>
+  <main class="main">
+
+    <!-- HOME -->
+    <div id="page-home" class="page active">
+      <div class="search-box">
+        <input id="search" type="text" placeholder="Buscar grupos por nome ou categoria..." oninput="applyFilters()">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="4.5" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="10" y1="10" x2="14" y2="14" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
-      <span class="tname">Grupix</span>
-      <span class="tbadge">ADMIN</span>
+
+      <div id="feat-section" style="display:none">
+        <div class="feat-sec">
+          <div class="sec-lbl">🔥 Grupos em Destaque</div>
+          <div class="feat-strip" id="feat-strip"></div>
+        </div>
+      </div>
+
+      <div class="cta">
+        <div>
+          <h3>Tem um grupo? 📣</h3>
+          <p>Cadastre grátis e alcance milhares de pessoas agora.</p>
+        </div>
+        <button class="btn-cta" onclick="openModal('ov-submit')">Adicionar meu grupo grátis</button>
+      </div>
+
+      <div class="grid-hd">
+        <span class="grid-title" id="grid-title">Todos os grupos</span>
+        <span class="grid-count" id="grid-count"></span>
+      </div>
+      <div class="grid" id="groups-grid">
+        <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+        <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+      </div>
     </div>
-    <div class="tright">
-      <span class="tuser" id="tuser"></span>
-      <button class="tbtn" onclick="window.open('/','_blank')">↗ Ver site</button>
-      <button class="tbtn" onclick="logout()">Sair</button>
+
+    <!-- GROUP PAGE -->
+    <div id="page-group" class="page">
+      <div class="gpage">
+        <button class="back-btn" onclick="goHome()">← Voltar para grupos</button>
+        <div id="gpage-content"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="sb-sec">Visão Geral</div>
-      <button class="sbi on" onclick="nav('dashboard',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
-        Dashboard
-      </button>
-      <button class="sbi" onclick="nav('analytics',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><polyline points="1,12 5,7 8,9 12,4 15,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Analytics
-      </button>
-
-      <div class="sb-sec">Grupos</div>
-      <button class="sbi" onclick="nav('pending',this)" id="nav-pending">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".7" fill="currentColor"/></svg>
-        Pendentes
-        <span class="sbadge" id="badge-p" style="display:none">0</span>
-      </button>
-      <button class="sbi" onclick="nav('groups',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="2.5" width="14" height="2" rx="1" fill="currentColor" opacity=".3"/><rect x="1" y="7" width="14" height="2" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="11.5" width="14" height="2" rx="1" fill="currentColor"/></svg>
-        Todos os grupos
-      </button>
-      <button class="sbi" onclick="nav('destaques',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-        Destaques
-      </button>
-
-      <div class="sb-sec">Personalizar</div>
-      <button class="sbi" onclick="nav('categorias',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="4" cy="12" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
-        Categorias
-      </button>
-      <button class="sbi" onclick="nav('banners',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="1" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg>
-        Banners
-      </button>
-      <button class="sbi" onclick="nav('aparencia',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        Aparência
-      </button>
-      <button class="sbi" onclick="nav('pagamentos-cfg',this)">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="3.5" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/><line x1="1" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="9.5" width="3" height="1.5" rx=".5" fill="currentColor" opacity=".5"/></svg>
-        Pagamentos
-      </button>
-
-      <div class="sb-sec">Sistema</div>
-      <button class="sbi" onclick="window.open('/','_blank')">
-        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.5C6 4 5 6 5 8s1 4 3 6.5M8 1.5C10 4 11 6 11 8s-1 4-3 6.5M1.5 8h13" stroke="currentColor" stroke-width="1.3"/></svg>
-        Ver site
-      </button>
-    </aside>
-
-    <main class="main">
-
-      <!-- DASHBOARD -->
-      <div id="tab-dashboard" class="tab on">
-        <div class="sh"><span class="sh-title">Dashboard</span><button class="btn-p" onclick="loadAll()">↻ Atualizar</button></div>
-        <div class="mg" id="dash-metrics">
-          <div class="mc c-green"><div class="spin" style="width:16px;height:16px;margin:4px 0"></div></div>
-          <div class="mc c-orange"></div><div class="mc c-blue"></div><div class="mc c-purple"></div>
-        </div>
-        <div class="mg" style="grid-template-columns:repeat(3,1fr)">
-          <div class="mc c-green"><div class="mc-n" id="d-views">—</div><div class="mc-l">Visitas ao site</div></div>
-          <div class="mc c-blue"><div class="mc-n" id="d-clicks">—</div><div class="mc-l">Cliques em grupos</div></div>
-          <div class="mc c-purple"><div class="mc-n" id="d-revenue">R$0</div><div class="mc-l">Faturamento</div></div>
-        </div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle">🏆 Top grupos por views</span></div>
-          <div style="padding:16px" id="top-chart"><div class="load-cell"><div class="spin"></div></div></div>
-        </div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle">Grupos recentes</span></div>
-          <table><thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Views</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody id="dash-recent"></tbody></table>
-        </div>
+    <!-- CAT PAGE -->
+    <div id="page-cat" class="page">
+      <div class="cpage">
+        <button class="back-btn" onclick="goHome()">← Voltar</button>
+        <h2 id="cpage-title" style="font-size:22px;font-weight:800;margin-bottom:6px"></h2>
+        <p id="cpage-sub" style="font-size:14px;color:var(--md);margin-bottom:20px"></p>
+        <div class="grid" id="cpage-grid"></div>
       </div>
+    </div>
 
-      <!-- ANALYTICS -->
-      <div id="tab-analytics" class="tab">
-        <div class="sh"><span class="sh-title">Analytics</span></div>
-        <div class="mg">
-          <div class="mc c-green"><div class="mc-n" id="an-total">—</div><div class="mc-l">Total grupos</div></div>
-          <div class="mc c-blue"><div class="mc-n" id="an-wa">—</div><div class="mc-l">WhatsApp</div></div>
-          <div class="mc c-orange"><div class="mc-n" id="an-tg">—</div><div class="mc-l">Telegram</div></div>
-          <div class="mc c-purple"><div class="mc-n" id="an-cats">—</div><div class="mc-l">Categorias ativas</div></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-          <div class="tw"><div class="thead"><span class="ttitle">Por categoria</span></div><div style="padding:16px" id="cat-chart"></div></div>
-          <div class="tw"><div class="thead"><span class="ttitle">Top 5 views</span></div><div style="padding:16px" id="click-chart"></div></div>
-        </div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle">Todos os grupos — métricas</span></div>
-          <table><thead><tr><th>Grupo</th><th>Categoria</th><th>Plataforma</th><th>Views</th><th>Membros</th><th>Destaque</th></tr></thead>
-          <tbody id="analytics-tbody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- PENDENTES -->
-      <div id="tab-pending" class="tab">
-        <div class="sh"><span class="sh-title">Pendentes</span><span id="pend-count" style="font-size:13px;color:var(--mid)"></span></div>
-        <div class="tw">
-          <table><thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Link</th><th>Data</th><th>Ações</th></tr></thead>
-          <tbody id="pend-tbody"><tr><td colspan="6" class="load-cell"><div class="spin"></div></td></tr></tbody></table>
-        </div>
-      </div>
-
-      <!-- TODOS OS GRUPOS -->
-      <div id="tab-groups" class="tab">
-        <div class="sh"><span class="sh-title">Todos os grupos</span><button class="btn-p" onclick="openAdd()">+ Adicionar grupo</button></div>
-        <div class="filters">
-          <button class="fb on" onclick="setFilter('all',this)">Todos</button>
-          <button class="fb" onclick="setFilter('wa',this)">WhatsApp</button>
-          <button class="fb" onclick="setFilter('tg',this)">Telegram</button>
-          <button class="fb" onclick="setFilter('feat',this)">⭐ Destaque</button>
-        </div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle" id="groups-count"></span><input class="tsearch" type="text" placeholder="Buscar..." oninput="setSearch(this.value)"></div>
-          <table><thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Membros</th><th>Views</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody id="groups-tbody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- DESTAQUES -->
-      <div id="tab-destaques" class="tab">
-        <div class="sh"><span class="sh-title">Destaques</span></div>
-        <div class="tw" style="margin-bottom:20px">
-          <div class="thead"><span class="ttitle">📌 Escolher grupos para o topo</span><button class="btn-p" onclick="saveDestaques()">Salvar selecionados</button></div>
-          <div style="padding:16px;display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto" id="pick-list"></div>
-        </div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle">Destaques ativos</span><span id="dest-count" style="font-size:12px;color:var(--mid)"></span></div>
-          <table><thead><tr><th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Views</th><th>Válido até</th><th>Ações</th></tr></thead>
-          <tbody id="dest-tbody"></tbody></table>
-        </div>
-      </div>
-
-      <!-- CATEGORIAS -->
-      <div id="tab-categorias" class="tab">
-        <div class="sh"><span class="sh-title">Categorias</span><button class="btn-p" onclick="openAddCat()">+ Nova categoria</button></div>
-        <div class="tw">
-          <div class="thead"><span class="ttitle">Gerenciar categorias do site</span></div>
-          <div style="padding:16px" id="cats-list"></div>
-        </div>
-      </div>
-
-      <!-- BANNERS -->
-      <div id="tab-banners" class="tab">
-        <div class="sh"><span class="sh-title">Banners</span></div>
-        <div class="set-grid">
-          <div class="set-card">
-            <h3>🖼️ Banner principal</h3>
-            <p style="font-size:12px;color:var(--mid);margin-bottom:12px">Aparece no topo da página inicial</p>
-            <div class="banner-preview" onclick="document.getElementById('b-main').click()" id="prev-main">
-              <span>Clique para adicionar banner</span>
-            </div>
-            <input type="file" id="b-main" accept="image/*" style="display:none" onchange="previewBanner(this,'prev-main','url-main')">
-            <input class="fi" id="url-main" type="url" placeholder="Ou cole a URL da imagem" style="margin-bottom:8px" oninput="updateBannerFromUrl(this.value,'prev-main')">
-            <input class="fi" id="link-main" type="url" placeholder="Link ao clicar no banner">
-            <div class="cb-row" style="margin-top:8px"><input type="checkbox" id="banner-main-on" checked><label for="banner-main-on">Banner ativo</label></div>
-            <button class="btn-p" style="width:100%;margin-top:10px" onclick="saveBanner('main')">Salvar banner</button>
-          </div>
-
-          <div class="set-card">
-            <h3>📢 Banner lateral</h3>
-            <p style="font-size:12px;color:var(--mid);margin-bottom:12px">Aparece na sidebar ao lado dos grupos</p>
-            <div class="banner-preview" onclick="document.getElementById('b-side').click()" id="prev-side">
-              <span>Clique para adicionar banner</span>
-            </div>
-            <input type="file" id="b-side" accept="image/*" style="display:none" onchange="previewBanner(this,'prev-side','url-side')">
-            <input class="fi" id="url-side" type="url" placeholder="Ou cole a URL da imagem" style="margin-bottom:8px" oninput="updateBannerFromUrl(this.value,'prev-side')">
-            <input class="fi" id="link-side" type="url" placeholder="Link ao clicar no banner">
-            <div class="cb-row" style="margin-top:8px"><input type="checkbox" id="banner-side-on" checked><label for="banner-side-on">Banner ativo</label></div>
-            <button class="btn-p" style="width:100%;margin-top:10px" onclick="saveBanner('side')">Salvar banner</button>
-          </div>
-
-          <div class="set-card">
-            <h3>🔔 Banner popup</h3>
-            <p style="font-size:12px;color:var(--mid);margin-bottom:12px">Aparece como popup ao entrar no site</p>
-            <div class="banner-preview" onclick="document.getElementById('b-popup').click()" id="prev-popup">
-              <span>Clique para adicionar banner</span>
-            </div>
-            <input type="file" id="b-popup" accept="image/*" style="display:none" onchange="previewBanner(this,'prev-popup','url-popup')">
-            <input class="fi" id="url-popup" type="url" placeholder="Ou cole a URL da imagem" style="margin-bottom:8px" oninput="updateBannerFromUrl(this.value,'prev-popup')">
-            <input class="fi" id="link-popup" type="url" placeholder="Link ao clicar no banner">
-            <div class="cb-row" style="margin-top:8px"><input type="checkbox" id="banner-popup-on"><label for="banner-popup-on">Popup ativo</label></div>
-            <button class="btn-p" style="width:100%;margin-top:10px" onclick="saveBanner('popup')">Salvar banner</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- APARÊNCIA -->
-      <div id="tab-aparencia" class="tab">
-        <div class="sh"><span class="sh-title">Aparência</span><button class="btn-p" onclick="saveAparencia()">Salvar alterações</button></div>
-        <div class="set-grid">
-          <div class="set-card">
-            <h3>🎨 Cores do site</h3>
-            <div class="color-row">
-              <input type="color" class="color-swatch" id="c-primary" value="#22c55e" oninput="previewColor('primary',this.value)">
-              <span class="color-label">Cor primária (botões, destaques)</span>
-              <input class="color-input fi" id="ct-primary" value="#22c55e" oninput="document.getElementById('c-primary').value=this.value;previewColor('primary',this.value)">
-            </div>
-            <div class="color-row">
-              <input type="color" class="color-swatch" id="c-secondary" value="#f97316" oninput="previewColor('secondary',this.value)">
-              <span class="color-label">Cor secundária (destacar, laranja)</span>
-              <input class="color-input fi" id="ct-secondary" value="#f97316" oninput="document.getElementById('c-secondary').value=this.value;previewColor('secondary',this.value)">
-            </div>
-            <div class="color-row">
-              <input type="color" class="color-swatch" id="c-bg" value="#f8f9fa" oninput="previewColor('bg',this.value)">
-              <span class="color-label">Cor de fundo</span>
-              <input class="color-input fi" id="ct-bg" value="#f8f9fa" oninput="document.getElementById('c-bg').value=this.value;previewColor('bg',this.value)">
-            </div>
-          </div>
-
-          <div class="set-card">
-            <h3>✏️ Textos do site</h3>
-            <div class="fg"><label class="fl">Nome do site</label><input class="fi" id="t-sitename" value="Grupix" placeholder="Grupix"></div>
-            <div class="fg"><label class="fl">Slogan / subtítulo</label><input class="fi" id="t-slogan" value="Descubra grupos de WhatsApp e Telegram" placeholder="Slogan"></div>
-            <div class="fg"><label class="fl">Texto do botão principal</label><input class="fi" id="t-mainbtn" value="+ Adicionar seu grupo" placeholder="Texto do botão"></div>
-            <div class="fg"><label class="fl">Texto rodapé</label><input class="fi" id="t-footer" value="© 2025 Grupix — Diretório de Grupos" placeholder="Rodapé"></div>
-          </div>
-
-          <div class="set-card">
-            <h3>⚙️ Configurações gerais</h3>
-            <div class="set-row">
-              <span class="set-label">Aprovação automática de grupos</span>
-              <button class="toggle on" id="toggle-auto" onclick="this.classList.toggle('on')"></button>
-            </div>
-            <div class="set-row">
-              <span class="set-label">Mostrar seção "Em Destaque"</span>
-              <button class="toggle on" id="toggle-featured" onclick="this.classList.toggle('on')"></button>
-            </div>
-            <div class="set-row">
-              <span class="set-label">Mostrar contador de membros</span>
-              <button class="toggle on" id="toggle-members" onclick="this.classList.toggle('on')"></button>
-            </div>
-            <div class="set-row">
-              <span class="set-label">Permitir grupos fechados</span>
-              <button class="toggle on" id="toggle-closed" onclick="this.classList.toggle('on')"></button>
-            </div>
-            <div class="set-row">
-              <span class="set-label">Modo manutenção</span>
-              <button class="toggle" id="toggle-maint" onclick="this.classList.toggle('on')"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGAMENTOS CONFIG -->
-      <div id="tab-pagamentos-cfg" class="tab">
-        <div class="sh"><span class="sh-title">Configurar Pagamentos</span><button class="btn-p" onclick="savePlanos()">Salvar planos</button></div>
-
-        <div class="tw" style="margin-bottom:20px">
-          <div class="thead"><span class="ttitle">💳 Planos de destaque</span></div>
-          <div style="padding:16px" id="planos-edit">
-            <div class="plan-edit">
-              <div class="plan-edit-head"><span class="plan-edit-name">Plano 1 — Semanal</span><div class="cb-row" style="margin:0"><input type="checkbox" id="p1-on" checked><label for="p1-on">Ativo</label></div></div>
-              <div class="plan-edit-row">
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Nome</label><input class="fi" id="p1-name" value="Semanal"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Dias</label><input class="fi" id="p1-dias" type="number" value="7"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Preço (R$)</label><input class="fi" id="p1-price" type="number" step="0.01" value="10.00"></div>
-              </div>
-              <div class="cb-row" style="margin:0"><input type="checkbox" id="p1-pop"><label for="p1-pop">Marcar como popular</label></div>
-            </div>
-            <div class="plan-edit">
-              <div class="plan-edit-head"><span class="plan-edit-name">Plano 2 — Quinzenal</span><div class="cb-row" style="margin:0"><input type="checkbox" id="p2-on" checked><label for="p2-on">Ativo</label></div></div>
-              <div class="plan-edit-row">
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Nome</label><input class="fi" id="p2-name" value="Quinzenal"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Dias</label><input class="fi" id="p2-dias" type="number" value="15"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Preço (R$)</label><input class="fi" id="p2-price" type="number" step="0.01" value="20.00"></div>
-              </div>
-              <div class="cb-row" style="margin:0"><input type="checkbox" id="p2-pop" checked><label for="p2-pop">Marcar como popular</label></div>
-            </div>
-            <div class="plan-edit">
-              <div class="plan-edit-head"><span class="plan-edit-name">Plano 3 — Mensal</span><div class="cb-row" style="margin:0"><input type="checkbox" id="p3-on" checked><label for="p3-on">Ativo</label></div></div>
-              <div class="plan-edit-row">
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Nome</label><input class="fi" id="p3-name" value="Mensal"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Dias</label><input class="fi" id="p3-dias" type="number" value="30"></div>
-                <div class="fg" style="flex:1;margin:0"><label class="fl">Preço (R$)</label><input class="fi" id="p3-price" type="number" step="0.01" value="30.00"></div>
-              </div>
-              <div class="cb-row" style="margin:0"><input type="checkbox" id="p3-pop"><label for="p3-pop">Marcar como popular</label></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tw">
-          <div class="thead"><span class="ttitle">📊 Resumo financeiro</span></div>
-          <div style="padding:20px">
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
-              <div class="mc c-green" style="border:1px solid var(--light)"><div class="mc-n" id="pay-total">R$0</div><div class="mc-l">Faturamento total</div></div>
-              <div class="mc c-blue" style="border:1px solid var(--light)"><div class="mc-n" id="pay-month">R$0</div><div class="mc-l">Este mês</div></div>
-              <div class="mc c-purple" style="border:1px solid var(--light)"><div class="mc-n" id="pay-count">0</div><div class="mc-l">Pagamentos</div></div>
-            </div>
-            <div id="pay-history" style="font-size:13px;color:var(--mid);text-align:center;padding:20px">
-              Nenhum pagamento registrado ainda. Configure o webhook do Mercado Pago para ver os pagamentos aqui.
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
+  </main>
 </div>
 
-<!-- MODAL EDITAR GRUPO -->
-<div class="ov" id="ov-edit" onclick="ovClose(event,'ov-edit')">
+<footer>
+  <div class="fcats" id="fcats"></div>
+  <p>© 2025 Grupix — Diretório de Grupos de WhatsApp e Telegram</p>
+</footer>
+
+<!-- MODAL ADICIONAR GRUPO -->
+<div class="ov" id="ov-submit" onclick="ovClose(event,'ov-submit')">
   <div class="modal">
-    <div class="mh"><span class="mt" id="edit-mt">Editar grupo</span><button class="mcl" onclick="closeOv('ov-edit')">×</button></div>
-    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="e-name" type="text"></div>
-    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="e-desc" rows="2"></textarea></div>
-    <div class="fg"><label class="fl">Categoria</label>
-      <select class="fs" id="e-cat" style="width:100%"></select>
-    </div>
-    <div class="fg"><label class="fl">Link do grupo</label><input class="fi" id="e-link" type="url"></div>
-    <div class="fg"><label class="fl">Membros</label><input class="fi" id="e-mem" type="number" min="0"></div>
-    <div class="cb-row"><input type="checkbox" id="e-feat"><label for="e-feat">🔥 Marcar como destaque</label></div>
-    <div class="cb-row"><input type="checkbox" id="e-open" checked><label for="e-open">🟢 Grupo aberto</label></div>
-    <div class="ma">
-      <button class="btn-p" onclick="saveEdit()">Salvar</button>
-      <button style="background:var(--lighter);color:var(--mid);border:1px solid var(--light);border-radius:8px;font-size:13px;font-weight:600" onclick="closeOv('ov-edit')">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL ADD GRUPO -->
-<div class="ov" id="ov-add" onclick="ovClose(event,'ov-add')">
-  <div class="modal">
-    <div class="mh"><span class="mt">Adicionar grupo</span><button class="mcl" onclick="closeOv('ov-add')">×</button></div>
-    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="a-name" type="text" placeholder="Nome do grupo"></div>
-    <div class="fg"><label class="fl">Plataforma *</label>
-      <select class="fs" id="a-plat"><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select>
-    </div>
-    <div class="fg"><label class="fl">Categoria *</label>
-      <select class="fs" id="a-cat" style="width:100%"></select>
-    </div>
-    <div class="fg"><label class="fl">Link de convite *</label><input class="fi" id="a-link" type="url" placeholder="https://chat.whatsapp.com/..."></div>
-    <div class="fg"><label class="fl">Membros</label><input class="fi" id="a-mem" type="number" min="0" placeholder="0"></div>
-    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="a-desc" rows="2" placeholder="Sobre o que é esse grupo?"></textarea></div>
-    <div class="cb-row"><input type="checkbox" id="a-feat"><label for="a-feat">🔥 Já colocar em destaque</label></div>
-    <div class="ma">
-      <button class="btn-p" id="a-btn" onclick="addGroup()">Adicionar grupo</button>
-      <button style="background:var(--lighter);color:var(--mid);border:1px solid var(--light);border-radius:8px;font-size:13px;font-weight:600" onclick="closeOv('ov-add')">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL ADD CATEGORIA -->
-<div class="ov" id="ov-cat" onclick="ovClose(event,'ov-cat')">
-  <div class="modal sm">
-    <div class="mh"><span class="mt" id="cat-mt">Nova categoria</span><button class="mcl" onclick="closeOv('ov-cat')">×</button></div>
-    <div class="fg"><label class="fl">Emoji</label><input class="fi" id="cat-emoji" type="text" placeholder="📈" maxlength="2" style="font-size:24px;text-align:center"></div>
-    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="cat-name" type="text" placeholder="Ex: Marketing Digital"></div>
-    <div class="fg"><label class="fl">Slug (sem espaços) *</label><input class="fi" id="cat-slug" type="text" placeholder="Ex: marketing" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9]/g,'-')"></div>
-    <div class="ma">
-      <button class="btn-p" onclick="saveNewCat()">Salvar categoria</button>
-      <button style="background:var(--lighter);color:var(--mid);border:1px solid var(--light);border-radius:8px;font-size:13px;font-weight:600" onclick="closeOv('ov-cat')">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL CONFIRMAR -->
-<div class="ov" id="ov-confirm" onclick="ovClose(event,'ov-confirm')">
-  <div class="modal sm">
-    <div style="text-align:center;padding:8px 0">
-      <div style="font-size:36px;margin-bottom:10px">🗑️</div>
-      <div style="font-size:15px;font-weight:800;margin-bottom:8px" id="conf-title"></div>
-      <div style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6" id="conf-text"></div>
-      <div class="ma">
-        <button id="conf-ok" style="background:var(--red);color:#fff;border-radius:8px;font-size:13px;font-weight:600">Confirmar</button>
-        <button style="flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--light);background:transparent;font-size:13px;font-weight:600;color:var(--mid)" onclick="closeOv('ov-confirm')">Cancelar</button>
+    <div class="mpad">
+      <div class="mhead">
+        <span class="mtitle">Adicionar grupo</span>
+        <button class="mcl" onclick="closeModal('ov-submit')">×</button>
       </div>
+
+      <div class="fg">
+        <label class="fl">Link do grupo *</label>
+        <div style="position:relative">
+          <input class="fi" id="f-link" type="url" placeholder="https://chat.whatsapp.com/... ou t.me/..." oninput="detectLink(this.value)" style="padding-right:40px">
+          <span id="link-icon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;display:none"></span>
+        </div>
+        <div id="plat-badge" style="display:none;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:4px"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Foto do grupo</label>
+        <div onclick="document.getElementById('f-photo').click()"
+          style="border:2px dashed var(--lt);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:border-color .2s"
+          ondragover="event.preventDefault()" ondrop="handleDrop(event)" id="photo-drop">
+          <div id="photo-ph"><div style="font-size:22px;margin-bottom:4px">🖼️</div><div style="font-size:12px;color:var(--md);font-weight:600">Clique ou arraste uma foto</div><div style="font-size:11px;color:#9ca3af">JPG, PNG — máx 2MB</div></div>
+          <div id="photo-pv" style="display:none"><img id="photo-img" style="width:64px;height:64px;border-radius:10px;object-fit:cover"><div style="font-size:11px;color:var(--md);margin-top:4px">Clique para trocar</div></div>
+        </div>
+        <input type="file" id="f-photo" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+      </div>
+
+      <div class="fg">
+        <label class="fl">Nome do grupo *</label>
+        <input class="fi" id="f-name" type="text" placeholder="Ex: Marketing Digital Brasil">
+      </div>
+
+      <div class="fg">
+        <label class="fl">Status do grupo *</label>
+        <div class="status-row">
+          <button class="status-pick sp-open" id="sp-open" onclick="setStatus('aberto')">
+            <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block"></span>
+            Grupo aberto
+          </button>
+          <button class="status-pick sp-closed" id="sp-closed" onclick="setStatus('fechado')">
+            <span style="width:8px;height:8px;border-radius:50%;background:#d1d5db;display:inline-block" id="dot-closed"></span>
+            Grupo fechado
+          </button>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Categoria *</label>
+        <select class="fs" id="f-cat">
+          <option value="">Selecione...</option>
+          <option value="marketing">📈 Marketing Digital</option>
+          <option value="renda">💰 Renda Extra</option>
+          <option value="cripto">₿ Criptomoedas</option>
+          <option value="investimentos">📊 Investimentos</option>
+          <option value="tecnologia">💻 Tecnologia</option>
+          <option value="jogos">🎮 Jogos</option>
+          <option value="relacionamentos">❤️ Relacionamentos</option>
+          <option value="amizades">🤝 Amizades</option>
+          <option value="educacao">📚 Educação</option>
+          <option value="negocios">🚀 Negócios</option>
+          <option value="musica">🎵 Música</option>
+          <option value="empregos">💼 Empregos</option>
+          <option value="outros">⭐ Outros</option>
+        </select>
+      </div>
+
+      <input type="hidden" id="f-plat" value="whatsapp">
+      <input type="hidden" id="f-status" value="aberto">
+
+      <button class="btn-sub" id="btn-sub" onclick="submitGroup()">Publicar grupo agora</button>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#92400e;line-height:1.5">
+        💡 <b>Dica:</b> Após adicionar, você poderá destacar seu grupo para receber muito mais cliques e membros!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DESTACAR -->
+<div class="ov" id="ov-dest" onclick="ovClose(event,'ov-dest')">
+  <div class="modal dest-modal">
+    <div class="dest-header">
+      <button class="mcl" onclick="closeModal('ov-dest')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.1)">×</button>
+      <div style="width:52px;height:52px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)" id="dest-emoji">🚀</div>
+      <h2 style="font-size:17px;font-weight:800;color:var(--dk);margin-bottom:3px">Destaque seu grupo.</h2>
+      <p style="font-size:12px;font-weight:700;color:var(--gr)">Multiplique seus membros.</p>
+      <div class="dest-group-card">
+        <div style="width:34px;height:34px;background:#f0fdf4;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0" id="dest-av">⭐</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700" id="dest-gname">Seu grupo</div>
+          <div style="font-size:10px;color:var(--md);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="dest-glink"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mpad" style="padding-top:18px">
+      <div class="dest-benefits" style="margin-bottom:16px">
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">🎯</div><div style="font-size:10px;font-weight:600;line-height:1.4">Seu grupo no topo</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">📈</div><div style="font-size:10px;font-weight:600;line-height:1.4">3x mais cliques</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">✅</div><div style="font-size:10px;font-weight:600;line-height:1.4">Selo Verificado</div></div>
+      </div>
+
+      <p style="font-size:11px;font-weight:700;color:var(--md);text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px">Escolha seu plano:</p>
+
+      <div class="dest-plans">
+        <div class="dplan sel-basico" id="dpl-basico" onclick="selectPlan('basico')">
+          <div style="background:#e5e7eb;color:#374151;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">Básico</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$14,90</div>
+          <div style="font-size:11px;color:var(--md);margin:3px 0 6px">7 dias</div>
+          <div style="font-size:10px;color:var(--md);line-height:1.4">R$2,13/dia</div>
+          <button style="margin-top:10px;width:100%;padding:7px;border-radius:7px;border:1.5px solid var(--lt);background:transparent;font-size:11px;font-weight:700;color:var(--md);cursor:pointer">Escolher</button>
+        </div>
+        <div class="dplan sel-vip" id="dpl-vip" onclick="selectPlan('vip')">
+          <div class="dpop" style="background:var(--gr);color:#fff">⭐ POPULAR</div>
+          <div style="background:var(--gr);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">PRO</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$24,90</div>
+          <div style="font-size:11px;color:var(--md);margin:3px 0 2px">15 dias</div>
+          <div style="font-size:10px;font-weight:700;color:var(--gr);margin-bottom:4px">🔥 R$1,66/dia</div>
+          <button style="margin-top:8px;width:100%;padding:7px;border-radius:7px;border:none;background:var(--gr);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+        <div class="dplan" id="dpl-boost" onclick="selectPlan('boost')" style="border-color:#6366f1;background:#eef2ff">
+          <div class="dpop" style="background:#6366f1;color:#fff">👑 MELHOR</div>
+          <div style="background:#6366f1;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">VIP</div>
+          <div style="font-size:11px;color:#9ca3af;text-decoration:line-through">R$79,90</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$39,90</div>
+          <div style="font-size:11px;color:var(--md);margin:3px 0 2px">30 dias</div>
+          <div style="font-size:10px;font-weight:700;color:#6366f1;margin-bottom:4px">🏆 R$1,33/dia</div>
+          <button style="margin-top:8px;width:100%;padding:7px;border-radius:7px;border:none;background:#6366f1;color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">Seu email para recibo *</label>
+        <input class="fi" id="dest-email" type="email" placeholder="seuemail@gmail.com">
+      </div>
+
+      <input type="hidden" id="dest-name-hidden">
+      <input type="hidden" id="dest-link-hidden">
+      <input type="hidden" id="dest-groupid-hidden">
+
+      <button class="btn-pay" id="btn-pay" onclick="pagarDestaque()">
+        <span>Pagar via PIX</span>
+        <span class="pix-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.5 17.5L12 12l5.5 5.5M12 12V4M4 20h16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          PIX
+        </span>
+      </button>
+      <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px">🔒 Pagamento 100% seguro via Stripe · Ativação automática</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PIX QR CODE -->
+<div class="ov" id="ov-pix" onclick="ovClose(event,'ov-pix')">
+  <div class="modal pix-modal">
+    <div class="mpad">
+      <div class="mhead">
+        <span class="mtitle">💚 Pagar com PIX</span>
+        <button class="mcl" onclick="closeModal('ov-pix')">×</button>
+      </div>
+      <div id="pix-plan-info" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#16a34a;text-align:center"></div>
+      <div class="qr-container">
+        <div style="font-size:12px;color:var(--md);font-weight:600;margin-bottom:4px">Escaneie o QR Code abaixo:</div>
+        <div id="pix-qr-img" style="width:180px;height:180px;background:#e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center;color:var(--md)"><div style="font-size:24px">⏳</div><div style="font-size:11px;margin-top:4px">Gerando QR...</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--md)">ou copie o código PIX:</div>
+        <button class="pix-copy-code" id="pix-copy-btn" onclick="copyPixCode()">
+          <div id="pix-code-text" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Aguarde...</div>
+        </button>
+      </div>
+      <div class="pix-status pix-waiting" id="pix-status-box">
+        ⏳ Aguardando pagamento... <span id="pix-timer" class="pix-timer"></span>
+      </div>
+      <p style="font-size:11px;color:#9ca3af;text-align:center;margin-top:10px">Após o pagamento, seu grupo será destacado automaticamente em até 1 minuto.</p>
     </div>
   </div>
 </div>
@@ -617,15 +515,24 @@ tr:hover td{background:#fafbfc}
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const sb = createClient(
-  'https://qgrxbjvvzrzzpcubycol.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzQ5NzIyMywiZXhwIjoyMDg5MDczMjIzfQ.gNJVd0FZwFuS05ZOzF_88HsGOIQivpnyv44pUcAKMYw'
-)
+// ══════════════════════════════════════════
+// CONFIG — Substitua com suas credenciais
+// ══════════════════════════════════════════
+const SUPABASE_URL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
 
-const ADMIN_EMAIL='admin@grupix.site', ADMIN_PASS='grupix@admin2025', SESSION_KEY='gx_adm'
+// ══════════════════════════════════════════
+// PLANOS — IDs dos preços criados no Stripe
+// ══════════════════════════════════════════
+const PLANOS = {
+  basico:  { priceId: 'price_1TBftAFYhBVSD4ZZqoia4e07', dias: 7,  valor: 'R$14,90', label: 'Básico 7 dias' },
+  vip:     { priceId: 'price_1TBftDFYhBVSD4ZZlj0yoE1S', dias: 15, valor: 'R$24,90', label: 'PRO 15 dias' },
+  boost:   { priceId: 'price_1TBftHFYhBVSD4ZZC1uQVT5G', dias: 30, valor: 'R$39,90', label: 'VIP 30 dias' },
+}
 
-// Categorias padrão (editáveis)
-let CATS={
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+const CATS = {
   marketing:{e:'📈',l:'Marketing Digital'},renda:{e:'💰',l:'Renda Extra'},
   cripto:{e:'₿',l:'Criptomoedas'},investimentos:{e:'📊',l:'Investimentos'},
   tecnologia:{e:'💻',l:'Tecnologia'},jogos:{e:'🎮',l:'Jogos'},
@@ -633,422 +540,459 @@ let CATS={
   educacao:{e:'📚',l:'Educação'},negocios:{e:'🚀',l:'Negócios'},
   musica:{e:'🎵',l:'Música'},empregos:{e:'💼',l:'Empregos'},outros:{e:'⭐',l:'Outros'}
 }
+const BG = {marketing:'#fff7ed',renda:'#f0fdf4',cripto:'#fffbeb',investimentos:'#eff6ff',tecnologia:'#f5f3ff',jogos:'#fef2f2',relacionamentos:'#fff0f3',amizades:'#f0fff4',educacao:'#f0f9ff',negocios:'#f0fdf4',musica:'#fdf4ff',empregos:'#fefce8',outros:'#f9fafb'}
 
-let groups=[], pending=[], editId=null, gFilter='all', gSearch='', destPicked=new Set()
-
-// ── SESSION ──
-function checkSession(){try{const s=JSON.parse(localStorage.getItem(SESSION_KEY)||'{}');if(s.email&&Date.now()<s.exp)return s}catch{}return null}
-function saveSession(email){localStorage.setItem(SESSION_KEY,JSON.stringify({email,exp:Date.now()+8*60*60*1000}))}
-
-window.login=function(){
-  const email=document.getElementById('l-email').value.trim()
-  const pass=document.getElementById('l-pass').value
-  const err=document.getElementById('lerr')
-  err.style.display='none'
-  if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){saveSession(email);showApp(email)}
-  else err.style.display='block'
-}
-window.logout=function(){localStorage.removeItem(SESSION_KEY);document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';document.getElementById('l-pass').value=''}
-function showApp(email){document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('tuser').textContent=email;fillCatSelects();loadAll()}
-const sess=checkSession(); if(sess)showApp(sess.email)
-
-// ── TABS ──
-window.nav=function(tab,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'))
-  document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('on'))
-  document.getElementById('tab-'+tab).classList.add('on')
-  btn.classList.add('on')
-  const fns={pending:renderPending,groups:renderGroups,destaques:renderDestaques,analytics:renderAnalytics,dashboard:renderDashboard,categorias:renderCats}
-  if(fns[tab])fns[tab]()
-}
+let all=[], cat='todos', selectedPlan='vip'
+let photoFile=null, photoUrl=null
+let pixCheckInterval=null, pixPaymentIntent=null
 
 // ── LOAD ──
-window.loadAll=async function(){
-  const [{data:g},{data:p}]=await Promise.all([
-    sb.from('groups').select('*').order('created_at',{ascending:false}),
-    sb.from('group_submissions').select('*').order('created_at',{ascending:false})
-  ])
-  groups=g||[]; pending=(p||[]).filter(x=>x.status==='pending')
-  destPicked=new Set(groups.filter(g=>g.is_featured).map(g=>g.id))
-  const n=pending.length; const b=document.getElementById('badge-p')
-  b.textContent=n; b.style.display=n?'inline':'none'
-  renderDashboard()
-}
-
-// ── DASHBOARD ──
-function renderDashboard(){
-  const total=groups.length, pend=pending.length, feat=groups.filter(g=>g.is_featured).length
-  const views=groups.reduce((s,g)=>s+(g.views||0),0)
-  document.getElementById('dash-metrics').innerHTML=`
-    <div class="mc c-green"><div class="mc-n">${total}</div><div class="mc-l">Total de grupos</div></div>
-    <div class="mc c-orange"><div class="mc-n">${pend}</div><div class="mc-l">Pendentes</div></div>
-    <div class="mc c-blue"><div class="mc-n">${feat}</div><div class="mc-l">Em destaque</div></div>
-    <div class="mc c-purple"><div class="mc-n">${new Set(groups.map(g=>g.category)).size}</div><div class="mc-l">Categorias</div></div>`
-  document.getElementById('d-views').textContent=views.toLocaleString('pt-BR')
-  document.getElementById('d-clicks').textContent=views.toLocaleString('pt-BR')
-
-  const top=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5)
-  const mx=top[0]?.views||1
-  document.getElementById('top-chart').innerHTML=`<div class="bar-wrap">${top.map(g=>`
-    <div class="bar-row"><span class="bar-label" title="${g.name}">${g.name}</span>
-    <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/mx)*100)}%"></div></div>
-    <span class="bar-val">${g.views||0}</span></div>`).join('')||'<div style="text-align:center;color:var(--mid);font-size:13px;padding:16px">Sem dados ainda</div>'}</div>`
-
-  document.getElementById('dash-recent').innerHTML=groups.slice(0,6).map(g=>`<tr>
-    <td><div class="gname">${g.name}</div></td>
-    <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
-    <td><span class="tag tw-cat">${CATS[g.category]?.l||g.category}</span></td>
-    <td style="font-weight:600">${g.views||0}</td>
-    <td>${g.is_featured?'<span class="tag tw-feat">⭐</span>':'—'}</td>
-    <td class="acts"><button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button><button class="bs b-red" onclick="delGroup('${g.id}','${esc(g.name)}')">Excluir</button></td>
-  </tr>`).join('')||'<tr><td colspan="6" class="load-cell">Nenhum grupo</td></tr>'
-}
-
-// ── ANALYTICS ──
-function renderAnalytics(){
-  document.getElementById('an-total').textContent=groups.length
-  document.getElementById('an-wa').textContent=groups.filter(g=>g.platform==='whatsapp').length
-  document.getElementById('an-tg').textContent=groups.filter(g=>g.platform==='telegram').length
-  document.getElementById('an-cats').textContent=new Set(groups.map(g=>g.category)).size
-  const cc={}; groups.forEach(g=>{cc[g.category]=(cc[g.category]||0)+1})
-  const sc=Object.entries(cc).sort((a,b)=>b[1]-a[1]), mx1=sc[0]?.[1]||1
-  document.getElementById('cat-chart').innerHTML=`<div class="bar-wrap">${sc.map(([k,v])=>`
-    <div class="bar-row"><span class="bar-label">${CATS[k]?.l||k}</span>
-    <div class="bar-track"><div class="bar-fill" style="width:${Math.round((v/mx1)*100)}%;background:var(--blue)"></div></div>
-    <span class="bar-val">${v}</span></div>`).join('')}</div>`
-  const top=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5), mx2=top[0]?.views||1
-  document.getElementById('click-chart').innerHTML=`<div class="bar-wrap">${top.map(g=>`
-    <div class="bar-row"><span class="bar-label" title="${g.name}">${g.name}</span>
-    <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/mx2)*100)}%"></div></div>
-    <span class="bar-val">${g.views||0}</span></div>`).join('')}</div>`
-  document.getElementById('analytics-tbody').innerHTML=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).map(g=>`<tr>
-    <td><div class="gname">${g.name}</div></td>
-    <td><span class="tag tw-cat">${CATS[g.category]?.l||g.category}</span></td>
-    <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
-    <td style="font-weight:700;color:var(--green)">${g.views||0}</td>
-    <td>${g.members?Number(g.members).toLocaleString('pt-BR'):'—'}</td>
-    <td>${g.is_featured?'<span class="tag tw-feat">⭐</span>':'—'}</td>
-  </tr>`).join('')||'<tr><td colspan="6" class="load-cell">Sem dados</td></tr>'
-}
-
-// ── PENDENTES ──
-function renderPending(){
-  document.getElementById('pend-count').textContent=`${pending.length} pendente${pending.length!==1?'s':''}`
-  document.getElementById('pend-tbody').innerHTML=pending.length
-    ? pending.map(s=>`<tr>
-        <td><div class="gname">${s.name}</div></td>
-        <td><span class="tag ${s.platform==='whatsapp'?'tw-a':'tw-tg'}">${s.platform==='whatsapp'?'WA':'TG'}</span></td>
-        <td><span class="tag tw-cat">${CATS[s.category]?.l||s.category}</span></td>
-        <td><a href="${s.invite_link}" target="_blank" style="color:var(--blue);font-size:12px">Ver ↗</a></td>
-        <td style="font-size:11px;color:var(--mid)">${fmtDate(s.created_at)}</td>
-        <td class="acts">
-          <button class="bs b-green" onclick="approve('${s.id}','${esc(s.name)}','${s.category}','${s.platform}','${esc(s.invite_link)}','${esc(s.description||'')}')">✓ Aprovar</button>
-          <button class="bs b-red" onclick="reject('${s.id}')">✗ Rejeitar</button>
-        </td>
-      </tr>`).join('')
-    : '<tr><td colspan="6" class="load-cell">✅ Nenhum pendente!</td></tr>'
-}
-
-window.approve=async function(sid,name,cat,plat,link,desc){
-  const {error}=await sb.from('groups').insert({name,category:cat,platform:plat,invite_link:link,description:desc||null,is_featured:false,views:0})
-  if(error){toast('Erro: '+error.message,'err');return}
-  await sb.from('group_submissions').update({status:'approved'}).eq('id',sid)
-  toast(`✅ "${name}" aprovado!`,'ok'); await loadAll(); renderPending()
-}
-
-window.reject=function(sid){
-  confirm2('Rejeitar grupo?','Será marcado como rejeitado.',async()=>{
-    await sb.from('group_submissions').update({status:'rejected'}).eq('id',sid)
-    toast('Grupo rejeitado','err'); await loadAll(); renderPending()
-  })
-}
-
-// ── TODOS OS GRUPOS ──
-window.setFilter=function(f,btn){gFilter=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderGroups()}
-window.setSearch=function(q){gSearch=q.toLowerCase().trim();renderGroups()}
-function renderGroups(){
-  let list=groups
-  if(gFilter==='wa')list=list.filter(g=>g.platform==='whatsapp')
-  else if(gFilter==='tg')list=list.filter(g=>g.platform==='telegram')
-  else if(gFilter==='feat')list=list.filter(g=>g.is_featured)
-  if(gSearch)list=list.filter(g=>g.name.toLowerCase().includes(gSearch)||(CATS[g.category]?.l||'').toLowerCase().includes(gSearch))
-  document.getElementById('groups-count').textContent=`${list.length} grupo${list.length!==1?'s':''}`
-  document.getElementById('groups-tbody').innerHTML=list.length
-    ? list.map(g=>`<tr>
-        <td><div class="gname">${g.name}</div><div class="gdesc">${g.description||'—'}</div></td>
-        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
-        <td><span class="tag tw-cat">${CATS[g.category]?.l||g.category}</span></td>
-        <td>${g.members?Number(g.members).toLocaleString('pt-BR'):'—'}</td>
-        <td style="font-weight:600">${g.views||0}</td>
-        <td>${g.is_featured?'<span class="tag tw-feat">⭐</span>':'—'}</td>
-        <td class="acts">
-          <button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button>
-          ${g.is_featured
-            ?`<button class="bs b-gray" onclick="toggleFeat('${g.id}',false)">-⭐</button>`
-            :`<button class="bs b-orange" onclick="toggleFeat('${g.id}',true)">+⭐</button>`}
-          <button class="bs b-red" onclick="delGroup('${g.id}','${esc(g.name)}')">Excluir</button>
-        </td>
-      </tr>`).join('')
-    : '<tr><td colspan="7" class="load-cell">Nenhum grupo</td></tr>'
-}
-
-// ── DESTAQUES ──
-function renderDestaques(){
-  document.getElementById('pick-list').innerHTML=groups.map(g=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--light);border-radius:8px;background:${destPicked.has(g.id)?'#fff7ed':'var(--white)'}">
-      <input type="checkbox" ${destPicked.has(g.id)?'checked':''} onchange="togglePick('${g.id}',this.checked)" style="width:15px;height:15px;accent-color:var(--orange)">
-      <span style="flex:1;font-size:13px;font-weight:600">${g.name}</span>
-      <span class="tag tw-cat">${CATS[g.category]?.l||g.category}</span>
-      <span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span>
-    </div>`).join('')
-
-  const feat=groups.filter(g=>g.is_featured)
-  document.getElementById('dest-count').textContent=`${feat.length} ativo${feat.length!==1?'s':''}`
-  document.getElementById('dest-tbody').innerHTML=feat.length
-    ? feat.map(g=>`<tr>
-        <td><div class="gname">${g.name}</div></td>
-        <td><span class="tag ${g.platform==='whatsapp'?'tw-a':'tw-tg'}">${g.platform==='whatsapp'?'WA':'TG'}</span></td>
-        <td><span class="tag tw-cat">${CATS[g.category]?.l||g.category}</span></td>
-        <td>${g.views||0}</td>
-        <td style="font-size:12px;color:var(--mid)">${g.featured_until?fmtDate(g.featured_until):'Manual'}</td>
-        <td class="acts"><button class="bs b-gray" onclick="toggleFeat('${g.id}',false)">Remover</button><button class="bs b-blue" onclick="openEdit('${g.id}')">Editar</button></td>
-      </tr>`).join('')
-    : '<tr><td colspan="6" class="load-cell">Nenhum destaque</td></tr>'
-}
-
-window.togglePick=function(id,v){if(v)destPicked.add(id);else destPicked.delete(id)}
-window.saveDestaques=async function(){
-  for(const g of groups){
-    const s=destPicked.has(g.id)
-    if(g.is_featured!==s){
-      await sb.from('groups').update({is_featured:s,featured_until:s?new Date(Date.now()+365*24*60*60*1000).toISOString():null}).eq('id',g.id)
-    }
+async function load(){
+  const {data,error}=await sb.from('groups').select('*')
+    .order('is_featured',{ascending:false})
+    .order('views',{ascending:false})
+    .order('created_at',{ascending:false})
+  if(error){
+    document.getElementById('groups-grid').innerHTML='<div class="empty-grid">Erro ao carregar grupos.</div>'
+    return
   }
-  toast(`✅ ${destPicked.size} grupo${destPicked.size!==1?'s':''} em destaque!`,'ok')
-  await loadAll(); renderDestaques()
+  all=data||[]
+  buildSidebar()
+  renderFeatured()
+  render(all)
 }
 
-// ── CATEGORIAS ──
-function renderCats(){
-  document.getElementById('cats-list').innerHTML=Object.entries(CATS).map(([k,v])=>`
-    <div class="cat-item">
-      <div class="cat-emoji-edit" onclick="editCatEmoji('${k}')" title="Clique para editar emoji">${v.e}</div>
-      <input class="cat-name-edit" value="${v.l}" onchange="CATS['${k}'].l=this.value" placeholder="Nome da categoria">
-      <span style="font-size:11px;color:var(--mid);font-family:monospace;background:var(--lighter);padding:2px 6px;border-radius:4px">${k}</span>
-      <button class="bs b-red" onclick="delCat('${k}')">Remover</button>
-    </div>`).join('')
+function buildSidebar(){
+  const counts={}; all.forEach(g=>{counts[g.category]=(counts[g.category]||0)+1})
+  const entries=[['todos',{e:'🔥',l:'Todos os grupos'}],...Object.entries(CATS)]
+  const html=entries.map(([k,v])=>`
+    <button class="sb-btn${k==='todos'?' on':''}" data-cat="${k}" onclick="setCat('${k}',this)">
+      <span class="sb-emoji">${v.e}</span>${v.l}
+      <span class="sb-count">${k==='todos'?all.length:(counts[k]||0)}</span>
+    </button>`).join('')
+  document.getElementById('sidebar-list').innerHTML=html
+  document.getElementById('drawer-list').innerHTML=html.replace(/onclick="/g,'onclick="toggleDrawer();')
+  document.getElementById('fcats').innerHTML=Object.entries(CATS)
+    .map(([k,v])=>`<span class="fcat" onclick="openCatPage('${k}')">${v.e} grupos-${k}</span>`).join(' · ')
 }
 
-window.openAddCat=function(){
-  document.getElementById('cat-emoji').value='⭐'
-  document.getElementById('cat-name').value=''
-  document.getElementById('cat-slug').value=''
-  document.getElementById('cat-mt').textContent='Nova categoria'
-  document.getElementById('ov-cat').classList.add('open')
+function renderFeatured(){
+  const feat=all.filter(g=>g.is_featured).slice(0,8)
+  const sec=document.getElementById('feat-section')
+  if(!feat.length){sec.style.display='none';return}
+  sec.style.display='block'
+  document.getElementById('feat-strip').innerHTML=feat.map(g=>{
+    const c=CATS[g.category]||{e:'⭐'}
+    const av=g.image_url?`<img src="${g.image_url}" onerror="this.style.display='none'">`:`<span>${c.e}</span>`
+    return `<div class="feat-item" onclick="openGroup('${g.id}')">
+      <div class="feat-av" style="background:${BG[g.category]||'#f3f4f6'}">${av}</div>
+      <div class="feat-name">${g.name}</div>
+    </div>`}).join('')
 }
 
-window.saveNewCat=function(){
-  const emoji=document.getElementById('cat-emoji').value.trim()||'⭐'
-  const name=document.getElementById('cat-name').value.trim()
-  const slug=document.getElementById('cat-slug').value.trim()
-  if(!name||!slug){toast('Preencha nome e slug!','err');return}
-  if(CATS[slug]){toast('Essa categoria já existe!','err');return}
-  CATS[slug]={e:emoji,l:name}
-  fillCatSelects()
-  closeOv('ov-cat')
-  toast(`✅ Categoria "${name}" adicionada!`,'ok')
-  renderCats()
+function cardHTML(g,i=0){
+  const c=CATS[g.category]||{e:'⭐',l:'Outros'}
+  const bg=BG[g.category]||'#f3f4f6'
+  const av=g.image_url?`<img src="${g.image_url}" onerror="this.style.display='none'">`:`<span>${c.e}</span>`
+  const waIco=`<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+  const tgIco=`<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+  const platIco=g.platform==='telegram'?tgIco:waIco
+  const isOpen=g.is_open!==false
+  return `<div class="card${g.is_featured?' feat':''}" style="animation-delay:${i*0.04}s">
+    <div class="card-top" style="cursor:pointer" onclick="openGroup('${g.id}')">
+      <div class="card-av" style="background:${bg}">${av}</div>
+      <div style="flex:1;min-width:0">
+        <div class="card-name">${g.name}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          ${g.is_featured?'<span class="tag t-feat">⭐ Destaque</span>':''}
+          <span class="tag t-cat">${platIco} ${c.l}</span>
+        </div>
+      </div>
+    </div>
+    <div class="status-box ${isOpen?'status-open':'status-closed'}">
+      <span style="width:7px;height:7px;border-radius:50%;background:${isOpen?'#22c55e':'#ef4444'};flex-shrink:0"></span>
+      <div>
+        <div class="status-txt" style="color:${isOpen?'#16a34a':'#dc2626'}">${isOpen?'Aberto':'Fechado'}</div>
+        ${g.members?`<div class="status-sub" style="color:${isOpen?'#16a34a':'#dc2626'}">${Number(g.members).toLocaleString('pt-BR')} membros</div>`:''}
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="btn-enter" onclick="enterGroup('${g.id}','${g.invite_link}')">${platIco} Entrar no grupo</button>
+      ${g.is_featured
+        ?`<div class="btn-feat-badge">⭐ Em destaque</div>`
+        :`<button class="btn-dest" onclick="openDestaque('${g.id}')">⭐ Destacar grupo</button>`
+      }
+    </div>
+  </div>`
 }
 
-window.delCat=function(k){
-  confirm2(`Remover categoria "${CATS[k]?.l}"?`,'Os grupos dessa categoria não serão afetados.',()=>{
-    delete CATS[k]; fillCatSelects(); renderCats()
-    toast('Categoria removida','info')
-  })
+function render(list){
+  document.getElementById('grid-count').textContent=list.length?`${list.length} grupo${list.length!==1?'s':''}`:'Nenhum grupo'
+  document.getElementById('groups-grid').innerHTML=list.length
+    ?list.map((g,i)=>cardHTML(g,i)).join('')
+    :'<div class="empty-grid">Nenhum grupo encontrado.</div>'
 }
 
-window.editCatEmoji=function(k){
-  const novo=prompt(`Novo emoji para "${CATS[k].l}":`,CATS[k].e)
-  if(novo){CATS[k].e=novo.trim().slice(0,2);renderCats()}
+window.setCat=function(k,el){
+  cat=k
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.toggle('on',b===el))
+  document.getElementById('grid-title').textContent=k==='todos'?'Todos os grupos':`Grupos de ${CATS[k]?.l||k}`
+  document.getElementById('search').value=''
+  applyFilters()
 }
 
-function fillCatSelects(){
-  const opts=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v.e} ${v.l}</option>`).join('')
-  ;['e-cat','a-cat'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts})
+window.applyFilters=function(){
+  const q=document.getElementById('search').value.toLowerCase().trim()
+  let list=all
+  if(cat!=='todos')list=list.filter(g=>g.category===cat)
+  if(q)list=list.filter(g=>
+    g.name.toLowerCase().includes(q)||
+    (CATS[g.category]?.l||'').toLowerCase().includes(q)||
+    (g.platform||'').toLowerCase().includes(q)
+  )
+  render(list)
 }
 
-// ── BANNERS ──
-window.previewBanner=function(input,prevId,urlId){
+window.enterGroup=function(id,link){
+  if(!link||link==='null'){showToast('Link indisponível',true);return}
+  sb.from('groups').update({views:(all.find(x=>x.id===id)?.views||0)+1}).eq('id',id)
+  window.open(link,'_blank')
+}
+
+window.openGroup=function(id){
+  const g=all.find(x=>x.id===id); if(!g)return
+  const c=CATS[g.category]||{e:'⭐',l:'Outros'}
+  document.title=`${g.name} — Grupix`
+  history.pushState({},'',`/grupo/${g.name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`)
+  const rel=all.filter(x=>x.category===g.category&&x.id!==g.id).slice(0,3)
+  const waIco=`<svg width="14" height="14" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+  const tgIco=`<svg width="14" height="14" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+  document.getElementById('gpage-content').innerHTML=`
+    <div class="gcard">
+      <div class="gbanner" style="background:${BG[g.category]||'#f3f4f6'}">${c.e}</div>
+      <div class="gbody">
+        <div class="gtags">
+          ${g.is_featured?'<span class="tag t-feat">⭐ Destaque</span>':''}
+          <span class="tag t-cat">${g.platform==='whatsapp'?waIco:tgIco} ${c.l}</span>
+          <span class="tag" style="background:${g.is_open!==false?'#f0fdf4':'#fef2f2'};color:${g.is_open!==false?'#16a34a':'#dc2626'}">${g.is_open!==false?'🟢 Aberto':'🔴 Fechado'}</span>
+        </div>
+        <h2>${g.name}</h2>
+        ${(g.members||g.views)?`<div class="gstats">
+          ${g.members?`<div><div class="gsn">${Number(g.members).toLocaleString('pt-BR')}</div><div class="gsl">membros</div></div>`:''}
+          ${g.views?`<div><div class="gsn">${Number(g.views).toLocaleString('pt-BR')}</div><div class="gsl">views</div></div>`:''}
+        </div>`:''}
+        <p class="gdesc">${g.description||'Entre e descubra esse grupo!'}</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button class="btn-enter-big" onclick="enterGroup('${g.id}','${g.invite_link}')">
+            ${g.platform==='whatsapp'?waIco:tgIco} Entrar no Grupo
+          </button>
+          ${!g.is_featured?`<button class="btn-dest" onclick="openDestaque('${g.id}')">⭐ Destacar este grupo</button>`:''}
+        </div>
+      </div>
+    </div>
+    ${rel.length?`<div style="font-size:14px;font-weight:700;margin-bottom:12px">Grupos relacionados</div><div class="grid">${rel.map((r,i)=>cardHTML(r,i)).join('')}</div>`:''}`
+  showPage('page-group')
+  sb.from('groups').update({views:(g.views||0)+1}).eq('id',g.id)
+}
+
+window.openCatPage=function(k){
+  const list=all.filter(g=>g.category===k), label=CATS[k]?.l||k
+  document.title=`Grupos de ${label} — Grupix`
+  history.pushState({},'',`/grupos-${k}`)
+  document.getElementById('cpage-title').textContent=`Grupos de ${label}`
+  document.getElementById('cpage-sub').textContent=`${list.length} grupo${list.length!==1?'s':''} encontrado${list.length!==1?'s':''}`
+  document.getElementById('cpage-grid').innerHTML=list.length?list.map((g,i)=>cardHTML(g,i)).join(''):'<div class="empty-grid">Nenhum grupo ainda.</div>'
+  showPage('page-cat')
+}
+
+window.goHome=function(){
+  document.title='Grupix — Descubra Grupos de WhatsApp e Telegram'
+  history.pushState({},'','/')
+  cat='todos'
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.toggle('on',b.dataset.cat==='todos'))
+  document.getElementById('grid-title').textContent='Todos os grupos'
+  document.getElementById('search').value=''
+  render(all)
+  showPage('page-home')
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  window.scrollTo(0,0)
+}
+
+window.toggleDrawer=function(){
+  document.getElementById('drawer').classList.toggle('open')
+  document.getElementById('drawer-ov').classList.toggle('open')
+}
+
+window.openModal=id=>document.getElementById(id).classList.add('open')
+window.closeModal=id=>document.getElementById(id).classList.remove('open')
+window.ovClose=(e,id)=>{if(e.target.id===id)closeModal(id)}
+
+window.detectLink=function(v){
+  const icon=document.getElementById('link-icon')
+  const badge=document.getElementById('plat-badge')
+  if(v.includes('chat.whatsapp.com')||v.includes('whatsapp.com')){
+    document.getElementById('f-plat').value='whatsapp'
+    icon.textContent='✅'; icon.style.display='block'
+    badge.style.display='inline-flex'; badge.style.cssText+=';background:#dcfce7;color:#16a34a'
+    badge.innerHTML='WhatsApp detectado'
+  } else if(v.includes('t.me/')||v.includes('telegram.me/')){
+    document.getElementById('f-plat').value='telegram'
+    icon.textContent='✅'; icon.style.display='block'
+    badge.style.display='inline-flex'; badge.style.cssText+=';background:#dbeafe;color:#1d4ed8'
+    badge.innerHTML='Telegram detectado'
+  } else {
+    icon.style.display='none'; badge.style.display='none'
+  }
+}
+
+window.setStatus=function(s){
+  document.getElementById('f-status').value=s
+  const open=document.getElementById('sp-open'), closed=document.getElementById('sp-closed')
+  const dot=document.getElementById('dot-closed')
+  if(s==='aberto'){
+    open.style.cssText='border:2px solid var(--gr);background:#f0fdf4;color:#16a34a;flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    closed.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md);flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    dot.style.background='#d1d5db'
+  } else {
+    closed.style.cssText='border:2px solid #ef4444;background:#fef2f2;color:#ef4444;flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    open.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md);flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    dot.style.background='#ef4444'
+  }
+}
+
+window.previewPhoto=function(input){
   const file=input.files[0]; if(!file)return
-  const reader=new FileReader()
-  reader.onload=e=>{
-    const prev=document.getElementById(prevId)
-    prev.innerHTML=`<img src="${e.target.result}">`
-    document.getElementById(urlId).value=e.target.result
+  if(file.size>2*1024*1024){showToast('Foto muito grande. Máx 2MB.',true);return}
+  photoFile=file
+  const r=new FileReader()
+  r.onload=e=>{
+    document.getElementById('photo-img').src=e.target.result
+    document.getElementById('photo-ph').style.display='none'
+    document.getElementById('photo-pv').style.display='block'
+    photoUrl=e.target.result
   }
-  reader.readAsDataURL(file)
+  r.readAsDataURL(file)
 }
 
-window.updateBannerFromUrl=function(url,prevId){
-  if(!url)return
-  document.getElementById(prevId).innerHTML=`<img src="${url}" onerror="this.parentElement.innerHTML='<span>URL inválida</span>'">`
-}
-
-window.saveBanner=function(type){
-  const url=document.getElementById('url-'+type).value
-  const link=document.getElementById('link-'+type).value
-  const active=document.getElementById('banner-'+type+'-on').checked
-  if(!url){toast('Adicione uma imagem ou URL','err');return}
-  const banners=JSON.parse(localStorage.getItem('gx_banners')||'{}')
-  banners[type]={url,link,active}
-  localStorage.setItem('gx_banners',JSON.stringify(banners))
-  toast(`✅ Banner ${type} salvo!`,'ok')
-}
-
-// ── APARÊNCIA ──
-window.previewColor=function(key,val){
-  const map={primary:'--green',secondary:'--orange',bg:'--bg-preview'}
-  // Só preview visual no admin
-}
-
-window.saveAparencia=function(){
-  const cfg={
-    sitename:document.getElementById('t-sitename').value,
-    slogan:document.getElementById('t-slogan').value,
-    mainbtn:document.getElementById('t-mainbtn').value,
-    footer:document.getElementById('t-footer').value,
-    colorPrimary:document.getElementById('ct-primary').value,
-    colorSecondary:document.getElementById('ct-secondary').value,
-    colorBg:document.getElementById('ct-bg').value,
-    autoApprove:document.getElementById('toggle-auto').classList.contains('on'),
-    showFeatured:document.getElementById('toggle-featured').classList.contains('on'),
-    showMembers:document.getElementById('toggle-members').classList.contains('on'),
-    allowClosed:document.getElementById('toggle-closed').classList.contains('on'),
-    maintenance:document.getElementById('toggle-maint').classList.contains('on'),
+window.handleDrop=function(e){
+  e.preventDefault()
+  const file=e.dataTransfer.files[0]
+  if(file&&file.type.startsWith('image/')){
+    document.getElementById('f-photo').files=e.dataTransfer.files
+    previewPhoto({files:e.dataTransfer.files})
   }
-  localStorage.setItem('gx_aparencia',JSON.stringify(cfg))
-  toast('✅ Aparência salva! Atualize o index.html para aplicar.','ok')
 }
 
-// ── PLANOS ──
-window.savePlanos=function(){
-  const planos={
-    p1:{name:document.getElementById('p1-name').value,dias:parseInt(document.getElementById('p1-dias').value),price:parseFloat(document.getElementById('p1-price').value),popular:document.getElementById('p1-pop').checked,active:document.getElementById('p1-on').checked},
-    p2:{name:document.getElementById('p2-name').value,dias:parseInt(document.getElementById('p2-dias').value),price:parseFloat(document.getElementById('p2-price').value),popular:document.getElementById('p2-pop').checked,active:document.getElementById('p2-on').checked},
-    p3:{name:document.getElementById('p3-name').value,dias:parseInt(document.getElementById('p3-dias').value),price:parseFloat(document.getElementById('p3-price').value),popular:document.getElementById('p3-pop').checked,active:document.getElementById('p3-on').checked},
+async function uploadPhoto(){
+  if(!photoFile)return null
+  const ext=photoFile.name.split('.').pop()
+  const path=`grupos/${Date.now()}.${ext}`
+  const {data,error}=await sb.storage.from('group-photos').upload(path,photoFile,{contentType:photoFile.type,upsert:true})
+  if(error)return null
+  return sb.storage.from('group-photos').getPublicUrl(path).data.publicUrl
+}
+
+window.submitGroup=async function(){
+  const name=document.getElementById('f-name').value.trim()
+  const link=document.getElementById('f-link').value.trim()
+  const cat_v=document.getElementById('f-cat').value
+  const platV=document.getElementById('f-plat').value||'whatsapp'
+  const statusV=document.getElementById('f-status').value||'aberto'
+  if(!link){showToast('Cole o link do grupo!',true);return}
+  if(!name){showToast('Informe o nome do grupo!',true);return}
+  if(!cat_v){showToast('Selecione uma categoria!',true);return}
+  if(!link.startsWith('http')){showToast('Link inválido!',true);return}
+
+  const btn=document.getElementById('btn-sub')
+  btn.disabled=true; btn.textContent='Publicando...'
+
+  let imgUrl=null
+  try{imgUrl=await uploadPhoto()}catch{}
+
+  const {data:newG,error}=await sb.from('groups').insert({
+    name,category:cat_v,platform:platV,
+    invite_link:link,image_url:imgUrl||null,
+    is_open:statusV==='aberto',
+    is_featured:false,views:0
+  }).select().single()
+
+  btn.disabled=false; btn.textContent='Publicar grupo agora'
+
+  if(error){
+    console.error(error)
+    showToast('Erro ao publicar. Verifique as permissões do Supabase.',true)
+    return
   }
-  localStorage.setItem('gx_planos',JSON.stringify(planos))
-  toast('✅ Planos salvos! Atualize o create-payment.js para aplicar.','ok')
 
-  // Mostra os valores para copiar no create-payment.js
-  const code=`const PLANOS = {
-  basico:   { dias: ${planos.p1.dias}, preco: ${planos.p1.price.toFixed(2)}, label: '${planos.p1.name}' },
-  vip:      { dias: ${planos.p2.dias}, preco: ${planos.p2.price.toFixed(2)}, label: '${planos.p2.name}' },
-  boost:    { dias: ${planos.p3.dias}, preco: ${planos.p3.price.toFixed(2)}, label: '${planos.p3.name}' },
-  semana:   { dias: ${planos.p1.dias}, preco: ${planos.p1.price.toFixed(2)}, label: '${planos.p1.name}' },
-  quinzena: { dias: ${planos.p2.dias}, preco: ${planos.p2.price.toFixed(2)}, label: '${planos.p2.name}' },
-  mensal:   { dias: ${planos.p3.dias}, preco: ${planos.p3.price.toFixed(2)}, label: '${planos.p3.name}' },
-}`
-  prompt('Copie esse código e cole no arquivo api/create-payment.js:', code)
+  closeModal('ov-submit')
+  ;['f-name','f-link'].forEach(id=>document.getElementById(id).value='')
+  document.getElementById('f-cat').value=''
+  photoFile=null; photoUrl=null
+  document.getElementById('photo-ph').style.display='block'
+  document.getElementById('photo-pv').style.display='none'
+
+  showToast('Grupo publicado! 🎉')
+  await load()
+  setTimeout(()=>{if(newG)openDestaque(newG.id)},1500)
 }
 
-// ── TOGGLE FEAT ──
-window.toggleFeat=async function(id,val){
-  const until=val?new Date(Date.now()+30*24*60*60*1000).toISOString():null
-  const {error}=await sb.from('groups').update({is_featured:val,featured_until:until}).eq('id',id)
-  if(error){toast('Erro: '+error.message,'err');return}
-  if(val)destPicked.add(id);else destPicked.delete(id)
-  toast(val?'⭐ Destaque ativado!':'Destaque removido',val?'ok':'info')
-  await loadAll(); renderGroups(); renderDestaques()
+// ══════════════════════════════════════════
+// DESTAQUE + PAGAMENTO PIX via Stripe
+// ══════════════════════════════════════════
+
+window.openDestaque=function(id){
+  const g=all.find(x=>x.id===id)
+  if(!g){showToast('Grupo não encontrado',true);return}
+  const c=CATS[g.category]||{e:'⭐'}
+  document.getElementById('dest-av').textContent=c.e
+  document.getElementById('dest-emoji').textContent=c.e
+  document.getElementById('dest-gname').textContent=g.name
+  document.getElementById('dest-glink').textContent=g.invite_link||''
+  document.getElementById('dest-name-hidden').value=g.name
+  document.getElementById('dest-link-hidden').value=g.invite_link||''
+  document.getElementById('dest-groupid-hidden').value=g.id
+  selectPlan('vip')
+  openModal('ov-dest')
 }
 
-// ── EDITAR ──
-window.openEdit=function(id){
-  const g=groups.find(x=>x.id===id); if(!g)return
-  editId=id
-  document.getElementById('edit-mt').textContent='Editar: '+g.name
-  document.getElementById('e-name').value=g.name||''
-  document.getElementById('e-desc').value=g.description||''
-  document.getElementById('e-cat').value=g.category||'outros'
-  document.getElementById('e-link').value=g.invite_link||''
-  document.getElementById('e-mem').value=g.members||''
-  document.getElementById('e-feat').checked=!!g.is_featured
-  document.getElementById('e-open').checked=g.is_open!==false
-  document.getElementById('ov-edit').classList.add('open')
+window.selectPlan=function(p){
+  selectedPlan=p
+  document.getElementById('dpl-basico').className='dplan'+(p==='basico'?' sel-basico':'')
+  document.getElementById('dpl-vip').className='dplan'+(p==='vip'?' sel-vip':'')
+  document.getElementById('dpl-boost').className='dplan'+(p==='boost'?' sel-boost':'')
+  document.getElementById('dpl-boost').style.cssText=p==='boost'?'border:2px solid #6366f1;background:#eef2ff':'border:2px solid var(--lt);background:var(--wh)'
+  if(p==='basico') document.getElementById('dpl-basico').style.cssText='border:2px solid #9ca3af;background:#f9fafb'
 }
 
-window.saveEdit=async function(){
-  const name=document.getElementById('e-name').value.trim()
-  if(!name){toast('Nome obrigatório','err');return}
-  const feat=document.getElementById('e-feat').checked
-  const {error}=await sb.from('groups').update({
-    name,description:document.getElementById('e-desc').value.trim()||null,
-    category:document.getElementById('e-cat').value,
-    invite_link:document.getElementById('e-link').value.trim(),
-    members:parseInt(document.getElementById('e-mem').value)||null,
-    is_featured:feat,is_open:document.getElementById('e-open').checked,
-    featured_until:feat?new Date(Date.now()+30*24*60*60*1000).toISOString():null
-  }).eq('id',editId)
-  if(error){toast('Erro: '+error.message,'err');return}
-  closeOv('ov-edit'); toast('Salvo!','ok')
-  await loadAll(); renderGroups(); renderDashboard()
+window.pagarDestaque=async function(){
+  const name=document.getElementById('dest-name-hidden').value
+  const link=document.getElementById('dest-link-hidden').value
+  const groupId=document.getElementById('dest-groupid-hidden').value
+  const email=document.getElementById('dest-email').value.trim()
+
+  if(!email||!email.includes('@')){showToast('Informe um email válido!',true);return}
+  if(!name||!link){showToast('Erro: grupo não identificado.',true);return}
+
+  const plano=PLANOS[selectedPlan]
+  const btn=document.getElementById('btn-pay')
+  btn.disabled=true; btn.innerHTML='⏳ Gerando PIX...'
+
+  try{
+    // Chama Edge Function do Supabase para criar Payment Intent com PIX
+    const resp=await fetch(`${SUPABASE_URL}/functions/v1/create-pix-payment`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body:JSON.stringify({
+        priceId: plano.priceId,
+        groupId,
+        groupName: name,
+        inviteLink: link,
+        email,
+        planType: selectedPlan,
+        dias: plano.dias
+      })
+    })
+    const data=await resp.json()
+
+    if(data.error){
+      showToast('Erro: '+(data.error||'tente novamente'),true)
+      btn.disabled=false; btn.innerHTML='Pagar via PIX <span class="pix-badge">PIX</span>'
+      return
+    }
+
+    closeModal('ov-dest')
+    abrirModalPix(data, plano)
+
+  }catch(err){
+    console.error(err)
+    showToast('Erro de conexão. Tente novamente.',true)
+    btn.disabled=false; btn.innerHTML='Pagar via PIX <span class="pix-badge">PIX</span>'
+  }
 }
 
-// ── ADD GRUPO ──
-window.openAdd=function(){
-  ;['a-name','a-link','a-desc'].forEach(i=>document.getElementById(i).value='')
-  document.getElementById('a-mem').value=''
-  document.getElementById('a-feat').checked=false
-  document.getElementById('ov-add').classList.add('open')
+function abrirModalPix(data, plano){
+  pixPaymentIntent=data.paymentIntentId
+  document.getElementById('pix-plan-info').textContent=`${plano.label} — ${plano.valor}`
+
+  // Exibir QR Code (imagem base64 que vem da Stripe)
+  const qrEl=document.getElementById('pix-qr-img')
+  if(data.qrCodeImage){
+    qrEl.innerHTML=`<img src="data:image/png;base64,${data.qrCodeImage}" style="width:180px;height:180px;border-radius:12px" />`
+  } else if(data.qrCode){
+    qrEl.innerHTML=`<div style="font-size:10px;word-break:break-all;padding:10px;background:#fff;border-radius:8px;color:var(--dk)">${data.qrCode}</div>`
+  }
+
+  // Código PIX para copiar
+  const codeEl=document.getElementById('pix-code-text')
+  codeEl.textContent=data.qrCode||'Código indisponível'
+  codeEl.dataset.code=data.qrCode||''
+
+  openModal('ov-pix')
+  iniciarPollingPix(data.paymentIntentId, plano.dias)
 }
 
-window.addGroup=async function(){
-  const name=document.getElementById('a-name').value.trim()
-  const link=document.getElementById('a-link').value.trim()
-  if(!name||!link){toast('Nome e link obrigatórios','err');return}
-  const btn=document.getElementById('a-btn'); btn.disabled=true; btn.textContent='Adicionando...'
-  const {error}=await sb.from('groups').insert({
-    name,platform:document.getElementById('a-plat').value,
-    category:document.getElementById('a-cat').value,
-    invite_link:link,description:document.getElementById('a-desc').value.trim()||null,
-    members:parseInt(document.getElementById('a-mem').value)||null,
-    is_featured:document.getElementById('a-feat').checked,views:0
-  })
-  btn.disabled=false; btn.textContent='Adicionar grupo'
-  if(error){toast('Erro: '+error.message,'err');return}
-  closeOv('ov-add'); toast('Grupo adicionado!','ok')
-  await loadAll(); renderGroups(); renderDashboard()
+window.copyPixCode=function(){
+  const code=document.getElementById('pix-code-text').dataset.code
+  if(!code)return
+  navigator.clipboard.writeText(code).then(()=>showToast('Código PIX copiado! ✅'))
+    .catch(()=>showToast('Erro ao copiar',true))
 }
 
-// ── DELETE ──
-window.delGroup=function(id,name){
-  confirm2(`Excluir "${name}"?`,'Essa ação não pode ser desfeita.',async()=>{
-    const {error}=await sb.from('groups').delete().eq('id',id)
-    if(error){toast('Erro ao excluir: '+error.message,'err');return}
-    toast('Grupo excluído','info')
-    await loadAll(); renderGroups(); renderDashboard()
-  })
+function iniciarPollingPix(intentId, dias){
+  if(pixCheckInterval)clearInterval(pixCheckInterval)
+
+  let elapsed=0
+  const maxTime=600 // 10 min
+  document.getElementById('pix-timer').textContent='10:00'
+
+  pixCheckInterval=setInterval(async()=>{
+    elapsed+=10
+    const rem=maxTime-elapsed
+    if(rem<=0){
+      clearInterval(pixCheckInterval)
+      document.getElementById('pix-status-box').className='pix-status pix-waiting'
+      document.getElementById('pix-status-box').textContent='⏰ Tempo expirado. Gere um novo PIX.'
+      return
+    }
+    const m=String(Math.floor(rem/60)).padStart(2,'0')
+    const s=String(rem%60).padStart(2,'0')
+    document.getElementById('pix-timer').textContent=`${m}:${s}`
+
+    try{
+      const resp=await fetch(`${SUPABASE_URL}/functions/v1/check-pix-payment`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON_KEY}`},
+        body:JSON.stringify({paymentIntentId:intentId})
+      })
+      const d=await resp.json()
+      if(d.status==='succeeded'){
+        clearInterval(pixCheckInterval)
+        document.getElementById('pix-status-box').className='pix-status pix-approved'
+        document.getElementById('pix-status-box').textContent='✅ Pagamento aprovado! Ativando destaque...'
+        showToast('PIX aprovado! Grupo em destaque 🎉')
+        setTimeout(()=>{closeModal('ov-pix'); load()},2000)
+      }
+    }catch(e){console.error('Erro polling:',e)}
+  },10000)
 }
 
-// ── HELPERS ──
-function confirm2(title,text,onOk){
-  document.getElementById('conf-title').textContent=title
-  document.getElementById('conf-text').textContent=text
-  document.getElementById('conf-ok').onclick=()=>{closeOv('ov-confirm');onOk()}
-  document.getElementById('ov-confirm').classList.add('open')
-}
-
-function fmtDate(iso){if(!iso)return '—';return new Date(iso).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}
-function esc(s){return(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/\n/g,' ')}
-
-window.closeOv=id=>document.getElementById(id).classList.remove('open')
-window.ovClose=(e,id)=>{if(e.target.id===id)closeOv(id)}
-
-window.toast=function(msg,type='info'){
+window.showToast=function(msg,err=false){
   const t=document.getElementById('toast')
-  t.textContent=msg; t.className='toast show '+type
-  setTimeout(()=>t.classList.remove('show'),3000)
+  t.textContent=msg
+  t.className='toast show'+(err?' err':' ok')
+  setTimeout(()=>t.classList.remove('show'),3500)
 }
+
+window.addEventListener('popstate',()=>{if(location.pathname==='/')goHome()})
+
+load()
 </script>
 </body>
 </html>
