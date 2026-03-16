@@ -120,32 +120,59 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none}
 /* ── CARD ── */
 .g-card{
   background:var(--white);border:1px solid var(--light);
-  border-radius:var(--r);padding:18px;
+  border-radius:16px;padding:20px;
   display:flex;flex-direction:column;gap:14px;
-  transition:box-shadow .2s,border-color .2s;
+  transition:box-shadow .2s,border-color .2s,transform .15s;
   animation:fadeUp .3s ease both;
 }
-.g-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);border-color:#d1d5db}
-.g-card.is-featured{border-color:#fed7aa;background:#fffbf7}
+.g-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);border-color:#d1d5db;transform:translateY(-2px)}
+.g-card.is-featured{border-color:#f97316;border-width:2px;background:#fffbf7}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.card-top{display:flex;align-items:flex-start;gap:12px}
-.card-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--lighter)}
+.card-top{display:flex;align-items:center;gap:14px}
+.card-avatar{
+  width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;background:var(--lighter);
+  border:2px solid var(--light);overflow:hidden;position:relative;
+}
+.card-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .card-meta{flex:1;min-width:0}
-.card-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-name{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.3}
 .card-tags{display:flex;gap:5px;flex-wrap:wrap}
-.tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px}
-.tag-cat{background:var(--lighter);color:var(--mid)}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.tag-cat{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
 .tag-wa{background:#dcfce7;color:#16a34a}
 .tag-tg{background:#dbeafe;color:#1d4ed8}
 .tag-dest{background:#ffedd5;color:#ea580c}
 .tag-open{background:#f0fdf4;color:#15803d}
-.card-desc{font-size:12px;color:var(--mid);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-members{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px}
-.card-actions{display:flex;gap:8px}
-.btn-enter{flex:1;padding:9px;background:var(--green);color:#fff;border-radius:8px;font-size:12px;font-weight:600;transition:background .15s}
+.card-status{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:10px;
+  border:1px solid var(--light);
+  font-size:12px;font-weight:500;color:var(--mid);
+}
+.card-members{font-size:11px;color:#9ca3af;display:flex;align-items:center;gap:4px;padding-top:2px}
+.card-actions{display:flex;flex-direction:column;gap:8px}
+.btn-enter{
+  width:100%;padding:12px;background:var(--green);color:#fff;
+  border-radius:10px;font-size:13px;font-weight:700;
+  transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;
+  border:none;
+}
 .btn-enter:hover{background:var(--green-h)}
-.btn-boost{flex:1;padding:9px;background:var(--white);color:var(--orange);border:1.5px solid var(--orange);border-radius:8px;font-size:12px;font-weight:600;transition:all .15s}
-.btn-boost:hover{background:var(--orange);color:#fff}
+.btn-boost{
+  width:100%;padding:12px;background:var(--orange);color:#fff;
+  border-radius:10px;font-size:13px;font-weight:700;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;
+  border:none;cursor:pointer;
+}
+.btn-boost:hover{background:var(--orange-h)}
+.btn-featured-active{
+  width:100%;padding:10px;background:#fff7ed;color:var(--orange);
+  border-radius:10px;font-size:12px;font-weight:700;
+  border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:6px;
+  cursor:default;
+}
 
 /* ── SKELETON ── */
 .skel{background:var(--white);border:1px solid var(--light);border-radius:var(--r);height:190px;animation:pulse 1.5s infinite}
@@ -228,13 +255,52 @@ footer{margin-left:220px;border-top:1px solid var(--light);padding:20px 24px;bac
 .fcat:hover{color:var(--green)}
 footer p{font-size:11px;color:#9ca3af}
 
+/* ── DRAWER MOBILE ── */
+.menu-mobile{display:none}
+@media(max-width:680px){.menu-mobile{display:block!important}}
+.drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+.drawer-ov.open{display:block}
+.drawer{position:fixed;top:0;left:-250px;bottom:0;width:240px;background:var(--white);z-index:151;transition:left .25s ease;box-shadow:4px 0 20px rgba(0,0,0,.1);overflow-y:auto;padding:0}
+.drawer.open{left:0}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--light);margin-bottom:8px}
+.drawer-logo{font-weight:800;font-size:16px}
+.drawer-close{background:var(--lighter);border:none;width:28px;height:28px;border-radius:7px;font-size:18px;cursor:pointer}
+
 /* ── MOBILE ── */
 @media(max-width:680px){
   .sidebar{display:none}
-  .main{margin-left:0;max-width:100%;padding:16px}
+  .main{margin-left:0;max-width:100%;padding:12px}
   footer{margin-left:0}
-  .topbar{padding:0 16px}
+  .topbar{padding:0 12px;height:52px}
+  .logo-name{font-size:16px}
+  .btn-add{padding:8px 12px;font-size:12px}
   .btn-dest-top{display:none}
+  .search-wrap{margin-bottom:16px}
+  .search-wrap input{padding:11px 40px 11px 14px;font-size:13px}
+  .featured-section{margin-bottom:20px}
+  .feat-avatar{width:48px;height:48px;font-size:18px}
+  .feat-name{font-size:10px;max-width:52px}
+  .grid-header{margin-bottom:10px}
+  .grid-title{font-size:13px}
+  /* 2 colunas no mobile */
+  .groups-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  /* Card compacto no mobile */
+  .g-card{padding:12px;gap:10px;border-radius:12px}
+  .card-avatar{width:44px;height:44px;font-size:20px}
+  .card-name{font-size:13px;margin-bottom:4px}
+  .tag{font-size:10px;padding:2px 7px}
+  .card-status{padding:7px 10px;border-radius:8px}
+  .card-status div div:first-child{font-size:11px}
+  .card-status div div:last-child{display:none}
+  .btn-enter{padding:9px;font-size:12px;border-radius:8px}
+  .btn-boost{padding:9px;font-size:12px;border-radius:8px}
+  .btn-featured-active{padding:8px;font-size:11px}
+  .plans-grid{grid-template-columns:1fr}
+  .cta-inner{padding:16px}
+  .cta-text h3{font-size:15px}
+}
+@media(max-width:380px){
+  .groups-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -242,22 +308,40 @@ footer p{font-size:11px;color:#9ca3af}
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo" onclick="goHome()">
-    <div class="logo-mark">
-      <svg viewBox="0 0 16 16" fill="none">
-        <circle cx="4" cy="8" r="2.2" fill="#fff"/>
-        <circle cx="12" cy="4.5" r="2.2" fill="#fff"/>
-        <circle cx="12" cy="11.5" r="2.2" fill="#fff"/>
-        <line x1="6" y1="7" x2="10" y2="5.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="6" y1="9" x2="10" y2="10.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button id="menu-btn" onclick="toggleMenu()" style="display:none;background:transparent;border:none;padding:4px;cursor:pointer" class="menu-mobile">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <line x1="2" y1="5" x2="18" y2="5" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="2" y1="10" x2="18" y2="10" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="2" y1="15" x2="18" y2="15" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
+    </button>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none">
+          <circle cx="4" cy="8" r="2.2" fill="#fff"/>
+          <circle cx="12" cy="4.5" r="2.2" fill="#fff"/>
+          <circle cx="12" cy="11.5" r="2.2" fill="#fff"/>
+          <line x1="6" y1="7" x2="10" y2="5.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="6" y1="9" x2="10" y2="10.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-name">Grupix</span>
     </div>
-    <span class="logo-name">Grupix</span>
   </div>
   <div class="top-actions">
-    <button class="btn-dest-top" onclick="openModal('modal-destaque')">🔥 Destacar grupo</button>
     <button class="btn-add" onclick="openModal('modal-submit')">+ Adicionar seu grupo</button>
   </div>
+</div>
+
+<!-- DRAWER MOBILE -->
+<div class="drawer-ov" id="drawer-ov" onclick="toggleMenu()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <span class="drawer-logo">Grupix</span>
+    <button class="drawer-close" onclick="toggleMenu()">×</button>
+  </div>
+  <div id="drawer-cats"></div>
 </div>
 
 <div class="shell">
@@ -336,152 +420,215 @@ footer p{font-size:11px;color:#9ca3af}
       <button class="mclose" onclick="closeModal('modal-submit')">×</button>
     </div>
 
-    <!-- STEP 1: LINK -->
-    <div id="step1">
-      <div class="fg">
-        <label class="fl">Link do grupo *</label>
-        <div style="position:relative">
-          <input class="fi" id="fl2" type="url"
-            placeholder="https://chat.whatsapp.com/... ou t.me/..."
-            oninput="onLinkInput(this.value)"
-            style="padding-right:44px">
-          <div id="link-status" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;display:none"></div>
-        </div>
-        <div id="plat-detected" style="display:none;margin-top:6px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:5px"></div>
+    <!-- LINK -->
+    <div class="fg">
+      <label class="fl">Link do grupo *</label>
+      <div style="position:relative">
+        <input class="fi" id="fl2" type="url"
+          placeholder="https://chat.whatsapp.com/... ou t.me/..."
+          oninput="onLinkInput(this.value)"
+          style="padding-right:44px">
+        <div id="link-status" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;display:none"></div>
       </div>
+      <div id="plat-detected" style="display:none;margin-top:6px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:5px"></div>
+    </div>
 
-      <!-- TELEGRAM PREVIEW -->
-      <div id="tg-loading" style="display:none;text-align:center;padding:16px 0">
-        <div style="font-size:12px;color:var(--mid)">Buscando dados do grupo no Telegram...</div>
-        <div style="margin-top:8px;height:3px;background:var(--lighter);border-radius:2px;overflow:hidden">
-          <div style="height:100%;background:var(--green);border-radius:2px;animation:progress 1.5s ease-in-out infinite"></div>
-        </div>
+    <!-- TELEGRAM LOADING -->
+    <div id="tg-loading" style="display:none;text-align:center;padding:12px 0">
+      <div style="font-size:12px;color:var(--mid)">Buscando dados do grupo...</div>
+      <div style="margin-top:6px;height:3px;background:var(--lighter);border-radius:2px;overflow:hidden">
+        <div style="height:100%;background:var(--green);border-radius:2px;animation:progress 1.5s ease-in-out infinite"></div>
       </div>
+    </div>
 
-      <!-- PREVIEW CARD (Telegram) -->
-      <div id="tg-preview" style="display:none;background:var(--lighter);border-radius:10px;padding:14px;margin-bottom:14px">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div id="prev-avatar" style="width:48px;height:48px;border-radius:12px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden">
-            <img id="prev-img" src="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:12px">
-            <span id="prev-emoji">💬</span>
-          </div>
-          <div style="flex:1;min-width:0">
-            <div id="prev-name" style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px"></div>
-            <div id="prev-members" style="font-size:12px;color:var(--mid)"></div>
-            <div id="prev-desc" style="font-size:12px;color:var(--mid);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden"></div>
-          </div>
+    <!-- TG PREVIEW -->
+    <div id="tg-preview" style="display:none;background:var(--lighter);border-radius:10px;padding:14px;margin-bottom:14px">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div id="prev-avatar" style="width:48px;height:48px;border-radius:12px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden">
+          <img id="prev-img" src="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:12px">
+          <span id="prev-emoji">💬</span>
         </div>
-        <div style="margin-top:10px;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);font-weight:600">
-          <span>✓</span> Dados preenchidos automaticamente — você pode editar abaixo
+        <div style="flex:1;min-width:0">
+          <div id="prev-name" style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px"></div>
+          <div id="prev-members" style="font-size:12px;color:var(--mid)"></div>
         </div>
       </div>
+      <div style="margin-top:8px;font-size:11px;color:var(--green);font-weight:600">✓ Dados preenchidos automaticamente</div>
+    </div>
 
-      <!-- UPLOAD FOTO (WhatsApp ou manual) -->
-      <div class="fg" id="upload-area">
-        <label class="fl">Foto do grupo</label>
-        <div id="upload-box"
-          onclick="document.getElementById('photo-input').click()"
-          ondragover="event.preventDefault();this.style.borderColor='var(--green)'"
-          ondragleave="this.style.borderColor='var(--light)'"
-          ondrop="handleDrop(event)"
-          style="border:2px dashed var(--light);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;position:relative">
-          <div id="upload-placeholder">
-            <div style="font-size:28px;margin-bottom:6px">🖼️</div>
-            <div style="font-size:13px;font-weight:600;color:var(--mid)">Clique ou arraste uma foto</div>
-            <div style="font-size:11px;color:#9ca3af;margin-top:2px">JPG, PNG — máx 2MB</div>
-          </div>
-          <div id="upload-preview" style="display:none">
-            <img id="photo-preview-img" style="width:80px;height:80px;border-radius:12px;object-fit:cover;border:2px solid var(--light)">
-            <div style="font-size:11px;color:var(--mid);margin-top:6px">Clique para trocar</div>
-          </div>
+    <!-- UPLOAD FOTO -->
+    <div class="fg" id="upload-area">
+      <label class="fl">Foto do grupo</label>
+      <div id="upload-box"
+        onclick="document.getElementById('photo-input').click()"
+        ondragover="event.preventDefault();this.style.borderColor='var(--green)'"
+        ondragleave="this.style.borderColor='var(--light)'"
+        ondrop="handleDrop(event)"
+        style="border:2px dashed var(--light);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:border-color .2s">
+        <div id="upload-placeholder">
+          <div style="font-size:24px;margin-bottom:4px">🖼️</div>
+          <div style="font-size:13px;font-weight:600;color:var(--mid)">Clique ou arraste uma foto</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:2px">JPG, PNG — máx 2MB</div>
         </div>
-        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoSelect(this)">
+        <div id="upload-preview" style="display:none">
+          <img id="photo-preview-img" style="width:64px;height:64px;border-radius:10px;object-fit:cover">
+          <div style="font-size:11px;color:var(--mid);margin-top:4px">Clique para trocar</div>
+        </div>
       </div>
+      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhotoSelect(this)">
+    </div>
 
-      <div class="fg">
-        <label class="fl">Nome do grupo *</label>
-        <input class="fi" id="fn" type="text" placeholder="Ex: Marketing Digital Brasil">
+    <!-- NOME -->
+    <div class="fg">
+      <label class="fl">Nome do grupo *</label>
+      <input class="fi" id="fn" type="text" placeholder="Ex: Marketing Digital Brasil">
+    </div>
+
+    <!-- STATUS: ABERTO / FECHADO -->
+    <div class="fg">
+      <label class="fl">Status do grupo *</label>
+      <div style="display:flex;gap:10px">
+        <button id="btn-aberto" onclick="setStatus('aberto')"
+          style="flex:1;padding:10px;border-radius:8px;border:2px solid var(--green);background:#f0fdf4;color:#16a34a;font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px">
+          <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block"></span>
+          Grupo aberto
+        </button>
+        <button id="btn-fechado" onclick="setStatus('fechado')"
+          style="flex:1;padding:10px;border-radius:8px;border:2px solid var(--light);background:var(--white);color:var(--mid);font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px">
+          <span style="width:10px;height:10px;border-radius:50%;background:#e5e7eb;display:inline-block" id="dot-fechado"></span>
+          Grupo fechado
+        </button>
       </div>
+    </div>
 
-      <div class="fg">
-        <label class="fl">Categoria *</label>
-        <select class="fs" id="fc">
-          <option value="">Selecione...</option>
-          <option value="marketing">📈 Marketing Digital</option>
-          <option value="renda">💰 Renda Extra</option>
-          <option value="cripto">₿ Criptomoedas</option>
-          <option value="investimentos">📊 Investimentos</option>
-          <option value="tecnologia">💻 Tecnologia</option>
-          <option value="jogos">🎮 Jogos</option>
-          <option value="relacionamentos">❤️ Relacionamentos</option>
-          <option value="amizades">🤝 Amizades</option>
-          <option value="educacao">📚 Educação</option>
-          <option value="negocios">🚀 Negócios</option>
-          <option value="musica">🎵 Música</option>
-          <option value="empregos">💼 Empregos</option>
-          <option value="outros">⭐ Outros</option>
-        </select>
-      </div>
+    <!-- CATEGORIA -->
+    <div class="fg">
+      <label class="fl">Categoria *</label>
+      <select class="fs" id="fc">
+        <option value="">Selecione...</option>
+        <option value="marketing">📈 Marketing Digital</option>
+        <option value="renda">💰 Renda Extra</option>
+        <option value="cripto">₿ Criptomoedas</option>
+        <option value="investimentos">📊 Investimentos</option>
+        <option value="tecnologia">💻 Tecnologia</option>
+        <option value="jogos">🎮 Jogos</option>
+        <option value="relacionamentos">❤️ Relacionamentos</option>
+        <option value="amizades">🤝 Amizades</option>
+        <option value="educacao">📚 Educação</option>
+        <option value="negocios">🚀 Negócios</option>
+        <option value="musica">🎵 Música</option>
+        <option value="empregos">💼 Empregos</option>
+        <option value="outros">⭐ Outros</option>
+      </select>
+    </div>
 
-      <div class="fg">
-        <label class="fl">Descrição</label>
-        <textarea class="ft" id="fd" rows="2" placeholder="Sobre o que é esse grupo?"></textarea>
-      </div>
+    <input type="hidden" id="plat-hidden" value="whatsapp">
+    <input type="hidden" id="group-status" value="aberto">
 
-      <!-- Plataforma oculta (detectada automaticamente) -->
-      <input type="hidden" id="plat-hidden" value="whatsapp">
+    <button class="msub" id="sbtn" onclick="submitGroup()">Publicar grupo agora</button>
 
-      <button class="msub" id="sbtn" onclick="submitGroup()">Publicar grupo agora</button>
-      <p class="mnote">Aprovação automática — aparece imediatamente no diretório.</p>
+    <!-- DICA -->
+    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#92400e;line-height:1.5">
+      💡 <b>Dica:</b> Após adicionar seu grupo, você poderá destacá-lo para receber muito mais cliques e membros!
     </div>
   </div>
 </div>
 
 <!-- MODAL: DESTACAR -->
 <div class="overlay" id="modal-destaque" onclick="overlayClose(event,'modal-destaque')">
-  <div class="modal">
-    <div class="mhead">
-      <span class="mtitle">🔥 Destacar grupo</span>
-      <button class="mclose" onclick="closeModal('modal-destaque')">×</button>
-    </div>
-    <div class="benefits">
-      <div class="benefit"><span>✓</span><span>Aparece na seção "Grupos em Destaque" no topo</span></div>
-      <div class="benefit"><span>✓</span><span>Badge DESTAQUE laranja no card</span></div>
-      <div class="benefit"><span>✓</span><span>Primeiro na listagem de todos os visitantes</span></div>
-      <div class="benefit"><span>✓</span><span>Muito mais cliques e membros no grupo</span></div>
-    </div>
-    <div class="plans-grid">
-      <div class="plan on" id="pl-basico" onclick="setPlan('basico')">
-        <div class="pname">Destaque</div>
-        <div class="pprice">R$19</div>
-        <div class="psub">/mês</div>
-      </div>
-      <div class="plan" id="pl-vip" onclick="setPlan('vip')" style="padding-top:20px">
-        <div class="plan-badge">POPULAR</div>
-        <div class="pname">VIP</div>
-        <div class="pprice">R$49</div>
-        <div class="psub">/mês</div>
-      </div>
-      <div class="plan" id="pl-boost" onclick="setPlan('boost')">
-        <div class="pname">Boost</div>
-        <div class="pprice">R$14</div>
-        <div class="psub">7 dias</div>
+  <div class="modal" style="max-width:500px;padding:0;overflow:hidden;border-radius:20px">
+
+    <!-- HEADER -->
+    <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:24px 24px 20px;text-align:center;position:relative">
+      <button class="mclose" onclick="closeModal('modal-destaque')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.08)">×</button>
+      <div style="width:56px;height:56px;background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 2px 12px rgba(0,0,0,.08);font-size:26px">🚀</div>
+      <h2 style="font-size:18px;font-weight:800;color:#111;margin-bottom:4px">Destaque seu grupo.</h2>
+      <p style="font-size:13px;font-weight:700;color:var(--green)">Multiplique seus membros.</p>
+      <!-- Grupo selecionado -->
+      <div id="dest-group-info" style="margin-top:12px;background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left">
+        <div style="width:36px;height:36px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0" id="dest-group-emoji">⭐</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#111" id="dest-group-name">Seu grupo</div>
+          <div style="font-size:11px;color:var(--mid)" id="dest-group-link"></div>
+        </div>
       </div>
     </div>
-    <div class="fg">
-      <label class="fl">Nome do grupo *</label>
-      <input class="fi" id="dn" type="text" placeholder="Nome do seu grupo">
+
+    <div style="padding:20px 24px">
+      <!-- BENEFÍCIOS -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
+        <div style="background:var(--lighter);border-radius:12px;padding:14px 10px;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🎯</div>
+          <div style="font-size:11px;font-weight:600;color:var(--dark);line-height:1.4">Seu grupo no<br>topo da página</div>
+        </div>
+        <div style="background:var(--lighter);border-radius:12px;padding:14px 10px;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">📈</div>
+          <div style="font-size:11px;font-weight:600;color:var(--dark);line-height:1.4">Receba 3x mais<br>cliques no grupo</div>
+        </div>
+        <div style="background:var(--lighter);border-radius:12px;padding:14px 10px;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">✅</div>
+          <div style="font-size:11px;font-weight:600;color:var(--dark);line-height:1.4">Selo de Grupo<br>Verificado</div>
+        </div>
+      </div>
+
+      <!-- PLANOS -->
+      <p style="font-size:12px;font-weight:700;color:var(--mid);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px">Escolha seu plano e comece a crescer agora:</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">
+
+        <!-- BÁSICO -->
+        <div class="dest-plan" id="dpl-basico" onclick="setDestPlan('basico')"
+          style="border:2px solid var(--light);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;position:relative">
+          <div style="background:#e5e7eb;color:#374151;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Básico</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dark)">R$<span style="font-size:26px">10</span></div>
+          <div style="font-size:11px;color:var(--mid);margin:4px 0 8px">7 dias</div>
+          <div style="font-size:10px;color:var(--mid);line-height:1.4">Perfeito para conhecer e testar o destaque</div>
+          <button class="dest-choose-btn" style="margin-top:12px;width:100%;padding:8px;border-radius:8px;border:1.5px solid var(--light);background:transparent;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s">Escolher</button>
+        </div>
+
+        <!-- PRO — POPULAR -->
+        <div class="dest-plan" id="dpl-vip" onclick="setDestPlan('vip')"
+          style="border:2px solid var(--green);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#f0fdf4;transform:scale(1.03)">
+          <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap">⭐ MAIS POPULAR</div>
+          <div style="background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">PRO</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dark)">R$<span style="font-size:26px">20</span></div>
+          <div style="font-size:11px;color:var(--mid);margin:4px 0 2px">15 dias</div>
+          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:6px">🔥 Apenas R$1,33 por dia!</div>
+          <div style="font-size:10px;color:var(--mid);line-height:1.4">O plano mais escolhido pelos usuários</div>
+          <button class="dest-choose-btn" style="margin-top:12px;width:100%;padding:8px;border-radius:8px;border:none;background:var(--green);color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s">Escolher</button>
+        </div>
+
+        <!-- VIP -->
+        <div class="dest-plan" id="dpl-boost" onclick="setDestPlan('boost')"
+          style="border:2px solid #6366f1;border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:#eef2ff">
+          <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#6366f1;color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap">👑 MELHOR VALOR</div>
+          <div style="background:#6366f1;color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">VIP</div>
+          <div style="font-size:11px;color:#9ca3af;text-decoration:line-through;margin-bottom:2px">De: R$60,00</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dark)">R$<span style="font-size:26px">30</span></div>
+          <div style="font-size:11px;color:var(--mid);margin:4px 0 2px">30 dias</div>
+          <div style="font-size:10px;font-weight:700;color:#6366f1;margin-bottom:6px">🏆 Apenas R$1,00 por dia!</div>
+          <div style="font-size:10px;color:var(--mid);line-height:1.4">Melhor custo-benefício para quem quer crescer muito</div>
+          <button class="dest-choose-btn" style="margin-top:12px;width:100%;padding:8px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s">Escolher</button>
+        </div>
+      </div>
+
+      <!-- EMAIL (único campo necessário) -->
+      <div class="fg">
+        <label class="fl">Seu email para recibo *</label>
+        <input class="fi" id="de" type="email" placeholder="seuemail@gmail.com">
+      </div>
+
+      <!-- CAMPOS OCULTOS -->
+      <input type="hidden" id="dn">
+      <input type="hidden" id="dl">
+
+      <button class="pay-btn" id="pbtn" onclick="iniciarPagamento()"
+        style="background:var(--green);border:none;width:100%;padding:14px;border-radius:12px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="currentColor" opacity=".3"/><path d="M9 8h6v8H9z" fill="currentColor" opacity=".1"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Pagar com Mercado Pago →
+      </button>
+      <p class="mnote" style="margin-top:8px">🔒 Pagamento 100% seguro · Ativação automática após pagamento</p>
     </div>
-    <div class="fg">
-      <label class="fl">Seu email *</label>
-      <input class="fi" id="de" type="email" placeholder="seuemail@gmail.com">
-    </div>
-    <div class="fg">
-      <label class="fl">Link do grupo *</label>
-      <input class="fi" id="dl" type="url" placeholder="https://chat.whatsapp.com/...">
-    </div>
-    <button class="pay-btn" id="pbtn" onclick="iniciarPagamento()">Pagar com Mercado Pago →</button>
-    <p class="mnote">Pagamento seguro · Cancele quando quiser</p>
   </div>
 </div>
 
@@ -523,6 +670,7 @@ async function load(){
   if(error){showToast('Erro ao carregar grupos',true);return}
   all=data||[]
   buildSidebar()
+  fillDrawer()
   renderFeatured()
   render(all)
 }
@@ -562,25 +710,44 @@ function renderFeatured(){
 // ── CARD ──
 function cardHTML(g,i=0){
   const c=CATS[g.category]||{e:'⭐',l:'Outros'}
-  const isOpen=true // todos abertos por padrão
+  const isOpen=g.is_open!==false
+  const waIcon=`<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+  const tgIcon=`<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+  const platIcon=g.platform==='whatsapp'?waIcon:tgIcon
+  const lockOpen=`<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="#16a34a" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/></svg>`
+  const lockClosed=`<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="#dc2626" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="5" x2="11" y2="7" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/></svg>`
   return `<div class="g-card${g.is_featured?' is-featured':''}" style="animation-delay:${i*0.04}s">
     <div class="card-top">
-      <div class="card-avatar" style="background:${BG[g.category]||'#f3f4f6'};overflow:hidden">${g.image_url?`<img src="${g.image_url}" style="width:100%;height:100%;object-fit:cover;border-radius:12px" onerror="this.style.display='none'">`:''}${c.e}</div>
+      <div class="card-avatar" style="background:${BG[g.category]||'#f3f4f6'}">
+        ${g.image_url?`<img src="${g.image_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:c.e}
+      </div>
       <div class="card-meta">
-        <div class="card-name" title="${g.name}">${g.name}</div>
+        <div class="card-name">${g.name}</div>
         <div class="card-tags">
-          <span class="tag tag-cat">${c.l}</span>
-          <span class="tag ${g.platform==='whatsapp'?'tag-wa':'tag-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span>
-          ${g.is_featured?'<span class="tag tag-dest">Destaque</span>':''}
-          <span class="tag tag-open">Aberto</span>
+          <span class="tag tag-cat">${platIcon} ${c.l}</span>
+          ${g.is_featured?'<span class="tag tag-dest">⭐ Destaque</span>':''}
         </div>
       </div>
     </div>
-    ${g.description?`<div class="card-desc">${g.description}</div>`:''}
-    ${g.members?`<div class="card-members"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="3" stroke="#9ca3af" stroke-width="1.5"/><path d="M2 13c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/><path d="M11 7c1.1 0 2 .9 2 2s-.9 2-2 2" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/><path d="M13 13c0-1.1-.4-2-1-2.7" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg>${Number(g.members).toLocaleString('pt-BR')} membros</div>`:''}
+    <div class="card-status" style="${isOpen?'background:#f0fdf4;border:1px solid #bbf7d0':'background:#fef2f2;border:1px solid #fecaca'}">
+      ${isOpen?lockOpen:lockClosed}
+      <div>
+        <div style="font-size:12px;font-weight:700;color:${isOpen?'#16a34a':'#dc2626'}">${isOpen?'Grupo Aberto':'Grupo Fechado'}</div>
+        <div style="font-size:11px;color:${isOpen?'#4ade80':'#f87171'}">${isOpen?'Qualquer membro pode enviar mensagem.':'Apenas admins podem enviar mensagem.'}</div>
+      </div>
+    </div>
+    ${g.members?`<div class="card-members"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="3" stroke="#9ca3af" stroke-width="1.5"/><path d="M2 13c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>${Number(g.members).toLocaleString('pt-BR')} membros</div>`:''}
     <div class="card-actions">
-      <button class="btn-enter" onclick="enterGroup('${g.id}','${g.invite_link}')">Entrar no grupo</button>
-      <button class="btn-boost" onclick="openDestaque('${g.name}','${g.invite_link}')">🔥 Destacar</button>
+      <button class="btn-enter" onclick="enterGroup('${g.id}','${g.invite_link}')">
+        ${platIcon} Entrar no Grupo
+      </button>
+      ${g.is_featured
+        ?`<button class="btn-featured-active">⭐ Grupo em destaque</button>`
+        :`<button class="btn-boost" onclick="openDestaque('${g.name}','${g.invite_link}')">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="currentColor"/></svg>
+            Destacar Grupo
+          </button>`
+      }
     </div>
   </div>`
 }
@@ -641,7 +808,7 @@ window.openGroup=function(id){
           ${g.is_featured?'<span class="tag tag-dest">Destaque</span>':''}
           <span class="tag ${g.platform==='whatsapp'?'tag-wa':'tag-tg'}">${g.platform==='whatsapp'?'WhatsApp':'Telegram'}</span>
           <span class="tag tag-cat">${c.l}</span>
-          <span class="tag tag-open">Aberto</span>
+          <span class="tag tag-open" style="${g.is_open===false?'background:#fef2f2;color:#dc2626':''}">${g.is_open===false?"🔴 Fechado":"🟢 Aberto"}</span>
         </div>
         <h2>${g.name}</h2>
         ${(g.members||g.views)?`<div class="gstats">
@@ -698,17 +865,42 @@ window.closeModal=id=>document.getElementById(id).classList.remove('open')
 window.overlayClose=(e,id)=>{if(e.target.id===id)closeModal(id)}
 
 window.openDestaque=function(name='',link=''){
-  if(name)document.getElementById('dn').value=name
-  if(link)document.getElementById('dl').value=link
+  // Preenche campos ocultos automaticamente
+  document.getElementById('dn').value=name
+  document.getElementById('dl').value=link
+  document.getElementById('de').value=''
+
+  // Mostra info do grupo no header do modal
+  const g=all.find(x=>x.invite_link===link)
+  const c=g?CATS[g.category]:{e:'⭐',l:''}
+  document.getElementById('dest-group-name').textContent=name||'Seu grupo'
+  document.getElementById('dest-group-emoji').textContent=c?.e||'⭐'
+  document.getElementById('dest-group-link').textContent=link?link.substring(0,40)+'...':''
+
+  // Seleciona plano PRO por padrão
+  setDestPlan('vip')
   openModal('modal-destaque')
 }
 
-
-
-// ── PLAN SELECT ──
-window.setPlan=function(p){
+// ── DESTAQUE PLAN SELECT ──
+window.setDestPlan=function(p){
   plan=p
-  ;['basico','vip','boost'].forEach(x=>document.getElementById('pl-'+x).classList.toggle('on',x===p))
+  // Reset todos
+  ;['basico','vip','boost'].forEach(id=>{
+    const el=document.getElementById('dpl-'+id)
+    if(!el)return
+    // Restaura estilo padrão de cada um
+    if(id==='basico'){el.style.borderColor=plan==='basico'?'var(--green)':'var(--light)';el.style.background=plan==='basico'?'#f0fdf4':'var(--white)'}
+    if(id==='vip'){el.style.borderColor=plan==='vip'?'var(--green)':'var(--green)';el.style.background=plan==='vip'?'#f0fdf4':'#f0fdf4';el.style.transform=plan==='vip'?'scale(1.05)':'scale(1.03)'}
+    if(id==='boost'){el.style.borderColor=plan==='boost'?'#4f46e5':'#6366f1';el.style.background=plan==='boost'?'#e0e7ff':'#eef2ff'}
+  })
+  // Destaca o selecionado
+  const sel=document.getElementById('dpl-'+p)
+  if(sel){sel.style.boxShadow='0 4px 16px rgba(0,0,0,.12)'}
+  // Remove sombra dos outros
+  ;['basico','vip','boost'].filter(x=>x!==p).forEach(id=>{
+    const el=document.getElementById('dpl-'+id); if(el)el.style.boxShadow='none'
+  })
 }
 
 // ── DETECÇÃO AUTOMÁTICA DE LINK ──
@@ -869,13 +1061,59 @@ async function uploadPhoto(){
   return urlData.publicUrl
 }
 
+// ── DRAWER MOBILE ──
+window.toggleMenu=function(){
+  document.getElementById('drawer').classList.toggle('open')
+  document.getElementById('drawer-ov').classList.toggle('open')
+}
+
+function fillDrawer(){
+  const entries=[['todos',{e:'🔥',l:'Todos os grupos'}],...Object.entries(CATS)]
+  document.getElementById('drawer-cats').innerHTML=entries.map(([k,v])=>`
+    <button class="sb-btn${k===currentCat?' active':''}" data-cat="${k}"
+      onclick="setCatDrawer('${k}',this)">
+      <span class="sb-emoji">${v.e}</span>${v.l}
+      <span class="sb-count">${k==='todos'?all.length:(all.filter(g=>g.category===k).length)}</span>
+    </button>`).join('')
+}
+
+window.setCatDrawer=function(cat,btn){
+  toggleMenu()
+  const sideBtn=document.querySelector(`.sb-btn[data-cat="${cat}"]`)
+  if(sideBtn) setCat(cat,sideBtn)
+  else{
+    currentCat=cat
+    document.querySelectorAll('.sb-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat))
+    document.getElementById('grid-title').textContent=cat==='todos'?'Todos os grupos':`Grupos de ${CATS[cat]?.l||cat}`
+    document.getElementById('search').value=''
+    applyFilters()
+  }
+}
+
+// ── STATUS ABERTO/FECHADO ──
+window.setStatus=function(s){
+  document.getElementById('group-status').value=s
+  const btnA=document.getElementById('btn-aberto')
+  const btnF=document.getElementById('btn-fechado')
+  const dotF=document.getElementById('dot-fechado')
+  if(s==='aberto'){
+    btnA.style.borderColor='var(--green)';btnA.style.background='#f0fdf4';btnA.style.color='#16a34a'
+    btnF.style.borderColor='var(--light)';btnF.style.background='var(--white)';btnF.style.color='var(--mid)'
+    dotF.style.background='#e5e7eb'
+  } else {
+    btnF.style.borderColor='var(--red)';btnF.style.background='#fef2f2';btnF.style.color='var(--red)'
+    dotF.style.background='var(--red)'
+    btnA.style.borderColor='var(--light)';btnA.style.background='var(--white)';btnA.style.color='var(--mid)'
+  }
+}
+
 // ── SUBMIT ──
 window.submitGroup=async function(){
   const name=document.getElementById('fn').value.trim()
   const cat=document.getElementById('fc').value
   const link=document.getElementById('fl2').value.trim()
-  const desc=document.getElementById('fd').value.trim()
   const platVal=document.getElementById('plat-hidden').value||'whatsapp'
+  const status=document.getElementById('group-status').value||'aberto'
 
   if(!link){showToast('Cole o link do grupo primeiro!',true);return}
   if(!name){showToast('Informe o nome do grupo!',true);return}
@@ -889,12 +1127,13 @@ window.submitGroup=async function(){
   let imageUrl=null
   try{imageUrl=await uploadPhoto()}catch{}
 
-  const {error}=await sb.from('groups').insert({
+  const {data:newGroup,error}=await sb.from('groups').insert({
     name,category:cat,platform:platVal,
-    invite_link:link,description:desc||null,
+    invite_link:link,
     image_url:imageUrl||null,
+    is_open: status==='aberto',
     is_featured:false,views:0
-  })
+  }).select().single()
 
   btn.disabled=false;btn.textContent='Publicar grupo agora'
 
@@ -906,17 +1145,25 @@ window.submitGroup=async function(){
 
   closeModal('modal-submit')
   // Reset form
-  ;['fn','fl2','fd'].forEach(i=>document.getElementById(i).value='')
+  ;['fn','fl2'].forEach(i=>document.getElementById(i).value='')
   document.getElementById('fc').value=''
   document.getElementById('tg-preview').style.display='none'
   document.getElementById('upload-placeholder').style.display='block'
   document.getElementById('upload-preview').style.display='none'
   document.getElementById('plat-detected').style.display='none'
   document.getElementById('link-status').style.display='none'
+  setStatus('aberto')
   uploadedPhotoFile=null;uploadedPhotoUrl=null
 
-  showToast('Grupo publicado com sucesso! 🎉')
+  showToast('Grupo publicado! 🎉 Agora destaque seu grupo para mais visibilidade!')
   await load()
+
+  // Abre modal de destaque automaticamente após publicar
+  setTimeout(()=>{
+    if(newGroup){
+      openDestaque(newGroup.name, newGroup.invite_link)
+    }
+  }, 1500)
 }
 
 // ── PAGAMENTO ──
@@ -924,17 +1171,33 @@ window.iniciarPagamento=async function(){
   const name=document.getElementById('dn').value.trim()
   const email=document.getElementById('de').value.trim()
   const link=document.getElementById('dl').value.trim()
-  if(!name||!email||!link){showToast('Preencha todos os campos!',true);return}
+
+  if(!email){showToast('Informe seu email!',true);return}
+  if(!email.includes('@')){showToast('Email inválido!',true);return}
+  if(!name||!link){showToast('Erro: grupo não identificado. Tente novamente.',true);return}
+
   const btn=document.getElementById('pbtn')
-  btn.disabled=true;btn.textContent='Redirecionando...'
+  btn.disabled=true
+  btn.innerHTML='⏳ Redirecionando para o pagamento...'
+
   try{
-    const r=await fetch('/api/create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupName:name,email,link,planType:plan})})
+    const r=await fetch('/api/create-payment',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({groupName:name,email,link,planType:plan})
+    })
     const d=await r.json()
-    if(d.url)window.location.href=d.url
-    else{showToast('Erro ao criar pagamento',true);btn.disabled=false;btn.textContent='Pagar com Mercado Pago →'}
+    if(d.url){
+      window.location.href=d.url
+    } else {
+      showToast('Erro ao criar pagamento. Tente novamente.',true)
+      btn.disabled=false
+      btn.innerHTML='Pagar com Mercado Pago →'
+    }
   }catch{
-    showToast('Configure /api/create-payment na Vercel para ativar pagamentos.',true)
-    btn.disabled=false;btn.textContent='Pagar com Mercado Pago →'
+    showToast('Erro de conexão. Tente novamente.',true)
+    btn.disabled=false
+    btn.innerHTML='Pagar com Mercado Pago →'
   }
 }
 
