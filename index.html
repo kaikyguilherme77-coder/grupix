@@ -107,14 +107,25 @@ footer a:hover{color:var(--black)}
 .btn-prim{width:100%;padding:13px;background:var(--black);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s;margin-top:6px}
 .btn-prim:hover{background:#222}
 .btn-prim:disabled{opacity:.5;cursor:not-allowed}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.plan{border:2px solid var(--gray2);border-radius:var(--r);padding:14px 10px;cursor:pointer;transition:all .2s;position:relative;text-align:center}
+/* MODAL DESTAQUE */
+.dest-modal{max-width:500px;padding:0;border-radius:20px;overflow:hidden}
+.dest-header{background:linear-gradient(135deg,var(--green-bg),#f0fff8);padding:22px 24px 18px;text-align:center;position:relative}
+.dest-group-card{background:var(--white);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-top:12px}
+.dest-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.dest-ben{background:var(--gray);border-radius:12px;padding:12px 8px;text-align:center}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.plan{border:2px solid var(--gray2);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s;position:relative;text-align:center}
 .plan:hover{border-color:var(--black)}
-.plan.sel{border-color:var(--green);background:var(--green-bg)}
-.plan.pop::before{content:'Popular';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
-.plan-price{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:2px}
-.plan-days{font-size:11px;color:var(--gray3)}
-.plan-dprice{font-size:10px;font-weight:600;color:var(--green);margin-top:3px}
+.plan.sel{border-color:var(--green);background:var(--green-bg);transform:scale(1.03)}
+.plan.sel-vip{border-color:#6366f1;background:#eef2ff}
+.plan.pop::before{content:'⭐ Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.plan-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
+.plan-price{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:2px}
+.plan-days{font-size:11px;color:var(--gray3);margin-bottom:2px}
+.plan-dprice{font-size:10px;font-weight:600;color:var(--green)}
+.btn-mp{width:100%;padding:14px;background:#009ee3;color:#fff;font-size:14px;font-weight:800;border-radius:var(--r);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-mp:hover{background:#0082c0}
+.btn-mp:disabled{opacity:.6;cursor:not-allowed}
 .qrbox{background:var(--gray);border-radius:var(--r);padding:24px;margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
 .qrimg{width:180px;height:180px;border-radius:12px;background:var(--white);display:flex;align-items:center;justify-content:center}
 .pixcopy{background:var(--green-bg);border:1.5px solid #b3ead9;border-radius:var(--r-sm);padding:10px 14px;font-size:11px;font-family:monospace;color:var(--green-dark);cursor:pointer;word-break:break-all;text-align:left;transition:all .15s;width:100%}
@@ -253,27 +264,69 @@ footer a:hover{color:var(--black)}
 
 <!-- MODAL BOOST -->
 <div class="overlay" id="m-boost" onclick="if(event.target===this)closeModal('m-boost')">
-  <div class="modal modal-sm">
-    <div class="mh"><span class="mt">⚡ Impulsionar grupo</span><button class="mcl" onclick="closeModal('m-boost')">×</button></div>
-    <div class="mb">
-      <div id="boost-info" style="background:var(--gray);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:20px;font-size:13px;font-weight:600"></div>
-      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray3);margin-bottom:10px">Escolha o plano:</p>
-      <div class="plans">
-        <div class="plan" id="pl-starter" onclick="selPlan('starter')">
-          <div class="plan-price">R$14,90</div><div class="plan-days">7 dias</div><div class="plan-dprice">R$2,13/dia</div>
-        </div>
-        <div class="plan pop sel" id="pl-pro" onclick="selPlan('pro')">
-          <div class="plan-price">R$24,90</div><div class="plan-days">15 dias</div><div class="plan-dprice">R$1,66/dia</div>
-        </div>
-        <div class="plan" id="pl-vip" onclick="selPlan('vip')">
-          <div class="plan-price">R$39,90</div><div class="plan-days">30 dias</div><div class="plan-dprice">R$1,33/dia</div>
+  <div class="modal dest-modal">
+
+    <!-- HEADER GRADIENTE -->
+    <div class="dest-header">
+      <button class="mcl" onclick="closeModal('m-boost')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.08)">×</button>
+      <div id="dest-emoji" style="width:52px;height:52px;background:var(--white);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)">⚡</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px">Destaque seu grupo.</h2>
+      <p style="font-size:12px;font-weight:700;color:var(--green-dark)">Multiplique seus membros.</p>
+      <div class="dest-group-card">
+        <div id="dest-av" style="width:34px;height:34px;background:var(--green-bg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⭐</div>
+        <div style="flex:1;min-width:0">
+          <div id="dest-gname" style="font-size:13px;font-weight:700">Seu grupo</div>
         </div>
       </div>
-      <div class="fg"><label class="lbl">Seu email *</label><input class="inp" id="b-email" type="email" placeholder="seuemail@gmail.com"></div>
+    </div>
+
+    <div class="mb" style="padding-top:18px">
+      <!-- BENEFÍCIOS -->
+      <div class="dest-benefits">
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">🎯</div><div style="font-size:10px;font-weight:600;line-height:1.4">No topo da página</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">📈</div><div style="font-size:10px;font-weight:600;line-height:1.4">3x mais cliques</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">✅</div><div style="font-size:10px;font-weight:600;line-height:1.4">Selo Verificado</div></div>
+      </div>
+
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray3);text-align:center;margin-bottom:12px">Escolha seu plano:</p>
+
+      <!-- PLANOS -->
+      <div class="plans">
+        <div class="plan" id="pl-starter" onclick="selPlan('starter')">
+          <span class="plan-badge" style="background:#e5e7eb;color:#374151">Básico</span>
+          <div class="plan-price">R$14,90</div>
+          <div class="plan-days">7 dias</div>
+          <div class="plan-dprice">R$2,13/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:1.5px solid var(--gray2);background:transparent;font-size:11px;font-weight:700;color:var(--gray3);cursor:pointer">Escolher</button>
+        </div>
+        <div class="plan pop sel" id="pl-pro" onclick="selPlan('pro')">
+          <span class="plan-badge" style="background:var(--green);color:#fff">PRO</span>
+          <div class="plan-price">R$24,90</div>
+          <div class="plan-days">15 dias</div>
+          <div class="plan-dprice">🔥 R$1,66/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:var(--green);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+        <div class="plan" id="pl-vip" onclick="selPlan('vip')">
+          <span class="plan-badge" style="background:#6366f1;color:#fff">VIP</span>
+          <div style="font-size:11px;color:#9ca3af;text-decoration:line-through;margin-bottom:0">R$79,90</div>
+          <div class="plan-price" style="margin-top:0">R$39,90</div>
+          <div class="plan-days">30 dias</div>
+          <div class="plan-dprice" style="color:#6366f1">🏆 R$1,33/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:#6366f1;color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+      </div>
+
+      <div class="fg"><label class="lbl">Seu email para recibo *</label>
+        <input class="inp" id="b-email" type="email" placeholder="seuemail@gmail.com">
+      </div>
       <input type="hidden" id="b-gid">
       <input type="hidden" id="b-gname">
-      <button class="btn-prim" id="btn-pay" onclick="createPayment()" style="background:#009ee3">Gerar QR Code PIX · Mercado Pago</button>
-      <p style="font-size:11px;color:var(--gray3);text-align:center;margin-top:8px">🔒 Pagamento seguro · Ativação automática</p>
+
+      <button class="btn-mp" id="btn-pay" onclick="createPayment()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Pagar com PIX · Mercado Pago
+      </button>
+      <p style="text-align:center;font-size:11px;color:var(--gray3);margin-top:8px">🔒 Pagamento 100% seguro · Ativação automática após pagamento</p>
     </div>
   </div>
 </div>
@@ -404,7 +457,11 @@ window.submitGroup=async function(){
 window.openBoost=function(id,name){
   document.getElementById('b-gid').value=id
   document.getElementById('b-gname').value=name
-  document.getElementById('boost-info').textContent='⚡ '+name
+  document.getElementById('dest-gname').textContent=name
+  const g=all.find(x=>x.id===id)
+  const icon=ICONS[g?.category||'outros']||'⭐'
+  document.getElementById('dest-av').textContent=icon
+  document.getElementById('dest-emoji').textContent=icon
   document.getElementById('b-email').value=''
   selPlan('pro')
   openModal('m-boost')
@@ -422,20 +479,20 @@ window.createPayment=async function(){
   const email=document.getElementById('b-email').value.trim()
   if(!email||!email.includes('@')){showToast('Email inválido','red');return}
   const btn=document.getElementById('btn-pay')
-  btn.disabled=true;btn.textContent='⏳ Gerando PIX...'
+  btn.disabled=true;btn.innerHTML='⏳ Gerando PIX...'
   try{
-    const r=await fetch(`${SURL}/functions/v1/create-payment`,{
+    const r=await fetch('https://qgrxbjvvzrzzpcubycol.supabase.co/functions/v1/create-payment',{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':`Bearer ${SKEY}`},
+      headers:{'Content-Type':'application/json','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'},
       body:JSON.stringify({groupId:gid,groupName:gname,email,plan})
     })
     const d=await r.json()
-    if(d.error){showToast('Erro: '+d.error,'red');btn.disabled=false;btn.textContent='Gerar QR Code PIX · Mercado Pago';return}
+    if(d.error){showToast('Erro: '+d.error,'red');btn.disabled=false;btn.innerHTML='Pagar com PIX · Mercado Pago';return}
     closeModal('m-boost')
     openPix(d)
   }catch(e){
-    showToast('Erro de conexão','red')
-    btn.disabled=false;btn.textContent='Gerar QR Code PIX · Mercado Pago'
+    showToast('Erro de conexão. Tente novamente.','red')
+    btn.disabled=false;btn.innerHTML='Pagar com PIX · Mercado Pago'
   }
 }
 function openPix(d){
