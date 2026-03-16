@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupix Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#22c55e;--green-h:#16a34a;--green-dim:#f0fdf4;
+  --orange:#f97316;--orange-h:#ea6c0a;
+  --red:#ef4444;--red-h:#dc2626;
+  --blue:#3b82f6;--purple:#8b5cf6;
+  --bg:#f1f5f9;--white:#fff;
+  --dark:#0f172a;--mid:#64748b;--light:#e2e8f0;--lighter:#f8fafc;
+  --r:10px;
+}
+body{background:var(--bg);color:var(--dark);font-family:'Inter',sans-serif;min-height:100vh}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
+input,select,textarea{font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#f0fdf4,#f8fafc)}
+.lcard{background:var(--white);border:1px solid var(--light);border-radius:20px;padding:40px 32px;width:380px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.08)}
+.llogo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px}
+.lmark{width:40px;height:40px;background:var(--green);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.lname{font-weight:800;font-size:22px;letter-spacing:-.5px}
+.lsubtitle{font-size:12px;background:#fef3c7;color:#92400e;padding:4px 12px;border-radius:20px;margin-bottom:24px;display:inline-block;font-weight:600}
+.li{width:100%;padding:11px 14px;border:1.5px solid var(--light);border-radius:10px;font-size:14px;outline:none;color:var(--dark);margin-bottom:10px;transition:border-color .2s}
+.li:focus{border-color:var(--green)}
+.lbtn{width:100%;padding:13px;background:var(--green);color:#fff;border-radius:10px;font-size:14px;font-weight:700;transition:background .15s;margin-top:4px}
+.lbtn:hover{background:var(--green-h)}
+.lbtn:disabled{opacity:.6;cursor:not-allowed}
+.lerr{font-size:12px;color:var(--red);margin-top:10px;display:none;background:#fef2f2;padding:8px 12px;border-radius:8px}
+
+/* APP */
+#app{display:none}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.tlogo{display:flex;align-items:center;gap:8px}
+.tmark{width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.tname{font-weight:800;font-size:16px}
+.tbadge{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;margin-left:4px}
+.tright{display:flex;align-items:center;gap:10px}
+.tuser{font-size:12px;color:var(--mid);background:var(--lighter);padding:5px 10px;border-radius:6px}
+.tbtn{font-size:12px;color:var(--mid);background:transparent;padding:6px 12px;border-radius:7px;border:1px solid var(--light);transition:all .15s}
+.tbtn:hover{border-color:#94a3b8;color:var(--dark)}
+.tbtn-red{font-size:12px;color:var(--red);background:transparent;padding:6px 12px;border-radius:7px;border:1px solid #fecaca;transition:all .15s}
+.tbtn-red:hover{background:var(--red);color:#fff}
+
+/* LAYOUT */
+.shell{display:flex;padding-top:56px;min-height:100vh}
+.sidebar{width:210px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--light);overflow-y:auto;padding:12px 0}
+.sb-sec{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 5px}
+.sbi{display:flex;align-items:center;gap:9px;width:100%;padding:8px 16px;background:transparent;color:var(--mid);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent}
+.sbi:hover{background:var(--lighter);color:var(--dark)}
+.sbi.on{background:var(--green-dim);color:var(--green);font-weight:600;border-left-color:var(--green)}
+.sbi .ic{width:15px;height:15px;flex-shrink:0;opacity:.5}
+.sbi.on .ic{opacity:1}
+.sbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center}
+
+/* MAIN */
+.main{margin-left:210px;flex:1;padding:20px;max-width:calc(100% - 210px)}
+.tab{display:none}.tab.on{display:block}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.sh-title{font-size:17px;font-weight:800;letter-spacing:-.3px}
+.sh-sub{font-size:13px;color:var(--mid);margin-top:2px}
+
+/* METRICS */
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:900px){.mg{grid-template-columns:repeat(2,1fr)}}
+.mc{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mc.c-green::before{background:var(--green)}.mc.c-orange::before{background:var(--orange)}
+.mc.c-blue::before{background:var(--blue)}.mc.c-purple::before{background:var(--purple)}
+.mc-n{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.mc-l{font-size:12px;color:var(--mid);font-weight:500}
+.mc-sub{font-size:11px;color:#94a3b8;margin-top:3px}
+
+/* TABLE */
+.tw{background:var(--white);border:1px solid var(--light);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.thead{padding:12px 16px;border-bottom:1px solid var(--light);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ttitle{font-size:13px;font-weight:700}
+.tsearch{padding:7px 11px;border:1.5px solid var(--light);border-radius:7px;font-size:12px;outline:none;width:200px;transition:border-color .2s}
+.tsearch:focus{border-color:var(--green)}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;background:var(--lighter);border-bottom:1px solid var(--light)}
+td{padding:11px 14px;font-size:13px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfc}
+.gname{font-weight:600;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gdesc{color:var(--mid);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;margin-top:1px}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.tw-a{background:#dcfce7;color:#16a34a}.tw-tg{background:#dbeafe;color:#1d4ed8}
+.tw-feat{background:#ffedd5;color:#ea580c}.tw-cat{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}
+.tw-pend{background:#fef3c7;color:#92400e}.tw-rej{background:#fee2e2;color:#dc2626}
+.tw-appr{background:#dcfce7;color:#16a34a}.tw-pix{background:#ede9fe;color:#7c3aed}
+
+/* BTNS */
+.acts{display:flex;gap:5px;flex-wrap:wrap}
+.bs{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap}
+.b-green{background:#dcfce7;color:#16a34a}.b-green:hover{background:var(--green);color:#fff}
+.b-red{background:#fee2e2;color:var(--red)}.b-red:hover{background:var(--red);color:#fff}
+.b-orange{background:#ffedd5;color:var(--orange)}.b-orange:hover{background:var(--orange);color:#fff}
+.b-gray{background:var(--lighter);color:var(--mid);border:1px solid var(--light)}.b-gray:hover{background:#e2e8f0;color:var(--dark)}
+.b-blue{background:#dbeafe;color:var(--blue)}.b-blue:hover{background:var(--blue);color:#fff}
+.btn-p{background:var(--green);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
+.btn-p:hover{background:var(--green-h)}
+.btn-o{background:var(--orange);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
+.btn-o:hover{background:var(--orange-h)}
+.btn-r{background:var(--red);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:background .15s}
+.btn-r:hover{background:var(--red-h)}
+
+/* FILTERS */
+.filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.fb{padding:5px 12px;border-radius:20px;border:1.5px solid var(--light);background:var(--white);color:var(--mid);font-size:12px;font-weight:500;transition:all .15s}
+.fb.on{background:var(--dark);border-color:var(--dark);color:#fff}
+
+/* EMPTY/LOAD */
+.load-cell{text-align:center;padding:32px;color:var(--mid);font-size:13px}
+.spin{width:18px;height:18px;border:2px solid var(--light);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--white);border-radius:14px;padding:24px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .2s ease}
+.modal.sm{max-width:360px}
+.modal.lg{max-width:600px}
+@keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-size:16px;font-weight:800}
+.mcl{background:var(--lighter);border:none;width:28px;height:28px;border-radius:7px;font-size:16px;color:var(--mid);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.fg{margin-bottom:13px}
+.fl{display:block;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fi,.fs,.ft{width:100%;padding:9px 12px;border:1.5px solid var(--light);border-radius:8px;font-size:13px;outline:none;color:var(--dark);background:var(--white);transition:border-color .2s}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--green)}
+.ft{resize:vertical}
+
+/* TOGGLE */
+.toggle{width:36px;height:20px;background:var(--light);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:19px}
+
+/* BAR CHART */
+.bar-wrap{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.bar-label{width:110px;color:var(--mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--lighter);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:var(--green);transition:width .5s ease}
+.bar-val{width:36px;text-align:right;font-weight:600;color:var(--dark);flex-shrink:0}
+
+/* SETTINGS */
+.set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+.set-card{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:18px}
+.set-card h3{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--lighter);font-size:13px}
+.set-row:last-child{border-bottom:none}
+.set-label{color:var(--mid);font-size:12px}
+
+/* PLANOS */
+.plan-card{background:var(--white);border:1.5px solid var(--light);border-radius:10px;padding:16px;margin-bottom:10px;transition:border-color .2s}
+.plan-card:hover{border-color:var(--green)}
+
+/* DESTAQUE STATUS */
+.dest-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700}
+.dest-active{background:#dcfce7;color:#16a34a}
+.dest-inactive{background:var(--lighter);color:var(--mid)}
+.dest-expired{background:#fee2e2;color:#dc2626}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;transition:all .25s;pointer-events:none;opacity:0;transform:translateY(6px);max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.ok{background:#15803d;color:#fff}
+.toast.err{background:var(--red);color:#fff}
+.toast.info{background:var(--dark);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="lcard">
+    <div class="llogo">
+      <div class="lmark">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
+          <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
+          <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
+          <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
+          <line x1="6.5" y1="7.9" x2="11.5" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="lname">Grupix</span>
+    </div>
+    <div class="lsubtitle">🔒 Painel Administrativo</div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px">Acesso restrito à equipe</p>
+    <input class="li" id="l-email" type="email" placeholder="Email de admin" onkeydown="if(event.key==='Enter')login()">
+    <input class="li" id="l-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
+    <button class="lbtn" id="lbtn" onclick="login()">Entrar no painel</button>
+    <div class="lerr" id="lerr">Email ou senha incorretos.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="tlogo">
+      <div class="tmark">
+        <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
+          <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
+          <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
+          <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
+          <line x1="6.5" y1="7.9" x2="11.5" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="tname">Grupix</span>
+      <span class="tbadge">ADMIN</span>
+    </div>
+    <div class="tright">
+      <span class="tuser" id="tuser">—</span>
+      <button class="tbtn" onclick="window.open('/','_blank')">↗ Ver site</button>
+      <button class="tbtn-red" onclick="logout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="sb-sec">Visão Geral</div>
+      <button class="sbi on" onclick="nav('dashboard',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        Dashboard
+      </button>
+      <button class="sbi" onclick="nav('analytics',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><polyline points="1,12 5,7 8,9 12,4 15,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Analytics
+      </button>
+
+      <div class="sb-sec">Grupos</div>
+      <button class="sbi" onclick="nav('groups',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 13c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Todos os grupos
+      </button>
+      <button class="sbi" onclick="nav('destaques',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><polygon points="8,2 10,6 14,6.5 11,9.5 11.8,14 8,12 4.2,14 5,9.5 2,6.5 6,6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Destaques ativos
+        <span class="sbadge" id="nb-dest">0</span>
+      </button>
+
+      <div class="sb-sec">Financeiro</div>
+      <button class="sbi" onclick="nav('pagamentos',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="1" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1.5"/></svg>
+        Pagamentos PIX
+        <span class="sbadge" id="nb-pix" style="background:#8b5cf6">0</span>
+      </button>
+
+      <div class="sb-sec">Configurações</div>
+      <button class="sbi" onclick="nav('config',this)">
+        <svg class="ic" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Configurações
+      </button>
+    </aside>
+
+    <main class="main">
+
+      <!-- DASHBOARD -->
+      <div id="tab-dashboard" class="tab on">
+        <div class="sh">
+          <div><div class="sh-title">Dashboard</div><div class="sh-sub">Visão geral do Grupix</div></div>
+          <button class="btn-p" onclick="loadAll()">↻ Atualizar</button>
+        </div>
+        <div class="mg">
+          <div class="mc c-green"><div class="mc-n" id="m-total">—</div><div class="mc-l">Grupos publicados</div></div>
+          <div class="mc c-orange"><div class="mc-n" id="m-feat">—</div><div class="mc-l">Em destaque agora</div></div>
+          <div class="mc c-blue"><div class="mc-n" id="m-views">—</div><div class="mc-l">Views totais</div></div>
+          <div class="mc c-purple"><div class="mc-n" id="m-receita">—</div><div class="mc-l">Receita (R$)</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+          <div class="tw">
+            <div class="thead"><span class="ttitle">📊 Top grupos por views</span></div>
+            <div style="padding:16px" id="top-views-list">
+              <div class="load-cell"><div class="spin"></div>Carregando...</div>
+            </div>
+          </div>
+          <div class="tw">
+            <div class="thead"><span class="ttitle">💳 Últimos pagamentos</span></div>
+            <div style="padding:16px" id="last-payments-list">
+              <div class="load-cell"><div class="spin"></div>Carregando...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div id="tab-analytics" class="tab">
+        <div class="sh"><div class="sh-title">Analytics</div></div>
+        <div class="mg">
+          <div class="mc c-green"><div class="mc-n" id="a-whatsapp">—</div><div class="mc-l">Grupos WhatsApp</div></div>
+          <div class="mc c-blue"><div class="mc-n" id="a-telegram">—</div><div class="mc-l">Grupos Telegram</div></div>
+          <div class="mc c-orange"><div class="mc-n" id="a-open">—</div><div class="mc-l">Grupos abertos</div></div>
+          <div class="mc c-purple"><div class="mc-n" id="a-clicks">—</div><div class="mc-l">Cliques totais</div></div>
+        </div>
+        <div class="tw">
+          <div class="thead"><span class="ttitle">📈 Grupos por categoria</span></div>
+          <div style="padding:16px" id="cat-chart"></div>
+        </div>
+        <div class="tw">
+          <div class="thead"><span class="ttitle">🏆 Top grupos por membros</span></div>
+          <div style="padding:16px" id="top-members-list"></div>
+        </div>
+      </div>
+
+      <!-- GRUPOS -->
+      <div id="tab-groups" class="tab">
+        <div class="sh">
+          <div class="sh-title">Todos os grupos</div>
+          <button class="btn-p" onclick="openAdd()">+ Adicionar grupo</button>
+        </div>
+        <div class="filters" id="grp-filters">
+          <button class="fb on" onclick="filterGrp('todos',this)">Todos</button>
+          <button class="fb" onclick="filterGrp('whatsapp',this)">WhatsApp</button>
+          <button class="fb" onclick="filterGrp('telegram',this)">Telegram</button>
+          <button class="fb" onclick="filterGrp('featured',this)">⭐ Destaque</button>
+        </div>
+        <div class="tw">
+          <div class="thead">
+            <span class="ttitle" id="grp-count">Grupos</span>
+            <input class="tsearch" id="grp-search" placeholder="Buscar por nome..." oninput="renderGroups()">
+          </div>
+          <table>
+            <thead><tr>
+              <th>Grupo</th><th>Plataforma</th><th>Categoria</th><th>Membros</th><th>Views</th><th>Destaque</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="grp-tbody">
+              <tr><td colspan="7" class="load-cell"><div class="spin"></div>Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DESTAQUES -->
+      <div id="tab-destaques" class="tab">
+        <div class="sh"><div class="sh-title">Destaques ativos</div></div>
+        <div class="tw">
+          <div class="thead"><span class="ttitle">Grupos em destaque agora</span></div>
+          <table>
+            <thead><tr>
+              <th>Grupo</th><th>Plano</th><th>Válido até</th><th>Dias restantes</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="dest-tbody">
+              <tr><td colspan="5" class="load-cell"><div class="spin"></div>Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGAMENTOS -->
+      <div id="tab-pagamentos" class="tab">
+        <div class="sh">
+          <div><div class="sh-title">Pagamentos PIX</div><div class="sh-sub">Histórico de transações via Stripe</div></div>
+        </div>
+        <div class="mg" style="grid-template-columns:repeat(3,1fr)">
+          <div class="mc c-green"><div class="mc-n" id="pay-aprovado">R$0</div><div class="mc-l">Total aprovado</div></div>
+          <div class="mc c-orange"><div class="mc-n" id="pay-pendente">0</div><div class="mc-l">Pendentes</div></div>
+          <div class="mc c-purple"><div class="mc-n" id="pay-qtd">0</div><div class="mc-l">Total de transações</div></div>
+        </div>
+        <div class="tw">
+          <div class="thead">
+            <span class="ttitle">Histórico completo</span>
+            <div style="display:flex;gap:8px">
+              <button class="fb on" id="pay-filter-all" onclick="filterPay('all',this)">Todos</button>
+              <button class="fb" id="pay-filter-approved" onclick="filterPay('approved',this)">Aprovados</button>
+              <button class="fb" id="pay-filter-pending" onclick="filterPay('pending',this)">Pendentes</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Grupo</th><th>Email</th><th>Plano</th><th>Valor</th><th>Status</th><th>Data</th><th>PIX ID</th>
+            </tr></thead>
+            <tbody id="pay-tbody">
+              <tr><td colspan="7" class="load-cell"><div class="spin"></div>Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONFIGURAÇÕES -->
+      <div id="tab-config" class="tab">
+        <div class="sh"><div class="sh-title">Configurações</div></div>
+
+        <div class="set-grid">
+          <div class="set-card">
+            <h3>💳 Planos de destaque</h3>
+            <p style="font-size:12px;color:var(--mid);margin-bottom:14px">Preços configurados no Stripe</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="plan-card">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-weight:700;font-size:13px">Básico — 7 dias</div><div style="font-size:11px;color:var(--mid);margin-top:2px">price_1TBftAFYhBVSD4ZZ...</div></div>
+                  <div style="font-weight:800;font-size:15px;color:var(--green)">R$14,90</div>
+                </div>
+              </div>
+              <div class="plan-card">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-weight:700;font-size:13px">PRO — 15 dias ⭐</div><div style="font-size:11px;color:var(--mid);margin-top:2px">price_1TBftDFYhBVSD4ZZ...</div></div>
+                  <div style="font-weight:800;font-size:15px;color:var(--green)">R$24,90</div>
+                </div>
+              </div>
+              <div class="plan-card">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-weight:700;font-size:13px">VIP — 30 dias 👑</div><div style="font-size:11px;color:var(--mid);margin-top:2px">price_1TBftHFYhBVSD4ZZ...</div></div>
+                  <div style="font-weight:800;font-size:15px;color:var(--green)">R$39,90</div>
+                </div>
+              </div>
+            </div>
+            <a href="https://dashboard.stripe.com" target="_blank" style="display:block;margin-top:12px;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:8px;border:1px solid var(--light);border-radius:8px">↗ Abrir painel Stripe</a>
+          </div>
+
+          <div class="set-card">
+            <h3>⚙️ Configurações gerais</h3>
+            <div class="set-row">
+              <span class="set-label">Mostrar seção "Em Destaque"</span>
+              <button class="toggle on" id="toggle-featured" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div class="set-row">
+              <span class="set-label">Mostrar contador de membros</span>
+              <button class="toggle on" id="toggle-members" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div class="set-row">
+              <span class="set-label">Permitir grupos fechados</span>
+              <button class="toggle on" id="toggle-closed" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <div class="set-row">
+              <span class="set-label">Modo manutenção</span>
+              <button class="toggle" id="toggle-maint" onclick="this.classList.toggle('on')"></button>
+            </div>
+          </div>
+
+          <div class="set-card">
+            <h3>🔑 Credenciais do sistema</h3>
+            <div style="background:var(--lighter);border-radius:8px;padding:12px;font-size:11px;font-family:monospace;color:var(--mid);margin-bottom:10px;line-height:1.8;word-break:break-all">
+              <b>Supabase URL:</b><br>
+              <span id="cfg-url" style="color:var(--dark)">qgrxbjvvzrzzpcubycol.supabase.co</span><br><br>
+              <b>Projeto:</b> grupix<br>
+              <b>Região:</b> sa-east-1 (São Paulo)
+            </div>
+            <a href="https://supabase.com/dashboard" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:8px;border:1px solid var(--light);border-radius:8px">↗ Abrir painel Supabase</a>
+          </div>
+        </div>
+
+        <div class="tw">
+          <div class="thead"><span class="ttitle">🛡️ Gerenciar admins</span><button class="btn-p" onclick="openAddAdmin()">+ Adicionar admin</button></div>
+          <table>
+            <thead><tr><th>Email</th><th>Username</th><th>Desde</th><th>Ações</th></tr></thead>
+            <tbody id="admins-tbody"><tr><td colspan="4" class="load-cell"><div class="spin"></div>Carregando...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- MODAL EDITAR GRUPO -->
+<div class="ov" id="ov-edit" onclick="if(event.target===this)closeOv('ov-edit')">
+  <div class="modal">
+    <div class="mh"><span class="mt" id="edit-mt">Editar grupo</span><button class="mcl" onclick="closeOv('ov-edit')">×</button></div>
+    <div class="fg"><label class="fl">Nome</label><input class="fi" id="e-name" type="text"></div>
+    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="e-desc" rows="2"></textarea></div>
+    <div class="fg"><label class="fl">Categoria</label>
+      <select class="fs" id="e-cat">
+        <option value="marketing">Marketing Digital</option><option value="renda">Renda Extra</option>
+        <option value="cripto">Criptomoedas</option><option value="investimentos">Investimentos</option>
+        <option value="tecnologia">Tecnologia</option><option value="jogos">Jogos</option>
+        <option value="relacionamentos">Relacionamentos</option><option value="amizades">Amizades</option>
+        <option value="educacao">Educação</option><option value="negocios">Negócios</option>
+        <option value="musica">Música</option><option value="empregos">Empregos</option>
+        <option value="outros">Outros</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Link de convite</label><input class="fi" id="e-link" type="url"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg"><label class="fl">Membros</label><input class="fi" id="e-mem" type="number"></div>
+      <div class="fg"><label class="fl">Plataforma</label>
+        <select class="fs" id="e-plat"><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;margin-bottom:14px">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="e-feat" style="accent-color:var(--green)"> Em destaque</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="e-open" checked style="accent-color:var(--green)"> Grupo aberto</label>
+    </div>
+    <button class="btn-p" style="width:100%" onclick="saveEdit()">Salvar alterações</button>
+  </div>
+</div>
+
+<!-- MODAL ADICIONAR GRUPO -->
+<div class="ov" id="ov-add" onclick="if(event.target===this)closeOv('ov-add')">
+  <div class="modal">
+    <div class="mh"><span class="mt">Adicionar grupo</span><button class="mcl" onclick="closeOv('ov-add')">×</button></div>
+    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="a-name" type="text" placeholder="Nome do grupo"></div>
+    <div class="fg"><label class="fl">Link de convite *</label><input class="fi" id="a-link" type="url" placeholder="https://..."></div>
+    <div class="fg"><label class="fl">Descrição</label><textarea class="ft" id="a-desc" rows="2" placeholder="Descrição opcional"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg"><label class="fl">Plataforma</label>
+        <select class="fs" id="a-plat"><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select>
+      </div>
+      <div class="fg"><label class="fl">Categoria</label>
+        <select class="fs" id="a-cat">
+          <option value="marketing">Marketing</option><option value="renda">Renda Extra</option>
+          <option value="cripto">Cripto</option><option value="tecnologia">Tecnologia</option>
+          <option value="jogos">Jogos</option><option value="educacao">Educação</option>
+          <option value="negocios">Negócios</option><option value="outros">Outros</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Membros</label><input class="fi" id="a-mem" type="number" placeholder="0"></div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin-bottom:14px"><input type="checkbox" id="a-feat" style="accent-color:var(--green)"> Publicar já em destaque</label>
+    <button class="btn-p" style="width:100%" id="a-btn" onclick="addGroup()">Adicionar grupo</button>
+  </div>
+</div>
+
+<!-- MODAL REJEITAR -->
+<div class="ov" id="ov-rej" onclick="if(event.target===this)closeOv('ov-rej')">
+  <div class="modal sm">
+    <div class="mh"><span class="mt">Motivo da rejeição</span><button class="mcl" onclick="closeOv('ov-rej')">×</button></div>
+    <div class="fg"><label class="fl">Motivo (opcional)</label><textarea class="ft" id="rej-reason" rows="3" placeholder="Ex: Link inválido, conteúdo inadequado..."></textarea></div>
+    <input type="hidden" id="rej-id">
+    <button class="btn-r" style="width:100%" onclick="confirmRej()">Rejeitar grupo</button>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAR -->
+<div class="ov" id="ov-confirm" onclick="if(event.target===this)closeOv('ov-confirm')">
+  <div class="modal sm">
+    <div class="mh"><span class="mt" id="conf-title">Confirmar ação</span><button class="mcl" onclick="closeOv('ov-confirm')">×</button></div>
+    <p id="conf-text" style="font-size:13px;color:var(--mid);margin-bottom:18px"></p>
+    <div style="display:flex;gap:8px">
+      <button class="b-gray bs" style="flex:1;padding:10px" onclick="closeOv('ov-confirm')">Cancelar</button>
+      <button class="btn-r" style="flex:1" id="conf-ok">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADD ADMIN -->
+<div class="ov" id="ov-add-admin" onclick="if(event.target===this)closeOv('ov-add-admin')">
+  <div class="modal sm">
+    <div class="mh"><span class="mt">Adicionar admin</span><button class="mcl" onclick="closeOv('ov-add-admin')">×</button></div>
+    <p style="font-size:12px;color:var(--mid);margin-bottom:14px">O usuário já precisa ter conta criada no Grupix para ser promovido a admin.</p>
+    <div class="fg"><label class="fl">Email do usuário</label><input class="fi" id="adm-email" type="email" placeholder="email@exemplo.com"></div>
+    <button class="btn-p" style="width:100%" onclick="addAdmin()">Promover a admin</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+// ══════════════════════════════════════
+// CONFIG — mesmas credenciais do index
+// ══════════════════════════════════════
+const SUPABASE_URL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+const CATS = {
+  marketing:'Marketing Digital',renda:'Renda Extra',cripto:'Criptomoedas',
+  investimentos:'Investimentos',tecnologia:'Tecnologia',jogos:'Jogos',
+  relacionamentos:'Relacionamentos',amizades:'Amizades',educacao:'Educação',
+  negocios:'Negócios',musica:'Música',empregos:'Empregos',outros:'Outros'
+}
+
+let groups=[], payments=[], editId=null, grpFilter='todos', payFilter='all'
+
+// ══════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════
+window.login=async function(){
+  const email=document.getElementById('l-email').value.trim()
+  const pass=document.getElementById('l-pass').value
+  const btn=document.getElementById('lbtn')
+  const err=document.getElementById('lerr')
+  if(!email||!pass){err.textContent='Preencha todos os campos.';err.style.display='block';return}
+  btn.disabled=true; btn.textContent='Entrando...'
+  err.style.display='none'
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pass})
+  if(error||!data.user){
+    err.textContent='Email ou senha incorretos.';err.style.display='block'
+    btn.disabled=false;btn.textContent='Entrar no painel';return
+  }
+  // Verifica se é admin
+  const {data:profile}=await sb.from('users').select('is_admin,username,email').eq('id',data.user.id).single()
+  if(!profile?.is_admin){
+    await sb.auth.signOut()
+    err.textContent='Você não tem permissão de admin.';err.style.display='block'
+    btn.disabled=false;btn.textContent='Entrar no painel';return
+  }
+  document.getElementById('tuser').textContent=profile.username||email
+  document.getElementById('login-screen').style.display='none'
+  document.getElementById('app').style.display='block'
+  btn.disabled=false;btn.textContent='Entrar no painel'
+  loadAll()
+}
+
+window.logout=async function(){
+  await sb.auth.signOut()
+  location.reload()
+}
+
+// Verifica sessão ao carregar
+;(async()=>{
+  const {data:{session}}=await sb.auth.getSession()
+  if(session){
+    const {data:profile}=await sb.from('users').select('is_admin,username').eq('id',session.user.id).single()
+    if(profile?.is_admin){
+      document.getElementById('tuser').textContent=profile.username||session.user.email
+      document.getElementById('login-screen').style.display='none'
+      document.getElementById('app').style.display='block'
+      loadAll()
+    }
+  }
+})()
+
+// ══════════════════════════════════════
+// NAVEGAÇÃO
+// ══════════════════════════════════════
+window.nav=function(tab,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'))
+  document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('on'))
+  document.getElementById('tab-'+tab).classList.add('on')
+  el.classList.add('on')
+}
+
+// ══════════════════════════════════════
+// LOAD DADOS
+// ══════════════════════════════════════
+window.loadAll=async function(){
+  const [{data:grps},{data:pays}]=await Promise.all([
+    sb.from('groups').select('*').order('created_at',{ascending:false}),
+    sb.from('payments').select('*').order('created_at',{ascending:false})
+  ])
+  groups=grps||[]; payments=pays||[]
+  renderDashboard(); renderGroups(); renderDestaques()
+  renderPagamentos(); renderAnalytics(); renderAdmins()
+}
+
+// ══════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════
+function renderDashboard(){
+  const feat=groups.filter(g=>g.is_featured)
+  const totalViews=groups.reduce((s,g)=>s+(g.views||0),0)
+  const totalReceita=payments.filter(p=>p.status==='approved').reduce((s,p)=>s+(parseFloat(p.amount)||0),0)
+  document.getElementById('m-total').textContent=groups.length
+  document.getElementById('m-feat').textContent=feat.length
+  document.getElementById('m-views').textContent=totalViews.toLocaleString('pt-BR')
+  document.getElementById('m-receita').textContent='R$'+totalReceita.toFixed(2).replace('.',',')
+  document.getElementById('nb-dest').textContent=feat.length
+  document.getElementById('nb-pix').textContent=payments.filter(p=>p.status==='pending').length
+
+  // Top views
+  const top=[...groups].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5)
+  const maxV=top[0]?.views||1
+  document.getElementById('top-views-list').innerHTML=top.length?`<div class="bar-wrap">${top.map(g=>`
+    <div class="bar-row">
+      <div class="bar-label" title="${g.name}">${g.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/maxV)*100)}%"></div></div>
+      <div class="bar-val">${g.views||0}</div>
+    </div>`).join('')}</div>`:'<div style="font-size:13px;color:var(--mid)">Nenhum dado ainda</div>'
+
+  // Últimos pagamentos
+  const last=payments.slice(0,5)
+  document.getElementById('last-payments-list').innerHTML=last.length?last.map(p=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--light)">
+      <div>
+        <div style="font-size:12px;font-weight:600">${p.group_name||'—'}</div>
+        <div style="font-size:11px;color:var(--mid)">${p.payer_email||'—'}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:700;font-size:13px;color:var(--green)">R$${(p.amount||0).toFixed(2).replace('.',',')}</div>
+        <span class="tag ${p.status==='approved'?'tw-appr':p.status==='pending'?'tw-pend':'tw-rej'}">${p.status==='approved'?'Pago':p.status==='pending'?'Pendente':'Rejeitado'}</span>
+      </div>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--mid)">Sem pagamentos ainda</div>'
+}
+
+// ══════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════
+function renderAnalytics(){
+  const wa=groups.filter(g=>g.platform==='whatsapp').length
+  const tg=groups.filter(g=>g.platform==='telegram').length
+  const open=groups.filter(g=>g.is_open!==false).length
+  const clicks=groups.reduce((s,g)=>s+(g.clicks||g.views||0),0)
+  document.getElementById('a-whatsapp').textContent=wa
+  document.getElementById('a-telegram').textContent=tg
+  document.getElementById('a-open').textContent=open
+  document.getElementById('a-clicks').textContent=clicks.toLocaleString('pt-BR')
+
+  // Por categoria
+  const catCount={}
+  groups.forEach(g=>{catCount[g.category]=(catCount[g.category]||0)+1})
+  const sorted=Object.entries(catCount).sort((a,b)=>b[1]-a[1])
+  const maxC=sorted[0]?.[1]||1
+  document.getElementById('cat-chart').innerHTML=sorted.length?`<div class="bar-wrap">${sorted.map(([k,v])=>`
+    <div class="bar-row">
+      <div class="bar-label">${CATS[k]||k}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round((v/maxC)*100)}%"></div></div>
+      <div class="bar-val">${v}</div>
+    </div>`).join('')}</div>`:'—'
+
+  // Top membros
+  const topM=[...groups].sort((a,b)=>(b.members||0)-(a.members||0)).slice(0,5)
+  const maxM=topM[0]?.members||1
+  document.getElementById('top-members-list').innerHTML=topM.length?`<div style="padding:16px"><div class="bar-wrap">${topM.map(g=>`
+    <div class="bar-row">
+      <div class="bar-label" title="${g.name}">${g.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.members||0)/maxM)*100)}%;background:#3b82f6"></div></div>
+      <div class="bar-val">${(g.members||0).toLocaleString('pt-BR')}</div>
+    </div>`).join('')}</div></div>`:'<div class="load-cell">Sem dados</div>'
+}
+
+// ══════════════════════════════════════
+// GRUPOS
+// ══════════════════════════════════════
+window.filterGrp=function(f,el){
+  grpFilter=f
+  document.querySelectorAll('#grp-filters .fb').forEach(b=>b.classList.toggle('on',b===el))
+  renderGroups()
+}
+
+window.renderGroups=function(){
+  const q=(document.getElementById('grp-search')?.value||'').toLowerCase()
+  let list=groups
+  if(grpFilter==='whatsapp')list=list.filter(g=>g.platform==='whatsapp')
+  else if(grpFilter==='telegram')list=list.filter(g=>g.platform==='telegram')
+  else if(grpFilter==='featured')list=list.filter(g=>g.is_featured)
+  if(q)list=list.filter(g=>g.name.toLowerCase().includes(q))
+  document.getElementById('grp-count').textContent=`${list.length} grupos`
+  document.getElementById('grp-tbody').innerHTML=list.length?list.map(g=>{
+    const plat=g.platform==='whatsapp'
+      ?'<span class="tag tw-a">WhatsApp</span>'
+      :'<span class="tag tw-tg">Telegram</span>'
+    const destUntil=g.featured_until?new Date(g.featured_until):null
+    const destOk=g.is_featured&&destUntil&&destUntil>new Date()
+    const destTag=destOk
+      ?`<span class="dest-badge dest-active">⭐ Ativo até ${fmtDate(g.featured_until)}</span>`
+      :`<span class="dest-badge dest-inactive">—</span>`
+    return `<tr>
+      <td><div class="gname">${esc(g.name)}</div><div class="gdesc">${esc(g.description||'')}</div></td>
+      <td>${plat}</td>
+      <td><span class="tag tw-cat">${CATS[g.category]||g.category}</span></td>
+      <td>${g.members?Number(g.members).toLocaleString('pt-BR'):'—'}</td>
+      <td>${g.views||0}</td>
+      <td>${destTag}</td>
+      <td><div class="acts">
+        <button class="bs b-blue" onclick="openEdit('${g.id}')">✏️ Editar</button>
+        ${destOk
+          ?`<button class="bs b-orange" onclick="toggleFeat('${g.id}',false)">Remover</button>`
+          :`<button class="bs b-green" onclick="toggleFeat('${g.id}',true)">⭐ Destacar</button>`
+        }
+        <button class="bs b-red" onclick="delGroup('${g.id}','${esc(g.name)}')">🗑️</button>
+      </div></td>
+    </tr>`}).join(''):'<tr><td colspan="7" class="load-cell">Nenhum grupo encontrado.</td></tr>'
+}
+
+// ══════════════════════════════════════
+// DESTAQUES
+// ══════════════════════════════════════
+function renderDestaques(){
+  const feat=groups.filter(g=>g.is_featured).sort((a,b)=>new Date(a.featured_until||0)-new Date(b.featured_until||0))
+  const now=new Date()
+  document.getElementById('dest-tbody').innerHTML=feat.length?feat.map(g=>{
+    const until=g.featured_until?new Date(g.featured_until):null
+    const dias=until?Math.max(0,Math.ceil((until-now)/(1000*60*60*24))):0
+    const expired=until&&until<now
+    return `<tr>
+      <td><div class="gname">${esc(g.name)}</div></td>
+      <td>—</td>
+      <td>${fmtDate(g.featured_until)}</td>
+      <td><span style="font-weight:700;color:${expired?'var(--red)':dias<=3?'var(--orange)':'var(--green)'}">${expired?'⚠️ Expirado':`${dias} dias`}</span></td>
+      <td><div class="acts">
+        <button class="bs b-green" onclick="extendFeat('${g.id}')">+7 dias</button>
+        <button class="bs b-red" onclick="toggleFeat('${g.id}',false)">Remover</button>
+      </div></td>
+    </tr>`}).join(''):'<tr><td colspan="5" class="load-cell">Nenhum destaque ativo.</td></tr>'
+}
+
+// ══════════════════════════════════════
+// PAGAMENTOS
+// ══════════════════════════════════════
+window.filterPay=function(f,el){
+  payFilter=f
+  document.querySelectorAll('#tab-pagamentos .fb').forEach(b=>b.classList.toggle('on',b===el))
+  renderPagamentos()
+}
+
+function renderPagamentos(){
+  const approved=payments.filter(p=>p.status==='approved')
+  const pending=payments.filter(p=>p.status==='pending')
+  const totalApr=approved.reduce((s,p)=>s+(parseFloat(p.amount)||0),0)
+  document.getElementById('pay-aprovado').textContent='R$'+totalApr.toFixed(2).replace('.',',')
+  document.getElementById('pay-pendente').textContent=pending.length
+  document.getElementById('pay-qtd').textContent=payments.length
+
+  let list=payments
+  if(payFilter==='approved')list=approved
+  else if(payFilter==='pending')list=pending
+
+  document.getElementById('pay-tbody').innerHTML=list.length?list.map(p=>`<tr>
+    <td><div class="gname">${esc(p.group_name||'—')}</div></td>
+    <td style="font-size:12px;color:var(--mid)">${esc(p.payer_email||'—')}</td>
+    <td><span class="tag tw-pix">${p.plan_type||'—'} · ${p.dias||0}d</span></td>
+    <td style="font-weight:700;color:var(--green)">R$${(parseFloat(p.amount)||0).toFixed(2).replace('.',',')}</td>
+    <td><span class="tag ${p.status==='approved'?'tw-appr':p.status==='pending'?'tw-pend':'tw-rej'}">${p.status==='approved'?'✅ Pago':p.status==='pending'?'⏳ Pendente':'❌ Rejeitado'}</span></td>
+    <td style="font-size:12px;color:var(--mid)">${fmtDate(p.created_at)}</td>
+    <td style="font-size:11px;color:var(--mid);font-family:monospace">${(p.mp_payment_id||'—').slice(0,20)}...</td>
+  </tr>`).join(''):'<tr><td colspan="7" class="load-cell">Nenhum pagamento registrado.</td></tr>'
+}
+
+// ══════════════════════════════════════
+// ADMINS
+// ══════════════════════════════════════
+async function renderAdmins(){
+  const {data}=await sb.from('users').select('*').eq('is_admin',true)
+  document.getElementById('admins-tbody').innerHTML=(data||[]).map(u=>`<tr>
+    <td>${esc(u.email||'—')}</td>
+    <td>${esc(u.username||'—')}</td>
+    <td style="font-size:12px;color:var(--mid)">${fmtDate(u.created_at)}</td>
+    <td><button class="bs b-red" onclick="removeAdmin('${u.id}','${esc(u.email)}')">Remover admin</button></td>
+  </tr>`).join('')||'<tr><td colspan="4" class="load-cell">Nenhum admin.</td></tr>'
+}
+
+window.openAddAdmin=()=>document.getElementById('ov-add-admin').classList.add('open')
+
+window.addAdmin=async function(){
+  const email=document.getElementById('adm-email').value.trim()
+  if(!email){toast('Email obrigatório','err');return}
+  const {data,error}=await sb.from('users').update({is_admin:true}).eq('email',email).select()
+  if(error||!data?.length){toast('Usuário não encontrado: '+email,'err');return}
+  closeOv('ov-add-admin')
+  toast('Admin adicionado!','ok')
+  renderAdmins()
+}
+
+window.removeAdmin=function(id,email){
+  confirm2(`Remover admin "${email}"?`,'O usuário perderá acesso ao painel.',async()=>{
+    await sb.from('users').update({is_admin:false}).eq('id',id)
+    toast('Admin removido','info')
+    renderAdmins()
+  })
+}
+
+// ══════════════════════════════════════
+// AÇÕES NOS GRUPOS
+// ══════════════════════════════════════
+window.toggleFeat=async function(id,val){
+  const until=val?new Date(Date.now()+30*24*60*60*1000).toISOString():null
+  const {error}=await sb.from('groups').update({is_featured:val,featured_until:until}).eq('id',id)
+  if(error){toast('Erro: '+error.message,'err');return}
+  toast(val?'⭐ Destaque ativado por 30 dias!':'Destaque removido',val?'ok':'info')
+  await loadAll()
+}
+
+window.extendFeat=async function(id){
+  const g=groups.find(x=>x.id===id); if(!g)return
+  const cur=g.featured_until&&new Date(g.featured_until)>new Date()?new Date(g.featured_until):new Date()
+  const until=new Date(cur.getTime()+7*24*60*60*1000).toISOString()
+  const {error}=await sb.from('groups').update({is_featured:true,featured_until:until}).eq('id',id)
+  if(error){toast('Erro','err');return}
+  toast('+7 dias adicionados!','ok')
+  await loadAll()
+}
+
+window.openEdit=function(id){
+  const g=groups.find(x=>x.id===id); if(!g)return
+  editId=id
+  document.getElementById('edit-mt').textContent='Editar: '+g.name
+  document.getElementById('e-name').value=g.name||''
+  document.getElementById('e-desc').value=g.description||''
+  document.getElementById('e-cat').value=g.category||'outros'
+  document.getElementById('e-plat').value=g.platform||'whatsapp'
+  document.getElementById('e-link').value=g.invite_link||''
+  document.getElementById('e-mem').value=g.members||''
+  document.getElementById('e-feat').checked=!!g.is_featured
+  document.getElementById('e-open').checked=g.is_open!==false
+  document.getElementById('ov-edit').classList.add('open')
+}
+
+window.saveEdit=async function(){
+  const name=document.getElementById('e-name').value.trim()
+  if(!name){toast('Nome obrigatório','err');return}
+  const feat=document.getElementById('e-feat').checked
+  const {error}=await sb.from('groups').update({
+    name,
+    description:document.getElementById('e-desc').value.trim()||null,
+    category:document.getElementById('e-cat').value,
+    platform:document.getElementById('e-plat').value,
+    invite_link:document.getElementById('e-link').value.trim(),
+    members:parseInt(document.getElementById('e-mem').value)||null,
+    is_featured:feat,
+    is_open:document.getElementById('e-open').checked,
+    featured_until:feat?new Date(Date.now()+30*24*60*60*1000).toISOString():null
+  }).eq('id',editId)
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('ov-edit')
+  toast('Salvo!','ok')
+  await loadAll()
+}
+
+window.openAdd=function(){
+  ;['a-name','a-link','a-desc'].forEach(i=>document.getElementById(i).value='')
+  document.getElementById('a-mem').value=''
+  document.getElementById('a-feat').checked=false
+  document.getElementById('ov-add').classList.add('open')
+}
+
+window.addGroup=async function(){
+  const name=document.getElementById('a-name').value.trim()
+  const link=document.getElementById('a-link').value.trim()
+  if(!name||!link){toast('Nome e link obrigatórios','err');return}
+  const btn=document.getElementById('a-btn'); btn.disabled=true; btn.textContent='Adicionando...'
+  const feat=document.getElementById('a-feat').checked
+  const {error}=await sb.from('groups').insert({
+    name,platform:document.getElementById('a-plat').value,
+    category:document.getElementById('a-cat').value,
+    invite_link:link,
+    description:document.getElementById('a-desc').value.trim()||null,
+    members:parseInt(document.getElementById('a-mem').value)||null,
+    is_featured:feat,
+    featured_until:feat?new Date(Date.now()+30*24*60*60*1000).toISOString():null,
+    views:0
+  })
+  btn.disabled=false; btn.textContent='Adicionar grupo'
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('ov-add'); toast('Grupo adicionado!','ok')
+  await loadAll()
+}
+
+window.delGroup=function(id,name){
+  confirm2(`Excluir "${name}"?`,'Essa ação não pode ser desfeita.',async()=>{
+    const {error}=await sb.from('groups').delete().eq('id',id)
+    if(error){toast('Erro: '+error.message,'err');return}
+    toast('Grupo excluído','info')
+    await loadAll()
+  })
+}
+
+// ══════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════
+function confirm2(title,text,onOk){
+  document.getElementById('conf-title').textContent=title
+  document.getElementById('conf-text').textContent=text
+  document.getElementById('conf-ok').onclick=()=>{closeOv('ov-confirm');onOk()}
+  document.getElementById('ov-confirm').classList.add('open')
+}
+
+function fmtDate(iso){
+  if(!iso)return '—'
+  return new Date(iso).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})
+}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,' ')}
+
+window.closeOv=id=>document.getElementById(id).classList.remove('open')
+
+window.toast=function(msg,type='info'){
+  const t=document.getElementById('toast')
+  t.textContent=msg; t.className='toast show '+type
+  setTimeout(()=>t.classList.remove('show'),3000)
+}
+</script>
+</body>
+</html>
