@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grupix — Descubra Grupos de WhatsApp e Telegram</title>
-<meta name="description" content="Encontre grupos de marketing digital, renda extra, amizades, tecnologia e muito mais.">
+<meta name="description" content="Encontre e divulgue grupos de WhatsApp e Telegram. Marketing digital, renda extra, tecnologia e muito mais.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -159,9 +159,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(-
 .dplan.sel-vip{border-color:var(--gr);background:#f0fdf4;transform:scale(1.03)}
 .dplan.sel-boost{border-color:#6366f1;background:#eef2ff}
 .dpop{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
-.btn-pay{width:100%;padding:14px;background:var(--gr);color:#fff;font-size:14px;font-weight:800;border-radius:12px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-pay:hover{background:var(--grh)}
+
+/* BOTÃO DE PAGAMENTO COM PIX */
+.btn-pay{width:100%;padding:14px;background:#22c55e;color:#fff;font-size:14px;font-weight:800;border-radius:12px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-pay:hover{background:#16a34a}
 .btn-pay:disabled{opacity:.6;cursor:not-allowed}
+.pix-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 8px;font-size:11px}
+
+/* MODAL PIX QR */
+.pix-modal{max-width:380px;text-align:center}
+.qr-container{background:#f8f9fa;border-radius:16px;padding:20px;margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.qr-container canvas,.qr-container img{border-radius:8px}
+.pix-copy-code{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:10px 14px;font-size:12px;color:#16a34a;font-family:monospace;word-break:break-all;text-align:left;cursor:pointer;transition:all .15s;width:100%}
+.pix-copy-code:hover{background:#dcfce7}
+.pix-timer{font-size:13px;font-weight:700;color:var(--or)}
+.pix-status{padding:12px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;margin-top:10px}
+.pix-waiting{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.pix-approved{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
 
 /* DRAWER */
 .drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
@@ -178,6 +192,12 @@ footer{margin-left:220px;border-top:1px solid var(--lt);padding:20px 24px;backgr
 .fcat{font-size:11px;color:#9ca3af;cursor:pointer;transition:color .15s}
 .fcat:hover{color:var(--gr)}
 footer p{font-size:11px;color:#9ca3af}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;pointer-events:none;background:#111827;color:#fff;opacity:0;transition:all .3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:#22c55e}
+.toast.err{background:#ef4444}
 
 /* MOBILE */
 .menu-mob{display:none;background:transparent;padding:4px;cursor:pointer}
@@ -243,13 +263,10 @@ footer p{font-size:11px;color:#9ca3af}
 </div>
 
 <div class="shell">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-sec">Categorias</div>
     <div id="sidebar-list"></div>
   </aside>
-
-  <!-- MAIN -->
   <main class="main">
 
     <!-- HOME -->
@@ -335,8 +352,7 @@ footer p{font-size:11px;color:#9ca3af}
         <label class="fl">Foto do grupo</label>
         <div onclick="document.getElementById('f-photo').click()"
           style="border:2px dashed var(--lt);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:border-color .2s"
-          ondragover="event.preventDefault()" ondrop="handleDrop(event)"
-          id="photo-drop">
+          ondragover="event.preventDefault()" ondrop="handleDrop(event)" id="photo-drop">
           <div id="photo-ph"><div style="font-size:22px;margin-bottom:4px">🖼️</div><div style="font-size:12px;color:var(--md);font-weight:600">Clique ou arraste uma foto</div><div style="font-size:11px;color:#9ca3af">JPG, PNG — máx 2MB</div></div>
           <div id="photo-pv" style="display:none"><img id="photo-img" style="width:64px;height:64px;border-radius:10px;object-fit:cover"><div style="font-size:11px;color:var(--md);margin-top:4px">Clique para trocar</div></div>
         </div>
@@ -396,8 +412,6 @@ footer p{font-size:11px;color:#9ca3af}
 <!-- MODAL DESTACAR -->
 <div class="ov" id="ov-dest" onclick="ovClose(event,'ov-dest')">
   <div class="modal dest-modal">
-
-    <!-- HEADER -->
     <div class="dest-header">
       <button class="mcl" onclick="closeModal('ov-dest')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.1)">×</button>
       <div style="width:52px;height:52px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)" id="dest-emoji">🚀</div>
@@ -413,62 +427,85 @@ footer p{font-size:11px;color:#9ca3af}
     </div>
 
     <div class="mpad" style="padding-top:18px">
-      <!-- BENEFÍCIOS -->
       <div class="dest-benefits" style="margin-bottom:16px">
-        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">🎯</div><div style="font-size:10px;font-weight:600;line-height:1.4">Seu grupo no topo da página</div></div>
-        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">📈</div><div style="font-size:10px;font-weight:600;line-height:1.4">Receba 3x mais cliques</div></div>
-        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">✅</div><div style="font-size:10px;font-weight:600;line-height:1.4">Selo de Grupo Verificado</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">🎯</div><div style="font-size:10px;font-weight:600;line-height:1.4">Seu grupo no topo</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">📈</div><div style="font-size:10px;font-weight:600;line-height:1.4">3x mais cliques</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">✅</div><div style="font-size:10px;font-weight:600;line-height:1.4">Selo Verificado</div></div>
       </div>
 
       <p style="font-size:11px;font-weight:700;color:var(--md);text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px">Escolha seu plano:</p>
 
-      <!-- PLANOS -->
       <div class="dest-plans">
-        <!-- BÁSICO -->
         <div class="dplan sel-basico" id="dpl-basico" onclick="selectPlan('basico')">
           <div style="background:#e5e7eb;color:#374151;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">Básico</div>
-          <div style="font-size:24px;font-weight:800;color:var(--dk)">R$10</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$14,90</div>
           <div style="font-size:11px;color:var(--md);margin:3px 0 6px">7 dias</div>
-          <div style="font-size:10px;color:var(--md);line-height:1.4">R$1,43/dia</div>
+          <div style="font-size:10px;color:var(--md);line-height:1.4">R$2,13/dia</div>
           <button style="margin-top:10px;width:100%;padding:7px;border-radius:7px;border:1.5px solid var(--lt);background:transparent;font-size:11px;font-weight:700;color:var(--md);cursor:pointer">Escolher</button>
         </div>
-
-        <!-- PRO -->
         <div class="dplan sel-vip" id="dpl-vip" onclick="selectPlan('vip')">
           <div class="dpop" style="background:var(--gr);color:#fff">⭐ POPULAR</div>
           <div style="background:var(--gr);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">PRO</div>
-          <div style="font-size:24px;font-weight:800;color:var(--dk)">R$20</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$24,90</div>
           <div style="font-size:11px;color:var(--md);margin:3px 0 2px">15 dias</div>
-          <div style="font-size:10px;font-weight:700;color:var(--gr);margin-bottom:4px">🔥 R$1,33/dia</div>
+          <div style="font-size:10px;font-weight:700;color:var(--gr);margin-bottom:4px">🔥 R$1,66/dia</div>
           <button style="margin-top:8px;width:100%;padding:7px;border-radius:7px;border:none;background:var(--gr);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
         </div>
-
-        <!-- VIP -->
         <div class="dplan" id="dpl-boost" onclick="selectPlan('boost')" style="border-color:#6366f1;background:#eef2ff">
           <div class="dpop" style="background:#6366f1;color:#fff">👑 MELHOR</div>
           <div style="background:#6366f1;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;text-transform:uppercase">VIP</div>
-          <div style="font-size:11px;color:#9ca3af;text-decoration:line-through">R$60,00</div>
-          <div style="font-size:24px;font-weight:800;color:var(--dk)">R$30</div>
+          <div style="font-size:11px;color:#9ca3af;text-decoration:line-through">R$79,90</div>
+          <div style="font-size:22px;font-weight:800;color:var(--dk)">R$39,90</div>
           <div style="font-size:11px;color:var(--md);margin:3px 0 2px">30 dias</div>
-          <div style="font-size:10px;font-weight:700;color:#6366f1;margin-bottom:4px">🏆 R$1,00/dia</div>
+          <div style="font-size:10px;font-weight:700;color:#6366f1;margin-bottom:4px">🏆 R$1,33/dia</div>
           <button style="margin-top:8px;width:100%;padding:7px;border-radius:7px;border:none;background:#6366f1;color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
         </div>
       </div>
 
-      <!-- EMAIL -->
       <div class="fg">
         <label class="fl">Seu email para recibo *</label>
         <input class="fi" id="dest-email" type="email" placeholder="seuemail@gmail.com">
       </div>
 
-      <!-- CAMPOS OCULTOS -->
       <input type="hidden" id="dest-name-hidden">
       <input type="hidden" id="dest-link-hidden">
+      <input type="hidden" id="dest-groupid-hidden">
 
       <button class="btn-pay" id="btn-pay" onclick="pagarDestaque()">
-        Pagar com Mercado Pago →
+        <span>Pagar via PIX</span>
+        <span class="pix-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.5 17.5L12 12l5.5 5.5M12 12V4M4 20h16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          PIX
+        </span>
       </button>
-      <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px">🔒 Pagamento seguro · Ativação automática após pagamento</p>
+      <p style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px">🔒 Pagamento 100% seguro via Stripe · Ativação automática</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PIX QR CODE -->
+<div class="ov" id="ov-pix" onclick="ovClose(event,'ov-pix')">
+  <div class="modal pix-modal">
+    <div class="mpad">
+      <div class="mhead">
+        <span class="mtitle">💚 Pagar com PIX</span>
+        <button class="mcl" onclick="closeModal('ov-pix')">×</button>
+      </div>
+      <div id="pix-plan-info" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#16a34a;text-align:center"></div>
+      <div class="qr-container">
+        <div style="font-size:12px;color:var(--md);font-weight:600;margin-bottom:4px">Escaneie o QR Code abaixo:</div>
+        <div id="pix-qr-img" style="width:180px;height:180px;background:#e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center;color:var(--md)"><div style="font-size:24px">⏳</div><div style="font-size:11px;margin-top:4px">Gerando QR...</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--md)">ou copie o código PIX:</div>
+        <button class="pix-copy-code" id="pix-copy-btn" onclick="copyPixCode()">
+          <div id="pix-code-text" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Aguarde...</div>
+        </button>
+      </div>
+      <div class="pix-status pix-waiting" id="pix-status-box">
+        ⏳ Aguardando pagamento... <span id="pix-timer" class="pix-timer"></span>
+      </div>
+      <p style="font-size:11px;color:#9ca3af;text-align:center;margin-top:10px">Após o pagamento, seu grupo será destacado automaticamente em até 1 minuto.</p>
     </div>
   </div>
 </div>
@@ -478,10 +515,22 @@ footer p{font-size:11px;color:#9ca3af}
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const sb = createClient(
-  'https://qgrxbjvvzrzzpcubycol.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
-)
+// ══════════════════════════════════════════
+// CONFIG — Substitua com suas credenciais
+// ══════════════════════════════════════════
+const SUPABASE_URL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
+
+// ══════════════════════════════════════════
+// PLANOS — IDs dos preços criados no Stripe
+// ══════════════════════════════════════════
+const PLANOS = {
+  basico:  { priceId: 'price_1TBftAFYhBVSD4ZZqoia4e07', dias: 7,  valor: 'R$14,90', label: 'Básico 7 dias' },
+  vip:     { priceId: 'price_1TBftDFYhBVSD4ZZlj0yoE1S', dias: 15, valor: 'R$24,90', label: 'PRO 15 dias' },
+  boost:   { priceId: 'price_1TBftHFYhBVSD4ZZC1uQVT5G', dias: 30, valor: 'R$39,90', label: 'VIP 30 dias' },
+}
+
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 const CATS = {
   marketing:{e:'📈',l:'Marketing Digital'},renda:{e:'💰',l:'Renda Extra'},
@@ -493,8 +542,9 @@ const CATS = {
 }
 const BG = {marketing:'#fff7ed',renda:'#f0fdf4',cripto:'#fffbeb',investimentos:'#eff6ff',tecnologia:'#f5f3ff',jogos:'#fef2f2',relacionamentos:'#fff0f3',amizades:'#f0fff4',educacao:'#f0f9ff',negocios:'#f0fdf4',musica:'#fdf4ff',empregos:'#fefce8',outros:'#f9fafb'}
 
-let all=[], cat='todos', plat='whatsapp', status='aberto', selectedPlan='vip'
+let all=[], cat='todos', selectedPlan='vip'
 let photoFile=null, photoUrl=null
+let pixCheckInterval=null, pixPaymentIntent=null
 
 // ── LOAD ──
 async function load(){
@@ -512,26 +562,20 @@ async function load(){
   render(all)
 }
 
-// ── SIDEBAR ──
 function buildSidebar(){
   const counts={}; all.forEach(g=>{counts[g.category]=(counts[g.category]||0)+1})
   const entries=[['todos',{e:'🔥',l:'Todos os grupos'}],...Object.entries(CATS)]
-
   const html=entries.map(([k,v])=>`
     <button class="sb-btn${k==='todos'?' on':''}" data-cat="${k}" onclick="setCat('${k}',this)">
-      <span class="sb-emoji">${v.e}</span>
-      ${v.l}
+      <span class="sb-emoji">${v.e}</span>${v.l}
       <span class="sb-count">${k==='todos'?all.length:(counts[k]||0)}</span>
     </button>`).join('')
-
   document.getElementById('sidebar-list').innerHTML=html
   document.getElementById('drawer-list').innerHTML=html.replace(/onclick="/g,'onclick="toggleDrawer();')
-
   document.getElementById('fcats').innerHTML=Object.entries(CATS)
     .map(([k,v])=>`<span class="fcat" onclick="openCatPage('${k}')">${v.e} grupos-${k}</span>`).join(' · ')
 }
 
-// ── FEATURED ──
 function renderFeatured(){
   const feat=all.filter(g=>g.is_featured).slice(0,8)
   const sec=document.getElementById('feat-section')
@@ -546,67 +590,52 @@ function renderFeatured(){
     </div>`}).join('')
 }
 
-// ── CARD ──
 function cardHTML(g,i=0){
   const c=CATS[g.category]||{e:'⭐',l:'Outros'}
+  const bg=BG[g.category]||'#f3f4f6'
+  const av=g.image_url?`<img src="${g.image_url}" onerror="this.style.display='none'">`:`<span>${c.e}</span>`
+  const waIco=`<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+  const tgIco=`<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+  const platIco=g.platform==='telegram'?tgIco:waIco
   const isOpen=g.is_open!==false
-  const av=g.image_url
-    ?`<img src="${g.image_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`
-    :`<span>${c.e}</span>`
-  const waIco=`<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
-  const tgIco=`<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
-  const platIco=g.platform==='whatsapp'?waIco:tgIco
-  const lockIco=isOpen
-    ?`<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="#16a34a" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/></svg>`
-    :`<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="#dc2626" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="5" x2="11" y2="7" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/></svg>`
-
-  return `<div class="card${g.is_featured?' feat':''}" style="animation-delay:${i*0.04}s" onclick="openGroup('${g.id}')">
-    <div class="card-top">
-      <div class="card-av" style="background:${BG[g.category]||'#f3f4f6'}">${av}</div>
+  return `<div class="card${g.is_featured?' feat':''}" style="animation-delay:${i*0.04}s">
+    <div class="card-top" style="cursor:pointer" onclick="openGroup('${g.id}')">
+      <div class="card-av" style="background:${bg}">${av}</div>
       <div style="flex:1;min-width:0">
         <div class="card-name">${g.name}</div>
-        <div style="display:flex;gap:5px;flex-wrap:wrap">
-          <span class="tag t-cat">${platIco} ${c.l}</span>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
           ${g.is_featured?'<span class="tag t-feat">⭐ Destaque</span>':''}
+          <span class="tag t-cat">${platIco} ${c.l}</span>
         </div>
       </div>
     </div>
     <div class="status-box ${isOpen?'status-open':'status-closed'}">
-      ${lockIco}
+      <span style="width:7px;height:7px;border-radius:50%;background:${isOpen?'#22c55e':'#ef4444'};flex-shrink:0"></span>
       <div>
-        <div class="status-txt" style="color:${isOpen?'#16a34a':'#dc2626'}">${isOpen?'Grupo Aberto':'Grupo Fechado'}</div>
-        <div class="status-sub" style="font-size:10px;color:${isOpen?'#86efac':'#f87171'}">${isOpen?'Qualquer membro pode enviar.':'Apenas admins enviam.'}</div>
+        <div class="status-txt" style="color:${isOpen?'#16a34a':'#dc2626'}">${isOpen?'Aberto':'Fechado'}</div>
+        ${g.members?`<div class="status-sub" style="color:${isOpen?'#16a34a':'#dc2626'}">${Number(g.members).toLocaleString('pt-BR')} membros</div>`:''}
       </div>
     </div>
-    ${g.members?`<div class="card-members"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="3" stroke="#9ca3af" stroke-width="1.5"/><path d="M2 13c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>${Number(g.members).toLocaleString('pt-BR')} membros</div>`:''}
     <div class="card-actions">
-      <button class="btn-enter" onclick="event.stopPropagation();enterGroup('${g.id}','${g.invite_link}')">
-        ${platIco} Entrar no Grupo
-      </button>
+      <button class="btn-enter" onclick="enterGroup('${g.id}','${g.invite_link}')">${platIco} Entrar no grupo</button>
       ${g.is_featured
-        ?`<button class="btn-feat-badge">⭐ Grupo em destaque</button>`
-        :`<button class="btn-dest" onclick="event.stopPropagation();openDestaque('${g.id}')">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1z" fill="currentColor"/></svg>
-            Destacar Grupo
-          </button>`
+        ?`<div class="btn-feat-badge">⭐ Em destaque</div>`
+        :`<button class="btn-dest" onclick="openDestaque('${g.id}')">⭐ Destacar grupo</button>`
       }
     </div>
   </div>`
 }
 
-// ── RENDER ──
 function render(list){
-  document.getElementById('grid-count').textContent=`${list.length} grupo${list.length!==1?'s':''}`
+  document.getElementById('grid-count').textContent=list.length?`${list.length} grupo${list.length!==1?'s':''}`:'Nenhum grupo'
   document.getElementById('groups-grid').innerHTML=list.length
     ?list.map((g,i)=>cardHTML(g,i)).join('')
-    :'<div class="empty-grid">🔍 Nenhum grupo encontrado</div>'
+    :'<div class="empty-grid">Nenhum grupo encontrado.</div>'
 }
 
-// ── FILTROS ──
-window.setCat=function(k,btn){
+window.setCat=function(k,el){
   cat=k
-  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('on'))
-  document.querySelectorAll(`[data-cat="${k}"]`).forEach(b=>b.classList.add('on'))
+  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.toggle('on',b===el))
   document.getElementById('grid-title').textContent=k==='todos'?'Todos os grupos':`Grupos de ${CATS[k]?.l||k}`
   document.getElementById('search').value=''
   applyFilters()
@@ -624,14 +653,12 @@ window.applyFilters=function(){
   render(list)
 }
 
-// ── ENTER GROUP ──
 window.enterGroup=function(id,link){
   if(!link||link==='null'){showToast('Link indisponível',true);return}
   sb.from('groups').update({views:(all.find(x=>x.id===id)?.views||0)+1}).eq('id',id)
   window.open(link,'_blank')
 }
 
-// ── GROUP PAGE ──
 window.openGroup=function(id){
   const g=all.find(x=>x.id===id); if(!g)return
   const c=CATS[g.category]||{e:'⭐',l:'Outros'}
@@ -668,7 +695,6 @@ window.openGroup=function(id){
   sb.from('groups').update({views:(g.views||0)+1}).eq('id',g.id)
 }
 
-// ── CAT PAGE ──
 window.openCatPage=function(k){
   const list=all.filter(g=>g.category===k), label=CATS[k]?.l||k
   document.title=`Grupos de ${label} — Grupix`
@@ -679,7 +705,6 @@ window.openCatPage=function(k){
   showPage('page-cat')
 }
 
-// ── HOME ──
 window.goHome=function(){
   document.title='Grupix — Descubra Grupos de WhatsApp e Telegram'
   history.pushState({},'','/')
@@ -697,53 +722,48 @@ function showPage(id){
   window.scrollTo(0,0)
 }
 
-// ── DRAWER ──
 window.toggleDrawer=function(){
   document.getElementById('drawer').classList.toggle('open')
   document.getElementById('drawer-ov').classList.toggle('open')
 }
 
-// ── MODALS ──
 window.openModal=id=>document.getElementById(id).classList.add('open')
 window.closeModal=id=>document.getElementById(id).classList.remove('open')
 window.ovClose=(e,id)=>{if(e.target.id===id)closeModal(id)}
 
-// ── LINK DETECT ──
 window.detectLink=function(v){
   const icon=document.getElementById('link-icon')
   const badge=document.getElementById('plat-badge')
   if(v.includes('chat.whatsapp.com')||v.includes('whatsapp.com')){
-    plat='whatsapp'; document.getElementById('f-plat').value='whatsapp'
+    document.getElementById('f-plat').value='whatsapp'
     icon.textContent='✅'; icon.style.display='block'
     badge.style.display='inline-flex'; badge.style.cssText+=';background:#dcfce7;color:#16a34a'
-    badge.innerHTML='<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg> WhatsApp detectado'
+    badge.innerHTML='WhatsApp detectado'
   } else if(v.includes('t.me/')||v.includes('telegram.me/')){
-    plat='telegram'; document.getElementById('f-plat').value='telegram'
+    document.getElementById('f-plat').value='telegram'
     icon.textContent='✅'; icon.style.display='block'
     badge.style.display='inline-flex'; badge.style.cssText+=';background:#dbeafe;color:#1d4ed8'
-    badge.innerHTML='<svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg> Telegram detectado'
+    badge.innerHTML='Telegram detectado'
   } else {
     icon.style.display='none'; badge.style.display='none'
   }
 }
 
-// ── STATUS ──
 window.setStatus=function(s){
-  status=s; document.getElementById('f-status').value=s
+  document.getElementById('f-status').value=s
   const open=document.getElementById('sp-open'), closed=document.getElementById('sp-closed')
   const dot=document.getElementById('dot-closed')
   if(s==='aberto'){
-    open.style.cssText='border:2px solid var(--gr);background:#f0fdf4;color:#16a34a'
-    closed.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md)'
+    open.style.cssText='border:2px solid var(--gr);background:#f0fdf4;color:#16a34a;flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    closed.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md);flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
     dot.style.background='#d1d5db'
   } else {
-    closed.style.cssText='border:2px solid #ef4444;background:#fef2f2;color:#ef4444'
-    open.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md)'
+    closed.style.cssText='border:2px solid #ef4444;background:#fef2f2;color:#ef4444;flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
+    open.style.cssText='border:2px solid var(--lt);background:var(--wh);color:var(--md);flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer'
     dot.style.background='#ef4444'
   }
 }
 
-// ── PHOTO ──
 window.previewPhoto=function(input){
   const file=input.files[0]; if(!file)return
   if(file.size>2*1024*1024){showToast('Foto muito grande. Máx 2MB.',true);return}
@@ -776,7 +796,6 @@ async function uploadPhoto(){
   return sb.storage.from('group-photos').getPublicUrl(path).data.publicUrl
 }
 
-// ── SUBMIT GROUP ──
 window.submitGroup=async function(){
   const name=document.getElementById('f-name').value.trim()
   const link=document.getElementById('f-link').value.trim()
@@ -812,87 +831,163 @@ window.submitGroup=async function(){
   closeModal('ov-submit')
   ;['f-name','f-link'].forEach(id=>document.getElementById(id).value='')
   document.getElementById('f-cat').value=''
-  document.getElementById('f-status').value='aberto'
-  setStatus('aberto')
   photoFile=null; photoUrl=null
   document.getElementById('photo-ph').style.display='block'
   document.getElementById('photo-pv').style.display='none'
 
   showToast('Grupo publicado! 🎉')
   await load()
-
-  // Abre modal destaque automaticamente
   setTimeout(()=>{if(newG)openDestaque(newG.id)},1500)
 }
 
-// ── ABRIR DESTAQUE ──
+// ══════════════════════════════════════════
+// DESTAQUE + PAGAMENTO PIX via Stripe
+// ══════════════════════════════════════════
+
 window.openDestaque=function(id){
   const g=all.find(x=>x.id===id)
   if(!g){showToast('Grupo não encontrado',true);return}
   const c=CATS[g.category]||{e:'⭐'}
-
   document.getElementById('dest-av').textContent=c.e
   document.getElementById('dest-emoji').textContent=c.e
   document.getElementById('dest-gname').textContent=g.name
   document.getElementById('dest-glink').textContent=g.invite_link||''
   document.getElementById('dest-name-hidden').value=g.name
   document.getElementById('dest-link-hidden').value=g.invite_link||''
-  document.getElementById('dest-email').value=''
-
+  document.getElementById('dest-groupid-hidden').value=g.id
   selectPlan('vip')
   openModal('ov-dest')
 }
 
-// ── SELECIONAR PLANO ──
 window.selectPlan=function(p){
   selectedPlan=p
-  document.getElementById('dpl-basico').className='dplan sel-basico'
-  document.getElementById('dpl-vip').className='dplan sel-vip'
-  document.getElementById('dpl-boost').className='dplan'
-  document.getElementById('dpl-boost').style.cssText='border-color:#6366f1;background:#eef2ff;border:2px solid #6366f1;background:#eef2ff'
-  if(p==='basico'){document.getElementById('dpl-basico').style.boxShadow='0 0 0 3px rgba(34,197,94,.3)'}
-  if(p==='vip'){document.getElementById('dpl-vip').style.boxShadow='0 0 0 3px rgba(34,197,94,.3)'}
-  if(p==='boost'){document.getElementById('dpl-boost').style.boxShadow='0 0 0 3px rgba(99,102,241,.3)'}
+  document.getElementById('dpl-basico').className='dplan'+(p==='basico'?' sel-basico':'')
+  document.getElementById('dpl-vip').className='dplan'+(p==='vip'?' sel-vip':'')
+  document.getElementById('dpl-boost').className='dplan'+(p==='boost'?' sel-boost':'')
+  document.getElementById('dpl-boost').style.cssText=p==='boost'?'border:2px solid #6366f1;background:#eef2ff':'border:2px solid var(--lt);background:var(--wh)'
+  if(p==='basico') document.getElementById('dpl-basico').style.cssText='border:2px solid #9ca3af;background:#f9fafb'
 }
 
-// ── PAGAR ──
 window.pagarDestaque=async function(){
   const name=document.getElementById('dest-name-hidden').value
   const link=document.getElementById('dest-link-hidden').value
+  const groupId=document.getElementById('dest-groupid-hidden').value
   const email=document.getElementById('dest-email').value.trim()
 
   if(!email||!email.includes('@')){showToast('Informe um email válido!',true);return}
   if(!name||!link){showToast('Erro: grupo não identificado.',true);return}
 
+  const plano=PLANOS[selectedPlan]
   const btn=document.getElementById('btn-pay')
-  btn.disabled=true; btn.textContent='⏳ Aguarde...'
+  btn.disabled=true; btn.innerHTML='⏳ Gerando PIX...'
 
   try{
-    const resp=await fetch('/api/create-payment',{
+    // Chama Edge Function do Supabase para criar Payment Intent com PIX
+    const resp=await fetch(`${SUPABASE_URL}/functions/v1/create-pix-payment`,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({groupName:name,email,link,planType:selectedPlan})
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body:JSON.stringify({
+        priceId: plano.priceId,
+        groupId,
+        groupName: name,
+        inviteLink: link,
+        email,
+        planType: selectedPlan,
+        dias: plano.dias
+      })
     })
     const data=await resp.json()
-    if(data.url){
-      window.location.href=data.url
-    } else {
+
+    if(data.error){
       showToast('Erro: '+(data.error||'tente novamente'),true)
-      btn.disabled=false; btn.textContent='Pagar com Mercado Pago →'
+      btn.disabled=false; btn.innerHTML='Pagar via PIX <span class="pix-badge">PIX</span>'
+      return
     }
+
+    closeModal('ov-dest')
+    abrirModalPix(data, plano)
+
   }catch(err){
+    console.error(err)
     showToast('Erro de conexão. Tente novamente.',true)
-    btn.disabled=false; btn.textContent='Pagar com Mercado Pago →'
+    btn.disabled=false; btn.innerHTML='Pagar via PIX <span class="pix-badge">PIX</span>'
   }
 }
 
-// ── TOAST ──
+function abrirModalPix(data, plano){
+  pixPaymentIntent=data.paymentIntentId
+  document.getElementById('pix-plan-info').textContent=`${plano.label} — ${plano.valor}`
+
+  // Exibir QR Code (imagem base64 que vem da Stripe)
+  const qrEl=document.getElementById('pix-qr-img')
+  if(data.qrCodeImage){
+    qrEl.innerHTML=`<img src="data:image/png;base64,${data.qrCodeImage}" style="width:180px;height:180px;border-radius:12px" />`
+  } else if(data.qrCode){
+    qrEl.innerHTML=`<div style="font-size:10px;word-break:break-all;padding:10px;background:#fff;border-radius:8px;color:var(--dk)">${data.qrCode}</div>`
+  }
+
+  // Código PIX para copiar
+  const codeEl=document.getElementById('pix-code-text')
+  codeEl.textContent=data.qrCode||'Código indisponível'
+  codeEl.dataset.code=data.qrCode||''
+
+  openModal('ov-pix')
+  iniciarPollingPix(data.paymentIntentId, plano.dias)
+}
+
+window.copyPixCode=function(){
+  const code=document.getElementById('pix-code-text').dataset.code
+  if(!code)return
+  navigator.clipboard.writeText(code).then(()=>showToast('Código PIX copiado! ✅'))
+    .catch(()=>showToast('Erro ao copiar',true))
+}
+
+function iniciarPollingPix(intentId, dias){
+  if(pixCheckInterval)clearInterval(pixCheckInterval)
+
+  let elapsed=0
+  const maxTime=600 // 10 min
+  document.getElementById('pix-timer').textContent='10:00'
+
+  pixCheckInterval=setInterval(async()=>{
+    elapsed+=10
+    const rem=maxTime-elapsed
+    if(rem<=0){
+      clearInterval(pixCheckInterval)
+      document.getElementById('pix-status-box').className='pix-status pix-waiting'
+      document.getElementById('pix-status-box').textContent='⏰ Tempo expirado. Gere um novo PIX.'
+      return
+    }
+    const m=String(Math.floor(rem/60)).padStart(2,'0')
+    const s=String(rem%60).padStart(2,'0')
+    document.getElementById('pix-timer').textContent=`${m}:${s}`
+
+    try{
+      const resp=await fetch(`${SUPABASE_URL}/functions/v1/check-pix-payment`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON_KEY}`},
+        body:JSON.stringify({paymentIntentId:intentId})
+      })
+      const d=await resp.json()
+      if(d.status==='succeeded'){
+        clearInterval(pixCheckInterval)
+        document.getElementById('pix-status-box').className='pix-status pix-approved'
+        document.getElementById('pix-status-box').textContent='✅ Pagamento aprovado! Ativando destaque...'
+        showToast('PIX aprovado! Grupo em destaque 🎉')
+        setTimeout(()=>{closeModal('ov-pix'); load()},2000)
+      }
+    }catch(e){console.error('Erro polling:',e)}
+  },10000)
+}
+
 window.showToast=function(msg,err=false){
   const t=document.getElementById('toast')
   t.textContent=msg
-  t.style.cssText=`position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;pointer-events:none;background:${err?'#ef4444':'#111827'};color:#fff`
-  t.style.opacity='1'
-  setTimeout(()=>t.style.opacity='0',3000)
+  t.className='toast show'+(err?' err':' ok')
+  setTimeout(()=>t.classList.remove('show'),3500)
 }
 
 window.addEventListener('popstate',()=>{if(location.pathname==='/')goHome()})
