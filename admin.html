@@ -217,6 +217,11 @@ tr:hover td{background:#fafbfc}
 
       <div class="sb-sec">Financeiro</div>
       <button class="sbi" onclick="nav('pagamentos',this)">💳 Pagamentos</button>
+
+      <div class="sb-sec">Suporte</div>
+      <a class="sbi" href="https://wa.me/5565993517234?text=Olá!%20Preciso%20de%20suporte%20no%20Grupix" target="_blank" style="text-decoration:none;color:inherit">
+        💬 Central de Ajuda
+      </a>
     </aside>
 
     <main class="main">
@@ -432,27 +437,18 @@ const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const sb = createClient(SURL, SKEY)
 
 // Categorias padrão (editáveis no painel)
-const CATS_DEFAULT = [
-  {slug:'empreendedorismo',name:'Empreendedorismo',emoji:'💼'},
-  {slug:'criptomoedas',name:'Criptomoedas',emoji:'₿'},
-  {slug:'marketing',name:'Marketing',emoji:'📈'},
-  {slug:'tecnologia',name:'Tecnologia',emoji:'💻'},
-  {slug:'investimentos',name:'Investimentos',emoji:'📊'},
-  {slug:'jogos',name:'Jogos',emoji:'🎮'},
-  {slug:'educacao',name:'Educação',emoji:'📚'},
-  {slug:'renda-extra',name:'Renda Extra',emoji:'💰'},
-]
 const EMOJIS_SUGESTOES = ['💼','₿','📈','💻','📊','🎮','📚','💰','🌿','🏋️','🍕','🎵','❤️','🤝','🚀','⚽','🎨','📷','✈️','🏠','🐶','🌎','💊','👗','🎯','🔥','⭐','🎓']
 
 let groups=[], payments=[], pendentes=[], cats=[], editId=null, catEditSlug=null, payFilter='all'
 
-// ── INIT CATS ──
-function initCats(){
-  const saved = localStorage.getItem('grupix_cats')
-  cats = saved ? JSON.parse(saved) : [...CATS_DEFAULT]
+// ── CATS VIA SUPABASE ──
+async function loadCats(){
+  const {data} = await sb.from('categories').select('*').order('sort_order')
+  cats = data || []
+  populateCatSelects()
 }
-function saveCatStore(){
-  localStorage.setItem('grupix_cats', JSON.stringify(cats))
+async function saveCatStore(){
+  // não faz nada — salvamos direto no Supabase nas funções de save/delete
 }
 
 // ── LOGIN ──
@@ -469,7 +465,7 @@ window.login=async function(){
   if(error||!data){err.textContent='Email ou senha incorretos.';err.style.display='block';return}
   document.getElementById('login').style.display='none'
   document.getElementById('app').style.display='block'
-  initCats()
+  await loadCats()
   loadAll()
 }
 window.logout=function(){
@@ -638,30 +634,35 @@ window.selectEmoji=function(e){
   document.querySelectorAll('.emoji-opt').forEach(el=>el.classList.toggle('sel',el.textContent===e))
 }
 
-window.saveCat=function(){
+window.saveCat=async function(){
   const name=document.getElementById('c-name').value.trim()
   const emoji=document.getElementById('c-emoji').value.trim()
   if(!name){toast('Nome obrigatório','err');return}
   if(!emoji){toast('Escolha um emoji','err');return}
   const slug=catEditSlug||name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')
+
+  const btn=document.getElementById('btn-save-cat')
+  btn.disabled=true; btn.textContent='Salvando...'
+
   if(catEditSlug){
-    const idx=cats.findIndex(x=>x.slug===catEditSlug)
-    if(idx>=0)cats[idx]={slug,name,emoji}
+    const {error}=await sb.from('categories').update({name,emoji}).eq('slug',catEditSlug)
+    if(error){toast('Erro: '+error.message,'err');btn.disabled=false;btn.textContent='Salvar categoria';return}
   } else {
-    if(cats.find(x=>x.slug===slug)){toast('Categoria já existe','err');return}
-    cats.push({slug,name,emoji})
+    const {error}=await sb.from('categories').insert({slug,name,emoji,sort_order:cats.length+1})
+    if(error){toast(error.code==='23505'?'Categoria já existe!':'Erro: '+error.message,'err');btn.disabled=false;btn.textContent='Salvar categoria';return}
   }
-  saveCatStore()
+  btn.disabled=false; btn.textContent='Salvar categoria'
+  await loadCats()
   closeOv('m-addcat')
   renderCats()
-  populateCatSelects()
-  toast(catEditSlug?'Categoria atualizada!':'Categoria criada!','ok')
+  toast(catEditSlug?'Categoria atualizada! ✅':'Categoria criada! ✅','ok')
 }
 
 window.deleteCat=function(slug,name){
-  confirm2(`Remover categoria "${name}"?`,'Os grupos com essa categoria não serão deletados.',()=>{
-    cats=cats.filter(c=>c.slug!==slug)
-    saveCatStore(); renderCats(); populateCatSelects()
+  confirm2(`Remover categoria "${name}"?`,'Os grupos com essa categoria não serão deletados.',async()=>{
+    await sb.from('categories').delete().eq('slug',slug)
+    await loadCats()
+    renderCats()
     toast('Categoria removida','info')
   })
 }
