@@ -65,7 +65,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .feat-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;transition:transform .15s}
 .feat-item:hover{transform:translateY(-2px)}
 .feat-av{width:62px;height:62px;border-radius:50%;border:2.5px solid var(--orange);background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0;position:relative}
-.feat-av img{width:62px;height:62px;object-fit:cover;display:block;border-radius:50%}
+.feat-av img{width:62px;height:62px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:2px}
 .feat-av-badge{position:absolute;bottom:0;right:0;width:18px;height:18px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;border:1.5px solid var(--white)}
 .feat-name{font-size:11px;font-weight:700;max-width:64px;text-align:center;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
@@ -480,7 +480,7 @@ function renderFeatured() {
     <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
       <div class="feat-av" style="background:${BGS[g.category]||'#f9fafb'}">
         ${g.image_url
-          ? `<img src="${esc(g.image_url)}" alt="" style="width:62px;height:62px;object-fit:cover;display:block;border-radius:50%" onerror="this.parentElement.innerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
+          ? `<img src="${esc(g.image_url)}" alt="" style="width:62px;height:62px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:2px" onerror="this.parentElement.innerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
           : `<span>${ICONS[g.category]||'⭐'}</span>`
         }
         <div class="feat-av-badge">⭐</div>
@@ -509,7 +509,7 @@ window.render = function() {
       <div class="card-top">
         <div class="card-av" style="background:${g.image_url ? 'transparent' : BGS[g.category]||'#f9fafb'};padding:0;overflow:hidden">
           ${g.image_url
-            ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;min-width:64px;object-fit:cover;object-position:center;display:block;border-radius:50%;border:none" onerror="this.parentElement.style.background='${BGS[g.category]||'#f9fafb'}';this.outerHTML='<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>'">`
+            ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;min-width:64px;object-fit:contain;object-position:center;display:block;border-radius:50%;border:none;background:#fff;padding:3px" onerror="this.parentElement.style.background='${BGS[g.category]||'#f9fafb'}';this.outerHTML='<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>'">`
             : `<span style="font-size:26px">${ICONS[g.category]||'⭐'}</span>`
           }
         </div>
