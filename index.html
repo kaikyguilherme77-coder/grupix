@@ -789,7 +789,7 @@ window.gerarImagem = async function() {
     const r = await fetch(`${SURL}/functions/v1/gerar-imagem`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
-      body: JSON.stringify({ prompt: fullPrompt, width: fmt.w, height: fmt.h })
+      body: JSON.stringify({ prompt: fullPrompt, formato: formatoSel })
     })
     const d = await r.json()
     if (!r.ok || d.error) { showErr(d.error || 'Erro ao gerar imagem'); return }
