@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grupix — Descubra Grupos de WhatsApp e Telegram</title>
 <meta name="description" content="O maior diretório de grupos de WhatsApp e Telegram do Brasil.">
-<meta property="og:title" content="Grupix — Grupos de WhatsApp e Telegram">
-<meta property="og:description" content="Encontre e divulgue grupos. Grátis e fácil.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#2563eb;--green-dark:#1e40af;--green-bg:#eff6ff;--green-btn:#2563eb;--green-btn-h:#1d4ed8;
+  --blue:#2563eb;--blue-h:#1d4ed8;--blue-bg:#eff6ff;--blue-mid:#dbeafe;
   --orange:#f97316;--orange-h:#ea6c0a;--orange-bg:#fff7ed;
   --white:#fff;--bg:#f0f2f5;--dk:#111827;--md:#6b7280;--lt:#e5e7eb;--ltr:#f3f4f6;
   --r:12px;--r-sm:8px;
@@ -23,47 +21,45 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
 input,select,textarea{font-family:'Inter',sans-serif}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
 
-/* ── HEADER ── */
-header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
-.logo-icon{width:32px;height:32px;background:var(--green-btn);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
 .logo-text{font-weight:800;font-size:18px;color:var(--dk);letter-spacing:-.5px}
-.logo-text span{color:var(--green-btn)}
-.header-right{display:flex;align-items:center;gap:10px}
-.btn-add-group{background:var(--green-btn);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;gap:6px}
-.btn-add-group:hover{background:var(--green-btn-h)}
+.logo-text span{color:var(--blue)}
+.btn-add-group{background:var(--blue);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn-add-group:hover{background:var(--blue-h)}
 .btn-menu{display:none;background:transparent;padding:4px;border-radius:6px}
-.btn-menu:hover{background:var(--ltr)}
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 .shell{display:flex;padding-top:56px;min-height:100vh}
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .sidebar{width:220px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--lt);overflow-y:auto;padding:12px 0}
 .sb-title{font-size:11px;font-weight:700;color:var(--md);text-transform:uppercase;letter-spacing:.6px;padding:14px 16px 6px;display:flex;align-items:center;gap:6px}
-.sb-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 16px;background:transparent;color:var(--md);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent;cursor:pointer}
+.sb-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 16px;background:transparent;color:var(--md);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent;cursor:pointer;border:none;outline:none}
 .sb-btn:hover{background:var(--ltr);color:var(--dk)}
-.sb-btn.on{background:var(--green-bg);color:var(--green-dark);font-weight:700;border-left-color:var(--green-btn)}
+.sb-btn.on{background:var(--blue-bg);color:var(--blue);font-weight:700;border-left:3px solid var(--blue)}
 .sb-ic{width:22px;height:22px;border-radius:6px;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
-.sb-btn.on .sb-ic{background:rgba(37,99,235,.12)}
+.sb-btn.on .sb-ic{background:var(--blue-mid)}
 .sb-cnt{margin-left:auto;font-size:11px;color:#d1d5db}
 .sb-btn.on .sb-cnt{color:#93c5fd}
 
-/* ── MAIN ── */
+/* MAIN */
 .main{margin-left:220px;flex:1;padding:20px;max-width:calc(100% - 220px)}
 
-/* ── SEARCH ── */
+/* SEARCH */
 .search-bar{background:var(--white);border-radius:var(--r);border:1.5px solid var(--lt);padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;max-width:560px;transition:border-color .2s}
-.search-bar:focus-within{border-color:var(--green-btn)}
+.search-bar:focus-within{border-color:var(--blue)}
 .search-bar input{flex:1;border:none;outline:none;font-size:14px;color:var(--dk);background:transparent}
 .search-bar input::placeholder{color:#9ca3af}
-.search-bar button{background:var(--green-btn);color:#fff;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;transition:all .15s}
-.search-bar button:hover{background:var(--green-btn-h)}
+.search-bar button{background:var(--blue);color:#fff;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;transition:all .15s}
+.search-bar button:hover{background:var(--blue-h)}
 
-/* ── FEATURED STRIP ── */
+/* FEATURED */
 .feat-sec{background:var(--white);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;border:1px solid var(--lt)}
 .sec-lbl{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.sec-lbl span{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.sec-badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
 .feat-strip{display:flex;gap:18px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .feat-strip::-webkit-scrollbar{display:none}
 .feat-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;transition:transform .15s}
@@ -73,22 +69,18 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .feat-av-badge{position:absolute;bottom:0;right:0;width:18px;height:18px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;border:1.5px solid var(--white)}
 .feat-name{font-size:11px;font-weight:700;max-width:64px;text-align:center;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ── GRID HEADER ── */
+/* GRID */
 .grid-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .grid-title{font-size:14px;font-weight:700}
 .grid-count{font-size:12px;color:var(--md)}
-
-/* ── GRID ── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 
-/* ── CARD ── */
+/* CARD */
 .card{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;transition:all .2s;position:relative;overflow:hidden;animation:fadeUp .35s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-.card.featured{border-color:#fed7aa;border-width:1.5px;background:linear-gradient(135deg,#fffbf7,#fff)}
-.feat-ribbon{position:absolute;top:10px;right:-24px;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:3px 28px;transform:rotate(45deg);transform-origin:top right}
-
-/* card top */
+.card.featured{border-color:#fed7aa;background:linear-gradient(135deg,#fffbf7,#fff)}
+.feat-ribbon{position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:4px 12px;border-radius:0 var(--r) 0 10px}
 .card-top{display:flex;align-items:flex-start;gap:12px}
 .card-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
 .card-av img{width:100%;height:100%;object-fit:cover}
@@ -96,91 +88,28 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .card-name{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
-.tag-wa{background:#eff6ff;color:#1e40af}
-.tag-tg{background:#e8f4fd;color:#0088cc}
+.tag-wa{background:#dcfce7;color:#15803d}
+.tag-tg{background:#dbeafe;color:#1d4ed8}
 .tag-cat{background:var(--ltr);color:var(--md);border:1px solid var(--lt)}
-
-/* card status */
 .card-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
-.cs-open{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
-.cs-closed{background:#fef2f2;border:1px solid #fecaca;color:#dc2626}
-.cs-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-
-/* card desc */
-.card-desc{font-size:12px;color:var(--md);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-/* card actions */
+.cs-open{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a}
+.cs-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#22c55e}
 .card-actions{display:flex;flex-direction:column;gap:8px}
-.btn-enter{width:100%;padding:10px;background:var(--green-btn);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
-.btn-enter:hover{background:var(--green-btn-h)}
+.btn-enter{width:100%;padding:10px;background:var(--blue);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-enter:hover{background:var(--blue-h)}
 .btn-boost{width:100%;padding:10px;background:var(--orange-bg);color:var(--orange);border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-boost:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
+.btn-boost:hover{background:var(--orange);color:#fff}
 .btn-boosted{width:100%;padding:10px;background:#fff7ed;color:var(--orange);border-radius:var(--r-sm);font-size:13px;font-weight:700;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:6px;cursor:default}
-
-/* skeleton */
 .skel{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);height:210px;animation:pulse 1.4s infinite}
 @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
 .empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--md);font-size:14px}
 
-
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--lt);padding:20px;text-align:center;font-size:12px;color:var(--md)}
+/* FOOTER */
+footer{margin-top:40px;border-top:1px solid var(--lt);padding:20px;text-align:center;font-size:12px;color:var(--md)}
 footer a{color:var(--md);text-decoration:none;margin:0 6px}
 footer a:hover{color:var(--dk)}
 
-/* ── OVERLAYS / MODAIS ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:16px}
-.overlay.open{display:flex}
-.modal{background:var(--white);border-radius:18px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .22s cubic-bezier(.34,1.56,.64,1)}
-.modal-sm{max-width:400px}
-@keyframes mIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.mh{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.mt{font-size:16px;font-weight:800}
-.mcl{width:28px;height:28px;border-radius:7px;background:var(--ltr);font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
-.mcl:hover{background:var(--lt);color:var(--dk)}
-.mb{padding:0 22px 22px}
-.fg{margin-bottom:13px}
-.lbl{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--md);margin-bottom:4px}
-.inp,.sel,.txta{width:100%;padding:10px 13px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:13px;outline:none;color:var(--dk);transition:border-color .2s}
-.inp:focus,.sel:focus,.txta:focus{border-color:var(--green-btn)}
-.txta{resize:none}
-.plat-row{display:flex;gap:8px}
-.plat-btn{flex:1;padding:10px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:13px;font-weight:600;background:var(--white);color:var(--md);transition:all .15s;cursor:pointer}
-.plat-btn.aw{border-color:var(--green-btn);background:var(--green-bg);color:var(--green-dark)}
-.plat-btn.at{border-color:#0088cc;background:#e8f4fd;color:#0088cc}
-.btn-prim{width:100%;padding:12px;background:var(--green-btn);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s;margin-top:6px}
-.btn-prim:hover{background:var(--green-btn-h)}
-.btn-prim:disabled{opacity:.5;cursor:not-allowed}
-
-/* ── MODAL DESTAQUE ── */
-.dest-modal{max-width:500px;padding:0;border-radius:20px;overflow:hidden}
-.dest-header{background:linear-gradient(135deg,#eff6ff,#dbeafe);padding:22px 24px 18px;text-align:center;position:relative}
-.dest-group-card{background:var(--white);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-top:12px}
-.dest-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
-.dest-ben{background:var(--ltr);border-radius:12px;padding:12px 8px;text-align:center}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.plan{border:2px solid var(--lt);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s;position:relative;text-align:center}
-.plan:hover{border-color:var(--green-btn)}
-.plan.sel{border-color:var(--green-btn);background:#eff6ff;transform:scale(1.03)}
-.plan.pop::before{content:'⭐ Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--green-btn);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
-.plan-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
-.plan-price{font-size:22px;font-weight:800;margin-bottom:2px}
-.plan-days{font-size:11px;color:var(--md);margin-bottom:2px}
-.plan-dprice{font-size:10px;font-weight:600;color:var(--green-btn)}
-.btn-mp{width:100%;padding:14px;background:#009ee3;color:#fff;font-size:14px;font-weight:800;border-radius:var(--r);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-mp:hover{background:#007dbf}
-.btn-mp:disabled{opacity:.6;cursor:not-allowed}
-
-/* ── PIX QR ── */
-.qrbox{background:var(--ltr);border-radius:var(--r);padding:20px;margin:14px 0;display:flex;flex-direction:column;align-items:center;gap:10px}
-.qrimg{width:180px;height:180px;border-radius:12px;background:var(--white);display:flex;align-items:center;justify-content:center}
-.pixcopy{background:var(--green-bg);border:1.5px solid #bfdbfe;border-radius:var(--r-sm);padding:10px 13px;font-size:11px;font-family:monospace;color:var(--green-dark);cursor:pointer;word-break:break-all;text-align:left;transition:all .15s;width:100%}
-.pixcopy:hover{background:#dbeafe}
-.pix-st{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;font-weight:600;margin-top:8px}
-.pix-wait{background:#fffbeb;color:#92400e}
-.pix-ok{background:#eff6ff;color:#1d4ed8}
-
-/* ── DRAWER MOBILE ── */
+/* DRAWER MOBILE */
 .drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300}
 .drawer-ov.open{display:block}
 .drawer{position:fixed;top:0;left:-240px;bottom:0;width:230px;background:var(--white);z-index:301;transition:left .25s;overflow-y:auto}
@@ -189,30 +118,73 @@ footer a:hover{color:var(--dk)}
 .drawer-logo{font-weight:800;font-size:16px}
 .drawer-cl{background:var(--ltr);border:none;width:28px;height:28px;border-radius:7px;font-size:18px;cursor:pointer}
 
-/* ── TOAST ── */
+/* MODAIS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:18px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .22s cubic-bezier(.34,1.56,.64,1)}
+.modal-sm{max-width:400px}
+@keyframes mIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mh{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-size:16px;font-weight:800}
+.mcl{width:28px;height:28px;border-radius:7px;background:var(--ltr);font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.mcl:hover{background:var(--lt)}
+.mb{padding:0 22px 22px}
+.fg{margin-bottom:13px}
+.lbl{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--md);margin-bottom:4px}
+.inp,.sel{width:100%;padding:10px 13px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:13px;outline:none;color:var(--dk);transition:border-color .2s}
+.inp:focus,.sel:focus{border-color:var(--blue)}
+.btn-prim{width:100%;padding:12px;background:var(--blue);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s;margin-top:6px}
+.btn-prim:hover{background:var(--blue-h)}
+.btn-prim:disabled{opacity:.5;cursor:not-allowed}
+
+/* MODAL DESTAQUE */
+.dest-modal{max-width:500px;padding:0;border-radius:20px;overflow:hidden}
+.dest-header{background:linear-gradient(135deg,var(--blue-bg),#e0e7ff);padding:22px 24px 18px;text-align:center;position:relative}
+.dest-group-card{background:var(--white);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-top:12px}
+.dest-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.dest-ben{background:var(--ltr);border-radius:12px;padding:12px 8px;text-align:center}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.plan{border:2px solid var(--lt);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s;position:relative;text-align:center}
+.plan:hover{border-color:var(--blue)}
+.plan.sel{border-color:var(--blue);background:var(--blue-bg);transform:scale(1.03)}
+.plan.pop::before{content:'⭐ Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.plan-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
+.plan-price{font-size:22px;font-weight:800;margin-bottom:2px}
+.plan-days{font-size:11px;color:var(--md);margin-bottom:2px}
+.plan-dprice{font-size:10px;font-weight:600;color:var(--blue)}
+.btn-mp{width:100%;padding:14px;background:#009ee3;color:#fff;font-size:14px;font-weight:800;border-radius:var(--r);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-mp:hover{background:#007dbf}
+.btn-mp:disabled{opacity:.6;cursor:not-allowed}
+
+/* PIX */
+.qrbox{background:var(--ltr);border-radius:var(--r);padding:20px;margin:14px 0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.qrimg{width:180px;height:180px;border-radius:12px;background:var(--white);display:flex;align-items:center;justify-content:center}
+.pixcopy{background:var(--blue-bg);border:1.5px solid var(--blue-mid);border-radius:var(--r-sm);padding:10px 13px;font-size:11px;font-family:monospace;color:var(--blue);cursor:pointer;word-break:break-all;text-align:left;transition:all .15s;width:100%}
+.pixcopy:hover{background:var(--blue-mid)}
+.pix-st{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;font-weight:600;margin-top:8px}
+.pix-wait{background:#fffbeb;color:#92400e}
+.pix-ok{background:#f0fdf4;color:#16a34a}
+
+/* TOAST */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dk);color:#fff;padding:11px 22px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:999;pointer-events:none;opacity:0;transition:all .3s;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.green{background:#16a34a}
 .toast.red{background:#dc2626}
 
-/* ── MOBILE ── */
+/* MOBILE */
 @media(max-width:720px){
   .sidebar{display:none}
   .main{margin-left:0;padding:14px;max-width:100%}
   .btn-menu{display:flex;align-items:center;justify-content:center}
   .grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .card{padding:12px;gap:10px}
-  .card-av{width:46px;height:46px;font-size:18px}
-  .btn-enter,.btn-boost,.btn-boosted{font-size:12px;padding:9px}
   .plans{grid-template-columns:1fr}
-  .dest-benefits{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:440px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div style="display:flex;align-items:center;gap:10px">
     <button class="btn-menu" onclick="toggleDrawer()">
@@ -235,16 +207,9 @@ footer a:hover{color:var(--dk)}
       <span class="logo-text">Grupi<span>x</span></span>
     </a>
   </div>
-  <div class="header-right">
-    <div class="search-bar" style="margin:0;max-width:280px;display:none" id="hdr-search">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#9ca3af" stroke-width="1.5"/><line x1="10" y1="10" x2="14" y2="14" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input id="q-hdr" type="text" placeholder="Buscar grupos..." oninput="document.getElementById('q').value=this.value;render()">
-    </div>
-    <button class="btn-add-group" onclick="openModal('m-submit')">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="7" x2="13" y2="7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-      Adicionar seu grupo
-    </button>
-  </div>
+  <button class="btn-add-group" onclick="openModal('m-submit')">
+    + Adicionar seu grupo
+  </button>
 </header>
 
 <!-- DRAWER MOBILE -->
@@ -258,21 +223,12 @@ footer a:hover{color:var(--dk)}
 </div>
 
 <div class="shell">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sb-title">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      Início
-    </div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-title">Início</div>
     <button class="sb-btn on" data-cat="todos" onclick="setCat('todos',this)">
-      <span class="sb-ic">🏠</span> Home
+      <span class="sb-ic">🏠</span> Home <span class="sb-cnt" id="cnt-todos"></span>
     </button>
-
-    <div class="sb-title" style="margin-top:4px">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
-      Categorias
-    </div>
+    <div class="sb-title">Categorias</div>
     <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">💼</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
     <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
     <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing <span class="sb-cnt" id="cnt-marketing"></span></button>
@@ -283,40 +239,31 @@ footer a:hover{color:var(--dk)}
     <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
-
-    <!-- SEARCH BAR -->
     <div class="search-bar">
       <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#9ca3af" stroke-width="1.5"/><line x1="10" y1="10" x2="14" y2="14" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input id="q" type="text" placeholder="Buscar grupos por nome ou descrição..." oninput="render()">
+      <input id="q" type="text" placeholder="Buscar grupos por nome..." oninput="render()">
       <button onclick="render()">Buscar</button>
     </div>
 
-    <!-- DESTAQUES -->
-    <div class="feat-sec" id="feat-sec" style="display:none">
-      <div class="sec-lbl">
-        <span>⭐</span> Grupos em Destaque
-        <span>IMPULSIONADOS</span>
+    <div id="feat-sec" style="display:none">
+      <div class="feat-sec">
+        <div class="sec-lbl">⭐ Grupos em Destaque <span class="sec-badge">IMPULSIONADOS</span></div>
+        <div class="feat-strip" id="feat-strip"></div>
       </div>
-      <div class="feat-strip" id="feat-strip"></div>
     </div>
 
-      <button class="btn-cta" onclick="openModal('m-submit')">Adicionar meu grupo grátis</button>
-    </div>
-
-    <!-- GRID -->
     <div class="grid-hd">
       <span class="grid-title" id="grid-title">Todos os grupos</span>
       <span class="grid-count" id="g-count"></span>
     </div>
     <div class="grid" id="grid">
-      <div class="skel"></div><div class="skel"></div><div class="skel"></div>
-      <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+      <div class="skel"></div><div class="skel"></div>
+      <div class="skel"></div><div class="skel"></div>
+      <div class="skel"></div><div class="skel"></div>
     </div>
 
-    <!-- FOOTER -->
-    <footer style="margin-top:40px">
+    <footer>
       <p>© 2025 Grupix · Diretório de grupos de WhatsApp e Telegram ·
         <a href="#" onclick="setCat('empreendedorismo',document.querySelector('[data-cat=empreendedorismo]'));return false">Empreendedorismo</a>
         <a href="#" onclick="setCat('criptomoedas',document.querySelector('[data-cat=criptomoedas]'));return false">Criptomoedas</a>
@@ -324,7 +271,6 @@ footer a:hover{color:var(--dk)}
         <a href="#" onclick="setCat('tecnologia',document.querySelector('[data-cat=tecnologia]'));return false">Tecnologia</a>
       </p>
     </footer>
-
   </main>
 </div>
 
@@ -333,17 +279,44 @@ footer a:hover{color:var(--dk)}
   <div class="modal">
     <div class="mh"><span class="mt">Adicionar grupo</span><button class="mcl" onclick="closeModal('m-submit')">×</button></div>
     <div class="mb">
+      <div class="fg">
+        <label class="lbl">Link do grupo *</label>
+        <div style="position:relative">
+          <input class="inp" id="s-link" type="url" placeholder="https://chat.whatsapp.com/... ou t.me/..." oninput="detectPlatform(this.value)" style="padding-right:40px">
+          <span id="plat-detect" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;display:none"></span>
+        </div>
+        <div id="plat-badge" style="display:none;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px"></div>
+      </div>
+      <div class="fg"><label class="lbl">Nome do grupo *</label><input class="inp" id="s-name" type="text" placeholder="Ex: Marketing Digital Brasil"></div>
+      <div class="fg"><label class="lbl">Categoria *</label>
+        <select class="sel" id="s-cat">
+          <option value="">Selecione...</option>
+          <option value="empreendedorismo">💼 Empreendedorismo</option>
+          <option value="criptomoedas">₿ Criptomoedas</option>
+          <option value="marketing">📈 Marketing</option>
+          <option value="tecnologia">💻 Tecnologia</option>
+          <option value="investimentos">📊 Investimentos</option>
+          <option value="jogos">🎮 Jogos</option>
+          <option value="educacao">📚 Educação</option>
+          <option value="renda-extra">💰 Renda Extra</option>
+        </select>
+      </div>
+      <button class="btn-prim" id="btn-send" onclick="submitGroup()">Publicar grupo agora</button>
+      <p style="font-size:11px;color:var(--md);text-align:center;margin-top:10px">Após aprovação, seu grupo aparecerá gratuitamente.</p>
+    </div>
+  </div>
+</div>
 
-<!-- MODAL BOOST / DESTAQUE -->
+<!-- MODAL DESTAQUE -->
 <div class="overlay" id="m-boost" onclick="if(event.target===this)closeModal('m-boost')">
   <div class="modal dest-modal">
     <div class="dest-header">
       <button class="mcl" onclick="closeModal('m-boost')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.08)">×</button>
       <div id="dest-emoji" style="width:52px;height:52px;background:var(--white);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)">⚡</div>
       <h2 style="font-size:17px;font-weight:800;margin-bottom:3px">Destaque seu grupo.</h2>
-      <p style="font-size:12px;font-weight:700;color:var(--green-dark)">Multiplique seus membros.</p>
+      <p style="font-size:12px;font-weight:700;color:var(--blue)">Multiplique seus membros.</p>
       <div class="dest-group-card">
-        <div id="dest-av" style="width:34px;height:34px;background:var(--green-bg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⭐</div>
+        <div id="dest-av" style="width:34px;height:34px;background:var(--blue-bg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⭐</div>
         <div style="flex:1;min-width:0"><div id="dest-gname" style="font-size:13px;font-weight:700">Seu grupo</div></div>
       </div>
     </div>
@@ -363,11 +336,11 @@ footer a:hover{color:var(--dk)}
           <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:1.5px solid var(--lt);background:transparent;font-size:11px;font-weight:700;color:var(--md);cursor:pointer">Escolher</button>
         </div>
         <div class="plan pop sel" id="pl-pro" onclick="selPlan('pro')">
-          <span class="plan-badge" style="background:var(--green-btn);color:#fff">PRO</span>
+          <span class="plan-badge" style="background:var(--blue);color:#fff">PRO</span>
           <div class="plan-price">R$24,90</div>
           <div class="plan-days">15 dias</div>
           <div class="plan-dprice">🔥 R$1,66/dia</div>
-          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:var(--green-btn);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:var(--blue);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
         </div>
         <div class="plan" id="pl-vip" onclick="selPlan('vip')">
           <span class="plan-badge" style="background:#6366f1;color:#fff">VIP</span>
@@ -384,24 +357,23 @@ footer a:hover{color:var(--dk)}
       <input type="hidden" id="b-gid">
       <input type="hidden" id="b-gname">
       <button class="btn-mp" id="btn-pay" onclick="createPayment()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Pagar com PIX · Mercado Pago
       </button>
-      <p style="text-align:center;font-size:11px;color:var(--md);margin-top:8px">🔒 Pagamento 100% seguro · Ativação automática após pagamento</p>
+      <p style="text-align:center;font-size:11px;color:var(--md);margin-top:8px">🔒 Pagamento 100% seguro · Ativação automática</p>
     </div>
   </div>
 </div>
 
-<!-- MODAL PIX QR -->
+<!-- MODAL PIX -->
 <div class="overlay" id="m-pix" onclick="if(event.target===this)closeModal('m-pix')">
   <div class="modal modal-sm" style="text-align:center">
     <div class="mh"><span class="mt">💚 Pagar com PIX</span><button class="mcl" onclick="closeModal('m-pix')">×</button></div>
     <div class="mb">
-      <div id="pix-lbl" style="background:var(--green-bg);border-radius:var(--r-sm);padding:10px 14px;font-size:13px;font-weight:700;color:var(--green-dark);margin-bottom:4px"></div>
+      <div id="pix-lbl" style="background:var(--blue-bg);border-radius:var(--r-sm);padding:10px 14px;font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px"></div>
       <div class="qrbox">
         <p style="font-size:12px;color:var(--md);font-weight:600">Escaneie o QR Code:</p>
         <div class="qrimg" id="pix-qr"><div style="color:var(--md)"><div style="font-size:28px">⏳</div><div style="font-size:11px;margin-top:4px">Gerando...</div></div></div>
-        <p style="font-size:11px;color:var(--md)">ou copie o código Pix:</p>
+        <p style="font-size:11px;color:var(--md)">ou copie o código:</p>
         <button class="pixcopy" onclick="copyPix()"><span id="pix-code">Aguarde...</span></button>
       </div>
       <div class="pix-st pix-wait" id="pix-st">⏳ Aguardando pagamento... <span style="font-weight:800;color:var(--orange)" id="pix-timer">10:00</span></div>
@@ -420,253 +392,264 @@ const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const sb = createClient(SURL, SKEY)
 
 const ICONS = {empreendedorismo:'💼',criptomoedas:'₿',marketing:'📈',tecnologia:'💻',investimentos:'📊',jogos:'🎮',educacao:'📚','renda-extra':'💰',outros:'⭐'}
-const BGS = {empreendedorismo:'#f0f9ff',criptomoedas:'#fffbeb',marketing:'#eff6ff',tecnologia:'#f5f3ff',investimentos:'#eff6ff',jogos:'#fef2f2',educacao:'#ecfeff','renda-extra':'#eff6ff',outros:'#f9fafb'}
-const WA_ICO=`<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
-const TG_ICO=`<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+const BGS = {empreendedorismo:'#f0f9ff',criptomoedas:'#fffbeb',marketing:'#f0fdf4',tecnologia:'#f5f3ff',investimentos:'#eff6ff',jogos:'#fef2f2',educacao:'#ecfeff','renda-extra':'#f0fdf4',outros:'#f9fafb'}
+const WA = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+const TG = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
 
-let all=[], cat='todos', plan='pro', pixTimer=null
+let all = [], cat = 'todos', plan = 'pro', pixTimer = null
 
-async function load(){
-  const {data}=await sb.from('groups').select('*').eq('approved',true).order('is_featured',{ascending:false}).order('created_at',{ascending:false})
-  all=data||[]
-  document.getElementById('s-total').textContent=all.length
-  document.getElementById('s-feat').textContent=all.filter(g=>g.is_featured).length
-  updateSidebarCounts()
+// CARREGAR GRUPOS
+async function load() {
+  const { data, error } = await sb
+    .from('groups')
+    .select('*')
+    .eq('approved', true)
+    .order('is_featured', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Erro ao carregar:', error)
+    document.getElementById('grid').innerHTML = '<div class="empty">Erro ao carregar grupos. Tente recarregar a página.</div>'
+    return
+  }
+
+  all = data || []
+  updateCounts()
   renderFeatured()
   render()
 }
 
-function updateSidebarCounts(){
-  const cats=['empreendedorismo','criptomoedas','marketing','tecnologia','investimentos','jogos','educacao','renda-extra']
-  cats.forEach(c=>{
-    const el=document.getElementById('cnt-'+c)
-    if(el) el.textContent=all.filter(g=>g.category===c).length||''
+function updateCounts() {
+  document.getElementById('cnt-todos').textContent = all.length
+  const cats = ['empreendedorismo','criptomoedas','marketing','tecnologia','investimentos','jogos','educacao','renda-extra']
+  cats.forEach(c => {
+    const el = document.getElementById('cnt-' + c)
+    if (el) el.textContent = all.filter(g => g.category === c).length || ''
   })
 }
 
-function renderFeatured(){
-  const feat=all.filter(g=>g.is_featured)
-  const sec=document.getElementById('feat-sec')
-  if(!feat.length){sec.style.display='none';return}
-  sec.style.display='block'
-  document.getElementById('feat-strip').innerHTML=feat.map(g=>`
-    <div class="feat-item" onclick="enterGroup('${g.id}','${g.link}')">
+function renderFeatured() {
+  const feat = all.filter(g => g.is_featured)
+  const sec = document.getElementById('feat-sec')
+  if (!feat.length) { sec.style.display = 'none'; return }
+  sec.style.display = 'block'
+  document.getElementById('feat-strip').innerHTML = feat.map(g => `
+    <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
       <div class="feat-av" style="background:${BGS[g.category]||'#f9fafb'}">
-        ${g.image_url?`<img src="${g.image_url}" onerror="this.style.display='none'">`:`<span>${ICONS[g.category]||'⭐'}</span>`}
+        <span>${ICONS[g.category]||'⭐'}</span>
         <div class="feat-av-badge">⭐</div>
       </div>
       <div class="feat-name">${esc(g.name)}</div>
     </div>`).join('')
 }
 
-window.render=function(){
-  const q=document.getElementById('q').value.toLowerCase().trim()
-  let list=all
-  if(cat!=='todos')list=list.filter(g=>g.category===cat)
-  if(q)list=list.filter(g=>g.name.toLowerCase().includes(q)||(g.description||'').toLowerCase().includes(q))
-  document.getElementById('g-count').textContent=`${list.length} grupo${list.length!==1?'s':''}`
-  document.getElementById('grid-title').textContent=cat==='todos'?'Todos os grupos':`Grupos de ${cat}`
-  document.getElementById('grid').innerHTML=list.length?list.map((g,i)=>`
-    <div class="card${g.is_featured?' featured':''}" style="animation-delay:${i*.04}s">
-      ${g.is_featured?'<div class="feat-ribbon">⭐ Destaque</div>':''}
+window.render = function() {
+  const q = document.getElementById('q').value.toLowerCase().trim()
+  let list = all
+  if (cat !== 'todos') list = list.filter(g => g.category === cat)
+  if (q) list = list.filter(g => g.name.toLowerCase().includes(q) || (g.description||'').toLowerCase().includes(q))
+
+  document.getElementById('g-count').textContent = `${list.length} grupo${list.length !== 1 ? 's' : ''}`
+  document.getElementById('grid-title').textContent = cat === 'todos' ? 'Todos os grupos' : `Grupos de ${cat}`
+
+  if (!list.length) {
+    document.getElementById('grid').innerHTML = '<div class="empty">Nenhum grupo encontrado.</div>'
+    return
+  }
+
+  document.getElementById('grid').innerHTML = list.map((g, i) => `
+    <div class="card${g.is_featured ? ' featured' : ''}" style="animation-delay:${i * 0.04}s">
+      ${g.is_featured ? '<div class="feat-ribbon">⭐ Destaque</div>' : ''}
       <div class="card-top">
-        <div class="card-av" style="background:${BGS[g.category]||'#f9fafb'}">
-          ${g.image_url?`<img src="${esc(g.image_url)}" onerror="this.style.display='none'">`:`<span>${ICONS[g.category]||'⭐'}</span>`}
-        </div>
+        <div class="card-av" style="background:${BGS[g.category]||'#f9fafb'}">${ICONS[g.category]||'⭐'}</div>
         <div class="card-info">
           <div class="card-name">${esc(g.name)}</div>
           <div class="card-tags">
-            ${g.platform==='telegram'?`<span class="tag tag-tg">${TG_ICO} Telegram</span>`:`<span class="tag tag-wa">${WA_ICO} WhatsApp</span>`}
+            ${g.platform === 'telegram' ? `<span class="tag tag-tg">${TG} Telegram</span>` : `<span class="tag tag-wa">${WA} WhatsApp</span>`}
             <span class="tag tag-cat">${g.category}</span>
           </div>
         </div>
       </div>
       <div class="card-status cs-open">
-        <span class="cs-dot" style="background:#2563eb"></span>
+        <span class="cs-dot"></span>
         <span>Grupo Aberto</span>
         <span style="color:#9ca3af;font-size:10px;font-weight:400;margin-left:2px">Qualquer membro pode enviar mensagem.</span>
       </div>
-      ${g.description?`<p class="card-desc">${esc(g.description)}</p>`:''}
+      ${g.description ? `<p style="font-size:12px;color:var(--md);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(g.description)}</p>` : ''}
       <div class="card-actions">
-        <button class="btn-enter" onclick="enterGroup('${g.id}','${g.link}')">
-          ${g.platform==='telegram'?TG_ICO:WA_ICO} Entrar no Grupo
+        <button class="btn-enter" onclick="enterGroup('${g.id}','${esc(g.link)}')">
+          ${g.platform === 'telegram' ? TG : WA} Entrar no Grupo
         </button>
         ${g.is_featured
-          ?`<button class="btn-boosted">⭐ Grupo em destaque</button>`
-          :`<button class="btn-boost" onclick="openBoost('${g.id}','${esc(g.name)}')">⭐ Destacar Grupo</button>`
+          ? '<button class="btn-boosted">⭐ Grupo em destaque</button>'
+          : `<button class="btn-boost" onclick="openBoost('${g.id}','${esc(g.name)}')">⭐ Destacar Grupo</button>`
         }
       </div>
-    </div>`).join(''):'<div class="empty">Nenhum grupo encontrado.</div>'
+    </div>`).join('')
 }
 
-window.setCat=function(c,el){
-  cat=c
-  document.querySelectorAll('.sb-btn').forEach(b=>b.classList.toggle('on',b===el))
+window.setCat = function(c, el) {
+  cat = c
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.toggle('on', b === el))
   render()
 }
 
-window.enterGroup=function(id,link){
-  if(!link){showToast('Link indisponível','red');return}
-  sb.from('groups').update({views:(all.find(g=>g.id===id)?.views||0)+1}).eq('id',id)
-  window.open(link,'_blank')
+window.enterGroup = function(id, link) {
+  if (!link) { showToast('Link indisponível', 'red'); return }
+  sb.from('groups').update({ views: (all.find(g => g.id === id)?.views || 0) + 1 }).eq('id', id)
+  window.open(link, '_blank')
 }
 
-window.toggleDrawer=function(){
+window.toggleDrawer = function() {
   document.getElementById('drawer').classList.toggle('open')
   document.getElementById('drawer-ov').classList.toggle('open')
-  // populate drawer cats
-  const dc=document.getElementById('drawer-cats')
-  if(!dc.innerHTML){
-    dc.innerHTML=document.querySelector('.sidebar').innerHTML
+  const dc = document.getElementById('drawer-cats')
+  if (!dc.innerHTML) dc.innerHTML = document.getElementById('sidebar').innerHTML
+}
+
+// SUBMIT GRUPO
+window.detectPlatform = function(v) {
+  const badge = document.getElementById('plat-badge')
+  const icon = document.getElementById('plat-detect')
+  if (v.includes('chat.whatsapp.com') || v.includes('whatsapp.com')) {
+    icon.textContent = '✅'; icon.style.display = 'block'
+    badge.style.cssText = 'display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dcfce7;color:#15803d;align-items:center;gap:5px'
+    badge.innerHTML = WA + ' WhatsApp detectado'
+  } else if (v.includes('t.me/') || v.includes('telegram')) {
+    icon.textContent = '✅'; icon.style.display = 'block'
+    badge.style.cssText = 'display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;align-items:center;gap:5px'
+    badge.innerHTML = TG + ' Telegram detectado'
+  } else {
+    icon.style.display = 'none'; badge.style.display = 'none'
   }
 }
 
-// SUBMIT
-window.submitGroup=async function(){
-  const link=document.getElementById('s-link').value.trim()
-  const name=document.getElementById('s-name').value.trim()
-  const cat_=document.getElementById('s-cat').value
-  if(!link||!name||!cat_){showToast('Preencha todos os campos obrigatórios','red');return}
-  if(!link.startsWith('http')){showToast('Link inválido','red');return}
-  // Auto-detectar plataforma
-  const platform=link.includes('t.me/')||link.includes('telegram')?'telegram':'whatsapp'
-  const btn=document.getElementById('btn-send')
-  btn.disabled=true;btn.textContent='Enviando...'
-  const {error}=await sb.from('groups').insert({name,link,category:cat_,platform,approved:false,is_featured:false})
-  btn.disabled=false;btn.textContent='Publicar grupo agora'
-  if(error){showToast('Erro: '+error.message,'red');return}
+window.submitGroup = async function() {
+  const link = document.getElementById('s-link').value.trim()
+  const name = document.getElementById('s-name').value.trim()
+  const cat_ = document.getElementById('s-cat').value
+  if (!link || !name || !cat_) { showToast('Preencha todos os campos obrigatórios', 'red'); return }
+  if (!link.startsWith('http')) { showToast('Link inválido', 'red'); return }
+  const platform = link.includes('t.me/') || link.includes('telegram') ? 'telegram' : 'whatsapp'
+  const btn = document.getElementById('btn-send')
+  btn.disabled = true; btn.textContent = 'Enviando...'
+  const { error } = await sb.from('groups').insert({ name, link, category: cat_, platform, approved: false, is_featured: false })
+  btn.disabled = false; btn.textContent = 'Publicar grupo agora'
+  if (error) { showToast('Erro: ' + error.message, 'red'); return }
   closeModal('m-submit')
-  document.getElementById('s-link').value=''
-  document.getElementById('s-name').value=''
-  document.getElementById('s-cat').value=''
-  document.getElementById('plat-badge').style.display='none'
-  document.getElementById('plat-detect').style.display='none'
-  showToast('Grupo enviado! Aguarde aprovação ✅','green')
+  document.getElementById('s-link').value = ''
+  document.getElementById('s-name').value = ''
+  document.getElementById('s-cat').value = ''
+  document.getElementById('plat-badge').style.display = 'none'
+  document.getElementById('plat-detect').style.display = 'none'
+  showToast('Grupo enviado! Aguarde aprovação ✅', 'green')
 }
 
-window.detectPlatform=function(v){
-  const badge=document.getElementById('plat-badge')
-  const icon=document.getElementById('plat-detect')
-  if(v.includes('chat.whatsapp.com')||v.includes('whatsapp.com')){
-    icon.textContent='✅';icon.style.display='block'
-    badge.style.display='inline-flex';badge.style.cssText='display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dcfce7;color:#16a34a;align-items:center;gap:5px'
-    badge.innerHTML='<svg width=11 height=11 viewBox="0 0 16 16"><circle cx=8 cy=8 r=7 fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg> WhatsApp detectado'
-  }else if(v.includes('t.me/')||v.includes('telegram')){
-    icon.textContent='✅';icon.style.display='block'
-    badge.style.display='inline-flex';badge.style.cssText='display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;align-items:center;gap:5px'
-    badge.innerHTML='<svg width=11 height=11 viewBox="0 0 16 16"><circle cx=8 cy=8 r=7 fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg> Telegram detectado'
-  }else{
-    icon.style.display='none';badge.style.display='none'
-  }
-}
-
-// BOOST
-window.openBoost=function(id,name){
-  document.getElementById('b-gid').value=id
-  document.getElementById('b-gname').value=name
-  document.getElementById('dest-gname').textContent=name
-  const g=all.find(x=>x.id===id)
-  const icon=ICONS[g?.category||'outros']||'⭐'
-  document.getElementById('dest-av').textContent=icon
-  document.getElementById('dest-emoji').textContent=icon
-  document.getElementById('b-email').value=''
+// BOOST / PAGAMENTO
+window.openBoost = function(id, name) {
+  document.getElementById('b-gid').value = id
+  document.getElementById('b-gname').value = name
+  document.getElementById('dest-gname').textContent = name
+  const g = all.find(x => x.id === id)
+  const icon = ICONS[g?.category || 'outros'] || '⭐'
+  document.getElementById('dest-av').textContent = icon
+  document.getElementById('dest-emoji').textContent = icon
+  document.getElementById('b-email').value = ''
   selPlan('pro')
   openModal('m-boost')
 }
-window.selPlan=function(p){
-  plan=p
-  ;['starter','pro','vip'].forEach(k=>{
-    const el=document.getElementById('pl-'+k)
-    el.className='plan'+(k==='pro'?' pop':'')+(k===p?' sel':'')
+
+window.selPlan = function(p) {
+  plan = p
+  ;['starter', 'pro', 'vip'].forEach(k => {
+    document.getElementById('pl-' + k).className = 'plan' + (k === 'pro' ? ' pop' : '') + (k === p ? ' sel' : '')
   })
 }
-window.createPayment=async function(){
-  const gid=document.getElementById('b-gid').value
-  const gname=document.getElementById('b-gname').value
-  const email=document.getElementById('b-email').value.trim()
-  if(!email||!email.includes('@')){showToast('Email inválido','red');return}
-  const btn=document.getElementById('btn-pay')
-  btn.disabled=true;btn.innerHTML='⏳ Gerando PIX...'
-  try{
-    const r=await fetch('https://qgrxbjvvzrzzpcubycol.supabase.co/functions/v1/create-payment',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'},
-      body:JSON.stringify({groupId:gid,groupName:gname,email,plan})
+
+window.createPayment = async function() {
+  const gid = document.getElementById('b-gid').value
+  const gname = document.getElementById('b-gname').value
+  const email = document.getElementById('b-email').value.trim()
+  if (!email || !email.includes('@')) { showToast('Email inválido', 'red'); return }
+  const btn = document.getElementById('btn-pay')
+  btn.disabled = true; btn.innerHTML = '⏳ Gerando PIX...'
+  try {
+    const r = await fetch(`${SURL}/functions/v1/create-payment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({ groupId: gid, groupName: gname, email, plan })
     })
-    const d=await r.json()
-    if(d.error){showToast('Erro: '+d.error,'red');btn.disabled=false;btn.innerHTML='Pagar com PIX · Mercado Pago';return}
+    const d = await r.json()
+    if (d.error) { showToast('Erro: ' + d.error, 'red'); btn.disabled = false; btn.innerHTML = 'Pagar com PIX · Mercado Pago'; return }
     closeModal('m-boost')
     openPix(d)
-  }catch(e){
-    showToast('Erro de conexão. Tente novamente.','red')
-    btn.disabled=false;btn.innerHTML='Pagar com PIX · Mercado Pago'
+  } catch(e) {
+    showToast('Erro de conexão. Tente novamente.', 'red')
+    btn.disabled = false; btn.innerHTML = 'Pagar com PIX · Mercado Pago'
   }
 }
-function openPix(d){
-  const labels={starter:'Starter · 7 dias · R$14,90',pro:'Pro · 15 dias · R$24,90',vip:'VIP · 30 dias · R$39,90'}
-  document.getElementById('pix-lbl').textContent=labels[plan]
-  const qr=document.getElementById('pix-qr')
-  if(d.qrCodeBase64){qr.innerHTML=`<img src="data:image/png;base64,${d.qrCodeBase64}" style="width:180px;height:180px;border-radius:10px">`}
-  else{qr.innerHTML='<div style="font-size:28px">📋</div>'}
-  const code=document.getElementById('pix-code')
-  code.textContent=d.qrCode||'Código indisponível'
-  code.dataset.code=d.qrCode||''
-  document.getElementById('pix-st').className='pix-st pix-wait'
-  document.getElementById('pix-st').innerHTML='⏳ Aguardando pagamento... <span style="font-weight:800;color:var(--orange)" id="pix-timer">10:00</span>'
+
+function openPix(d) {
+  const labels = { starter: 'Starter · 7 dias · R$14,90', pro: 'Pro · 15 dias · R$24,90', vip: 'VIP · 30 dias · R$39,90' }
+  document.getElementById('pix-lbl').textContent = labels[plan]
+  const qr = document.getElementById('pix-qr')
+  if (d.qrCodeBase64) {
+    qr.innerHTML = `<img src="data:image/png;base64,${d.qrCodeBase64}" style="width:180px;height:180px;border-radius:10px">`
+  } else {
+    qr.innerHTML = '<div style="font-size:28px">📋</div>'
+  }
+  const code = document.getElementById('pix-code')
+  code.textContent = d.qrCode || 'Código indisponível'
+  code.dataset.code = d.qrCode || ''
+  document.getElementById('pix-st').className = 'pix-st pix-wait'
+  document.getElementById('pix-st').innerHTML = '⏳ Aguardando pagamento... <span style="font-weight:800;color:var(--orange)" id="pix-timer">10:00</span>'
   openModal('m-pix')
   startPoll(d.paymentId)
 }
-window.copyPix=function(){
-  const c=document.getElementById('pix-code').dataset.code
-  if(c)navigator.clipboard.writeText(c).then(()=>showToast('Código PIX copiado ✅','green'))
+
+window.copyPix = function() {
+  const c = document.getElementById('pix-code').dataset.code
+  if (c) navigator.clipboard.writeText(c).then(() => showToast('Código PIX copiado ✅', 'green'))
 }
-function startPoll(pid){
-  if(pixTimer)clearInterval(pixTimer)
-  let elapsed=0
-  pixTimer=setInterval(async()=>{
-    elapsed+=10
-    const rem=600-elapsed
-    if(rem<=0){clearInterval(pixTimer);return}
-    const tm=document.getElementById('pix-timer')
-    if(tm)tm.textContent=`${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')}`
-    try{
-      const r=await fetch(`${SURL}/functions/v1/check-payment`,{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':`Bearer ${SKEY}`},
-        body:JSON.stringify({paymentId:pid})
+
+function startPoll(pid) {
+  if (pixTimer) clearInterval(pixTimer)
+  let elapsed = 0
+  pixTimer = setInterval(async () => {
+    elapsed += 10
+    const rem = 600 - elapsed
+    if (rem <= 0) { clearInterval(pixTimer); return }
+    const tm = document.getElementById('pix-timer')
+    if (tm) tm.textContent = `${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')}`
+    try {
+      const r = await fetch(`${SURL}/functions/v1/check-payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+        body: JSON.stringify({ paymentId: pid })
       })
-      const d=await r.json()
-      if(d.status==='approved'){
+      const d = await r.json()
+      if (d.status === 'approved') {
         clearInterval(pixTimer)
-        document.getElementById('pix-st').className='pix-st pix-ok'
-        document.getElementById('pix-st').textContent='✅ PIX confirmado! Ativando destaque...'
-        showToast('Pagamento confirmado! Grupo em destaque 🎉','green')
-        setTimeout(()=>{closeModal('m-pix');load()},2000)
+        document.getElementById('pix-st').className = 'pix-st pix-ok'
+        document.getElementById('pix-st').textContent = '✅ PIX confirmado! Ativando destaque...'
+        showToast('Pagamento confirmado! Grupo em destaque 🎉', 'green')
+        setTimeout(() => { closeModal('m-pix'); load() }, 2000)
       }
-    }catch(e){}
-  },10000)
+    } catch(e) {}
+  }, 10000)
 }
 
-// helpers
-window.openModal=id=>document.getElementById(id).classList.add('open')
-window.closeModal=id=>document.getElementById(id).classList.remove('open')
-window.showToast=function(msg,type=''){
-  const t=document.getElementById('toast')
-  t.textContent=msg;t.className='toast show'+(type?' '+type:'')
-  setTimeout(()=>t.classList.remove('show'),3500)
+// HELPERS
+window.openModal = id => document.getElementById(id).classList.add('open')
+window.closeModal = id => document.getElementById(id).classList.remove('open')
+window.showToast = function(msg, type = '') {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : '')
+  setTimeout(() => t.classList.remove('show'), 3500)
 }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 
-// stats elements fallback
-const st=document.getElementById('s-total'),sf=document.getElementById('s-feat')
-if(!st){
-  const s=document.createElement('span');s.id='s-total';s.style.display='none';document.body.appendChild(s)
-}
-if(!sf){
-  const s=document.createElement('span');s.id='s-feat';s.style.display='none';document.body.appendChild(s)
-}
-
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-
+// INICIAR
 load()
 </script>
 </body>
