@@ -91,32 +91,35 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:58px;background:rg
 .grid-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .grid-title{font-size:15px;font-weight:700;color:var(--text)}
 .grid-count{font-size:12px;color:var(--text3);background:var(--surface2);padding:3px 10px;border-radius:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 
 /* CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:13px;transition:all .22s;position:relative;animation:fadeUp .35s ease both}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:all .22s;position:relative;animation:fadeUp .35s ease both;cursor:pointer}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.card:hover{border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,.4);transform:translateY(-2px);background:var(--surface2)}
-.card.featured{border-color:rgba(245,158,11,.3);box-shadow:0 0 20px rgba(245,158,11,.08)}
-.feat-ribbon{position:absolute;top:0;right:0;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:9px;font-weight:700;padding:4px 12px;border-radius:0 var(--r) 0 10px}
-.card-top{display:flex;align-items:flex-start;gap:13px}
-.card-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0;flex-shrink:0;border:2px solid var(--border);overflow:hidden;background:var(--surface2)}
-.card-av img{width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:3px}
-.card-info{flex:1;min-width:0}
-.card-name{font-size:14px;font-weight:700;margin-bottom:6px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.card-tags{display:flex;gap:5px;flex-wrap:wrap}
+.card:hover{border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(-3px)}
+.card.featured{border-color:rgba(245,158,11,.5);box-shadow:0 0 24px rgba(245,158,11,.12)}
+/* Estrela destaque no canto — igual à foto */
+.feat-star{position:absolute;top:10px;right:10px;width:32px;height:32px;background:#f59e0b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;z-index:10;box-shadow:0 2px 8px rgba(245,158,11,.5)}
+/* Imagem grande no topo do card */
+.card-img{width:100%;height:140px;object-fit:cover;display:block;background:var(--surface2)}
+.card-img-placeholder{width:100%;height:140px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:48px}
+/* Badge de categoria sobre a imagem */
+.card-cat-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;z-index:10}
+/* Body do card */
+.card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;flex:1;align-items:center;text-align:center}
+.card-name{font-size:14px;font-weight:700;line-height:1.35;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;width:100%}
+.card-desc{font-size:12px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
 .tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
 .tag-wa{background:var(--green-bg);color:#34d399;border:1px solid rgba(16,185,129,.2)}
 .tag-tg{background:var(--cyan-bg);color:#22d3ee;border:1px solid rgba(6,182,212,.2)}
-.tag-cat{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
-.card-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
-.cs-open{background:var(--green-bg);border:1px solid rgba(16,185,129,.2);color:#34d399}
-.cs-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:#10b981;animation:blink 2s infinite}
+.card-actions{margin-top:auto;display:flex;flex-direction:column;gap:6px;width:100%}
+.btn-enter{width:100%;padding:11px;background:#25d366;color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-enter:hover{background:#128c7e;transform:translateY(-1px)}
+.btn-enter-tg{background:#2CA5E0}
+.btn-enter-tg:hover{background:#1a8cbf}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.card-actions{display:flex;flex-direction:column;gap:8px}
-.btn-enter{width:100%;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 2px 12px var(--primary-glow)}
-.btn-enter:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--primary-glow)}
 .skel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);height:220px;overflow:hidden;position:relative}
 .skel::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);animation:shimmer 1.5s infinite}
 @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
@@ -259,9 +262,59 @@ footer a:hover{color:var(--text2)}
     <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
     <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
     <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
+    <button class="sb-btn" data-cat="achadinhos" onclick="setCat('achadinhos',this)"><span class="sb-ic">🛍️</span> Achadinhos <span class="sb-cnt" id="cnt-achadinhos"></span></button>
+    <button class="sb-btn" data-cat="apostas" onclick="setCat('apostas',this)"><span class="sb-ic">⚽</span> Apostas & Esportes <span class="sb-cnt" id="cnt-apostas"></span></button>
+    <button class="sb-btn" data-cat="relacionamento" onclick="setCat('relacionamento',this)"><span class="sb-ic">💞</span> Relacionamento <span class="sb-cnt" id="cnt-relacionamento"></span></button>
+    <button class="sb-btn" data-cat="amizade" onclick="setCat('amizade',this)"><span class="sb-ic">🤝</span> Amizade <span class="sb-cnt" id="cnt-amizade"></span></button>
+    <button class="sb-btn" data-cat="figurinhas" onclick="setCat('figurinhas',this)"><span class="sb-ic">😂</span> Figurinhas <span class="sb-cnt" id="cnt-figurinhas"></span></button>
+    <button class="sb-btn" data-cat="network" onclick="setCat('network',this)"><span class="sb-ic">🌐</span> Network <span class="sb-cnt" id="cnt-network"></span></button>
+    <button class="sb-btn" data-cat="vendas" onclick="setCat('vendas',this)"><span class="sb-ic">💸</span> Vendas Online <span class="sb-cnt" id="cnt-vendas"></span></button>
+    <button class="sb-btn" data-cat="+18" onclick="setCat('+18',this)"><span class="sb-ic">🔞</span> +18 <span class="sb-cnt" id="cnt-+18"></span></button>
+    <div class="sb-title" style="margin-top:4px">Ferramentas</div>
+    <button class="sb-btn" id="btn-gerador" onclick="showGerador(this)"><span class="sb-ic">🔗</span> Gerador de Link WA</button>
   </aside>
 
   <main class="main">
+    <!-- GERADOR DE LINK WHATSAPP -->
+    <div id="sec-gerador" style="display:none">
+      <div style="max-width:560px">
+        <div style="margin-bottom:20px">
+          <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px">🔗 Gerador de Link WhatsApp</div>
+          <div style="font-size:13px;color:var(--text2)">Crie um link direto para qualquer número brasileiro. Compartilhe e a pessoa abre o WhatsApp já na conversa.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:16px">
+          <!-- Número -->
+          <div>
+            <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Número do WhatsApp (Brasil) *</label>
+            <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border2);border-radius:var(--r-sm);overflow:hidden">
+              <div style="background:var(--surface2);padding:10px 14px;font-size:13px;font-weight:700;color:var(--text2);border-right:1px solid var(--border2);white-space:nowrap">🇧🇷 +55</div>
+              <input id="wa-numero" type="tel" maxlength="11" placeholder="11999998888" oninput="gerarLink()" style="flex:1;border:none;outline:none;background:transparent;padding:10px 14px;font-size:14px;color:var(--text)">
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">DDD + número (ex: 11999998888 ou 65993517234)</div>
+          </div>
+          <!-- Mensagem -->
+          <div>
+            <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Mensagem pré-definida (opcional)</label>
+            <textarea id="wa-msg" rows="3" placeholder="Olá! Vi você no Grupix e quero conversar..." oninput="gerarLink()" style="width:100%;border:1px solid var(--border2);border-radius:var(--r-sm);background:var(--surface2);color:var(--text);padding:10px 14px;font-size:13px;outline:none;resize:none;font-family:inherit"></textarea>
+          </div>
+          <!-- Link gerado -->
+          <div id="wa-result" style="display:none">
+            <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Link gerado</label>
+            <div style="background:var(--surface2);border:1px solid rgba(109,40,217,.3);border-radius:var(--r-sm);padding:12px 14px;font-size:12px;font-family:monospace;color:#a78bfa;word-break:break-all" id="wa-link-text"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button onclick="copiarLink()" style="flex:1;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s">📋 Copiar link</button>
+              <button onclick="abrirLink()" style="flex:1;padding:11px;background:#25d366;color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s">✅ Testar link</button>
+            </div>
+          </div>
+          <div id="wa-error" style="display:none;font-size:12px;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:var(--r-sm);padding:10px 14px"></div>
+        </div>
+        <!-- Dica -->
+        <div style="margin-top:14px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 16px;font-size:12px;color:var(--amber);line-height:1.6">
+          💡 <b>Como usar:</b> Cole o link gerado em bio do Instagram, stories, site, ou qualquer lugar. Quem clicar vai abrir direto o WhatsApp com a mensagem pronta.
+        </div>
+      </div>
+    </div>
+    <div id="sec-grupos">
     <div class="search-bar">
       <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#4f6080" stroke-width="1.5"/><line x1="10" y1="10" x2="14" y2="14" stroke="#4f6080" stroke-width="1.5" stroke-linecap="round"/></svg>
       <input id="q" type="text" placeholder="Buscar grupos por nome..." oninput="render()">
@@ -284,6 +337,8 @@ footer a:hover{color:var(--text2)}
       <div class="skel"></div><div class="skel"></div>
       <div class="skel"></div><div class="skel"></div>
     </div>
+
+    </div><!-- /sec-grupos -->
 
     <footer>
       <p style="color:#2d3a52;margin-bottom:8px">© 2025 Grupix · Todos os direitos reservados</p>
@@ -346,6 +401,14 @@ footer a:hover{color:var(--text2)}
           <option value="jogos">🎮 Jogos</option>
           <option value="educacao">📚 Educação</option>
           <option value="renda-extra">💰 Renda Extra</option>
+          <option value="achadinhos">🛍️ Achadinhos</option>
+          <option value="apostas">⚽ Apostas & Esportes</option>
+          <option value="relacionamento">💞 Relacionamento</option>
+          <option value="amizade">🤝 Amizade</option>
+          <option value="figurinhas">😂 Figurinhas</option>
+          <option value="network">🌐 Network</option>
+          <option value="vendas">💸 Vendas Online</option>
+          <option value="+18">🔞 +18</option>
         </select>
       </div>
       <div style="background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--amber);line-height:1.5">
@@ -372,8 +435,8 @@ const SURL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
 const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
 const sb = createClient(SURL, SKEY)
 
-const ICONS = {empreendedorismo:'💼',criptomoedas:'₿',marketing:'📈',tecnologia:'💻',investimentos:'📊',jogos:'🎮',educacao:'📚','renda-extra':'💰',outros:'⭐'}
-const BGS = {empreendedorismo:'#1e1b4b',criptomoedas:'#1c1a0a',marketing:'#0a2010',tecnologia:'#1a0f2e',investimentos:'#0a1628',jogos:'#1a0a0a',educacao:'#0a1a1a','renda-extra':'#0a2010',outros:'#1a1a2e'}
+const ICONS = {empreendedorismo:'💼',criptomoedas:'₿',marketing:'📈',tecnologia:'💻',investimentos:'📊',jogos:'🎮',educacao:'📚','renda-extra':'💰',achadinhos:'🛍️',apostas:'⚽',relacionamento:'💞',amizade:'🤝',figurinhas:'😂',network:'🌐',vendas:'💸','+18':'🔞',outros:'⭐'}
+const BGS = {empreendedorismo:'#1e1b4b',criptomoedas:'#1c1a0a',marketing:'#0a2010',tecnologia:'#1a0f2e',investimentos:'#0a1628',jogos:'#1a0a0a',educacao:'#0a1a1a','renda-extra':'#0a2010',achadinhos:'#1a0a1a',apostas:'#0a1a0a',relacionamento:'#1a0a14',amizade:'#0f0a1a',figurinhas:'#1a140a',network:'#0a0f1a',vendas:'#0a1410','+18':'#1a0a0a',outros:'#1a1a2e'}
 const WA = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
 const TG = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
 
@@ -389,7 +452,7 @@ async function load() {
 
 function updateCounts() {
   document.getElementById('cnt-todos').textContent = all.length
-  ;['empreendedorismo','criptomoedas','marketing','tecnologia','investimentos','jogos','educacao','renda-extra'].forEach(c => {
+  ;['empreendedorismo','criptomoedas','marketing','tecnologia','investimentos','jogos','educacao','renda-extra','achadinhos','apostas','relacionamento','amizade','figurinhas','network','vendas','+18'].forEach(c => {
     const el = document.getElementById('cnt-' + c)
     if (el) { const n = all.filter(g => g.category === c).length; el.textContent = n || '' }
   })
@@ -400,13 +463,19 @@ function renderFeatured() {
   const sec = document.getElementById('feat-sec')
   if (!feat.length) { sec.style.display = 'none'; return }
   sec.style.display = 'block'
-  document.getElementById('feat-strip').innerHTML = feat.map(g => `
+  document.getElementById('feat-strip').innerHTML = feat.map(g => {
+    const icon = ICONS[g.category] || '⭐'
+    return `
     <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
       <div class="feat-av" style="background:${BGS[g.category]||'#1a1a2e'}">
-        ${g.image_url ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:2px" onerror="this.outerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">` : `<span>${ICONS[g.category]||'⭐'}</span>`}
+        ${g.image_url
+          ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:2px" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span>${icon}</span>')">`
+          : `<span>${icon}</span>`
+        }
       </div>
       <div class="feat-name">${esc(g.name)}</div>
-    </div>`).join('')
+    </div>`
+  }).join('')
 }
 
 window.render = function() {
@@ -417,37 +486,40 @@ window.render = function() {
   document.getElementById('g-count').textContent = `${list.length} grupo${list.length !== 1 ? 's' : ''}`
   document.getElementById('grid-title').textContent = cat === 'todos' ? 'Todos os grupos' : `Grupos · ${cat}`
   if (!list.length) { document.getElementById('grid').innerHTML = '<div class="empty">Nenhum grupo encontrado.</div>'; return }
-  document.getElementById('grid').innerHTML = list.map((g, i) => `
+  document.getElementById('grid').innerHTML = list.map((g, i) => {
+    const icon = ICONS[g.category] || '⭐'
+    const isTG = g.platform === 'telegram'
+    return `
     <div class="card${g.is_featured ? ' featured' : ''}" style="animation-delay:${i * 0.04}s">
-      ${g.is_featured ? '<div class="feat-ribbon">⭐ Destaque</div>' : ''}
-      <div class="card-top">
-        <div class="card-av" style="background:${g.image_url ? '#fff' : BGS[g.category]||'#1a1a2e'}">
-          ${g.image_url ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:3px" onerror="this.parentElement.style.background='${BGS[g.category]||'#1a1a2e'}';this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>')">` : `<span style="font-size:26px">${ICONS[g.category]||'⭐'}</span>`}
+      ${g.is_featured ? '<div class="feat-star">⭐</div>' : ''}
+      <div style="position:relative">
+        <span class="card-cat-badge">${g.category||'geral'}</span>
+        ${g.image_url
+          ? `<img class="card-img" src="${esc(g.image_url)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card-img-placeholder" style="display:none">${icon}</div>`
+          : `<div class="card-img-placeholder">${icon}</div>`
+        }
+      </div>
+      <div class="card-body">
+        <div class="card-name">${esc(g.name)}</div>
+        <div class="card-tags">
+          ${isTG ? `<span class="tag tag-tg">${TG} Telegram</span>` : `<span class="tag tag-wa">${WA} WhatsApp</span>`}
         </div>
-        <div class="card-info">
-          <div class="card-name">${esc(g.name)}</div>
-          <div class="card-tags">
-            ${g.platform === 'telegram' ? `<span class="tag tag-tg">${TG} Telegram</span>` : `<span class="tag tag-wa">${WA} WhatsApp</span>`}
-          </div>
+        <div class="card-actions">
+          <button class="btn-enter${isTG ? ' btn-enter-tg' : ''}" onclick="enterGroup('${g.id}','${esc(g.link)}')">
+            ${isTG ? TG : WA} Entrar no Grupo
+          </button>
         </div>
       </div>
-      <div class="card-status cs-open">
-        <span class="cs-dot"></span>
-        <span>Grupo Aberto</span>
-        <span style="color:var(--text3);font-size:10px;font-weight:400;margin-left:2px">Qualquer membro pode enviar mensagem.</span>
-      </div>
-      <div class="card-actions">
-        <button class="btn-enter" onclick="enterGroup('${g.id}','${esc(g.link)}')">
-          ${g.platform === 'telegram' ? TG : WA} Entrar no Grupo
-        </button>
-        ${g.is_featured ? '<div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#f59e0b;padding:6px 0">⭐ Grupo em destaque</div>' : ''}
-      </div>
-    </div>`).join('')
+    </div>`
+  }).join('')
 }
 
 window.setCat = function(c, el) {
   cat = c
   document.querySelectorAll('.sb-btn').forEach(b => b.classList.toggle('on', b === el))
+  // garantir que seção de grupos está visível
+  document.getElementById('sec-grupos').style.display = 'block'
+  document.getElementById('sec-gerador').style.display = 'none'
   render()
 }
 
@@ -536,6 +608,56 @@ window.submitGroup = async function() {
 
 window.openModal = id => document.getElementById(id).classList.add('open')
 window.closeModal = id => document.getElementById(id).classList.remove('open')
+
+// ── GERADOR DE LINK WHATSAPP ──
+window.showGerador = function(el) {
+  // Marcar aba ativa
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'))
+  el.classList.add('on')
+  // Mostrar seção gerador, esconder grupos
+  document.getElementById('sec-gerador').style.display = 'block'
+  document.getElementById('sec-grupos').style.display = 'none'
+  gerarLink()
+}
+
+window.showGrupos = function() {
+  document.getElementById('sec-gerador').style.display = 'none'
+  document.getElementById('sec-grupos').style.display = 'block'
+}
+
+window.gerarLink = function() {
+  const num = document.getElementById('wa-numero').value.replace(/\D/g,'')
+  const result = document.getElementById('wa-result')
+  const errEl = document.getElementById('wa-error')
+  const linkText = document.getElementById('wa-link-text')
+  errEl.style.display = 'none'
+  if (!num) { result.style.display = 'none'; return }
+  if (num.length < 10 || num.length > 11) {
+    result.style.display = 'none'
+    errEl.textContent = '⚠️ Número inválido. Use DDD + número (10 ou 11 dígitos)'
+    errEl.style.display = 'block'
+    return
+  }
+  const msg = document.getElementById('wa-msg').value.trim()
+  const numero = '55' + num
+  const link = msg
+    ? `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
+    : `https://wa.me/${numero}`
+  linkText.textContent = link
+  linkText.dataset.url = link
+  result.style.display = 'block'
+  errEl.style.display = 'none'
+}
+
+window.copiarLink = function() {
+  const link = document.getElementById('wa-link-text').dataset.url
+  if (link) navigator.clipboard.writeText(link).then(() => showToast('Link copiado! ✅', 'green'))
+}
+
+window.abrirLink = function() {
+  const link = document.getElementById('wa-link-text').dataset.url
+  if (link) window.open(link, '_blank')
+}
 window.showToast = function(msg, type = '') {
   const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : '')
   setTimeout(() => t.classList.remove('show'), 3500)
