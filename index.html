@@ -685,7 +685,7 @@ window.submitGroup = async function() {
   const fp = btoa(navigator.userAgent + screen.width + screen.height).slice(0, 32)
   try {
     const r = await fetch(`${SURL}/functions/v1/add-group`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}`, 'X-Grupix-Token': 'gx_8f4k2p9x7q3m1n5v6j0t' },
       body: JSON.stringify({ name, link, category: cat_, platform: fetchedMeta.platform || (link.includes('t.me') ? 'telegram' : 'whatsapp'), image_url: fetchedMeta.imageUrl || null, fingerprint: fp })
     })
     const d = await r.json()
