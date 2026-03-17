@@ -82,8 +82,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .card.featured{border-color:#fed7aa;background:linear-gradient(135deg,#fffbf7,#fff)}
 .feat-ribbon{position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:4px 12px;border-radius:0 var(--r) 0 10px}
 .card-top{display:flex;align-items:flex-start;gap:12px}
-.card-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
-.card-av img{width:64px;height:64px;object-fit:cover;display:block;border-radius:50%}
+.card-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
+.card-av img{width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:3px}
 .card-info{flex:1;min-width:0}
 .card-name{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-tags{display:flex;gap:5px;flex-wrap:wrap}
@@ -509,8 +509,8 @@ window.render = function() {
       <div class="card-top">
         <div class="card-av" style="background:${g.image_url ? 'transparent' : BGS[g.category]||'#f9fafb'};padding:0;overflow:hidden">
           ${g.image_url
-            ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;min-width:64px;object-fit:contain;object-position:center;display:block;border-radius:50%;border:none;background:#fff;padding:3px" onerror="this.parentElement.style.background='${BGS[g.category]||'#f9fafb'}';this.outerHTML='<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>'">`
-            : `<span style="font-size:26px">${ICONS[g.category]||'⭐'}</span>`
+            ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;min-width:64px;object-fit:contain;object-position:center;display:block;border-radius:50%;border:none;background:#fff;padding:3px;font-size:0" onerror="this.parentElement.style.background='${BGS[g.category]||'#f9fafb'}';this.outerHTML='<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>'">`
+            : `<span style="font-size:26px;display:flex;align-items:center;justify-content:center;width:64px;height:64px">${ICONS[g.category]||'⭐'}</span>`
           }
         </div>
         <div class="card-info">
