@@ -4,102 +4,156 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grupix Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--black:#0a0a0a;--white:#fff;--gray:#f4f4f2;--gray2:#e8e8e4;--gray3:#a0a09a;--green:#00c896;--green-dark:#00a07a;--green-bg:#e6faf5;--orange:#ff6b2b;--orange-bg:#fff1eb;--red:#ef4444;--red-bg:#fef2f2;--blue:#0066ff;--r:12px;--r-sm:8px}
-body{background:var(--gray);color:var(--black);font-family:'DM Sans',sans-serif;min-height:100vh}
-button{cursor:pointer;font-family:'DM Sans',sans-serif;border:none;outline:none}
-input,select,textarea{font-family:'DM Sans',sans-serif}
-#login{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--green-bg),var(--gray))}
-.lcard{background:var(--white);border-radius:20px;padding:40px 36px;width:380px;box-shadow:0 8px 40px rgba(0,0,0,.08)}
-.llogo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
-.licon{width:38px;height:38px;background:var(--black);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.lname{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.5px}
-.lbadge{display:block;text-align:center;font-size:11px;font-weight:700;background:#fef3c7;color:#92400e;padding:4px 12px;border-radius:20px;margin-bottom:24px}
-.linp{width:100%;padding:11px 14px;border:2px solid var(--gray2);border-radius:var(--r-sm);font-size:14px;outline:none;margin-bottom:12px;transition:border-color .2s}
-.linp:focus{border-color:var(--black)}
-.lbtn{width:100%;padding:13px;background:var(--black);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s}
-.lbtn:hover{background:#222}
+:root{
+  --blue:#2563eb;--blue-h:#1d4ed8;--blue-bg:#eff6ff;--blue-light:#dbeafe;
+  --orange:#f97316;--orange-bg:#fff7ed;
+  --red:#ef4444;--red-bg:#fef2f2;
+  --green:#22c55e;--green-bg:#f0fdf4;
+  --white:#fff;--bg:#f0f2f5;--dk:#111827;--md:#6b7280;--lt:#e5e7eb;--ltr:#f3f4f6;
+  --r:10px;--r-sm:7px;
+}
+body{background:var(--bg);color:var(--dk);font-family:'Inter',sans-serif;min-height:100vh}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
+input,select,textarea{font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+
+/* LOGIN */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--blue-bg),var(--bg))}
+.lcard{background:var(--white);border-radius:18px;padding:40px 36px;width:380px;box-shadow:0 8px 40px rgba(0,0,0,.08)}
+.llogo{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px}
+.licon{width:36px;height:36px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.lname{font-weight:800;font-size:20px;letter-spacing:-.5px}
+.lbadge{display:block;text-align:center;font-size:11px;font-weight:700;background:#fef3c7;color:#92400e;padding:3px 12px;border-radius:20px;margin:10px auto 20px;width:fit-content}
+.linp{width:100%;padding:11px 13px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:14px;outline:none;margin-bottom:10px;transition:border-color .2s}
+.linp:focus{border-color:var(--blue)}
+.lbtn{width:100%;padding:12px;background:var(--blue);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s}
+.lbtn:hover{background:var(--blue-h)}
+.lbtn:disabled{opacity:.6;cursor:not-allowed}
 .lerr{font-size:12px;color:var(--red);margin-top:10px;text-align:center;display:none;background:var(--red-bg);padding:8px;border-radius:8px}
+
+/* APP */
 #app{display:none}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:var(--white);border-bottom:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .tlogo{display:flex;align-items:center;gap:8px}
-.ticon{width:28px;height:28px;background:var(--black);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.tname{font-family:'Syne',sans-serif;font-weight:800;font-size:16px}
-.tbadge{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px}
-.tbtns{display:flex;gap:8px;align-items:center}
-.tbtn{font-size:12px;color:var(--gray3);padding:6px 12px;border-radius:7px;border:1px solid var(--gray2);background:transparent;transition:all .15s}
-.tbtn:hover{border-color:#999;color:var(--black)}
-.tbtn-red{font-size:12px;color:var(--red);padding:6px 12px;border-radius:7px;border:1px solid #fecaca;background:transparent;transition:all .15s}
+.ticon{width:28px;height:28px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.tname{font-weight:800;font-size:16px}
+.tbadge{font-size:10px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;margin-left:4px}
+.tright{display:flex;align-items:center;gap:8px}
+.tbtn{font-size:12px;color:var(--md);padding:6px 12px;border-radius:6px;border:1px solid var(--lt);background:transparent;transition:all .15s}
+.tbtn:hover{border-color:#999;color:var(--dk)}
+.tbtn-red{font-size:12px;color:var(--red);padding:6px 12px;border-radius:6px;border:1px solid #fecaca;background:transparent;transition:all .15s}
 .tbtn-red:hover{background:var(--red);color:#fff}
 .shell{display:flex;padding-top:56px;min-height:100vh}
-.sidebar{width:200px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--gray2);padding:12px 0;overflow-y:auto}
-.sb-sec{font-size:10px;font-weight:700;color:var(--gray3);text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 5px}
-.sbi{display:flex;align-items:center;gap:9px;width:100%;padding:9px 16px;background:transparent;color:var(--gray3);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent}
-.sbi:hover{background:var(--gray);color:var(--black)}
-.sbi.on{background:var(--green-bg);color:var(--green-dark);font-weight:600;border-left-color:var(--green)}
-.sbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px}
-.main{margin-left:200px;flex:1;padding:24px;max-width:calc(100% - 200px)}
+.sidebar{width:210px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--lt);padding:10px 0;overflow-y:auto}
+.sb-sec{font-size:10px;font-weight:700;color:var(--md);text-transform:uppercase;letter-spacing:.7px;padding:14px 16px 4px}
+.sbi{display:flex;align-items:center;gap:9px;width:100%;padding:8px 16px;background:transparent;color:var(--md);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent;cursor:pointer}
+.sbi:hover{background:var(--ltr);color:var(--dk)}
+.sbi.on{background:var(--blue-bg);color:var(--blue);font-weight:600;border-left-color:var(--blue)}
+.sbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center}
+.main{margin-left:210px;flex:1;padding:22px;max-width:calc(100% - 210px)}
 .tab{display:none}.tab.on{display:block}
-.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
-.page-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.3px}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}}
-.mc{background:var(--white);border:1px solid var(--gray2);border-radius:var(--r);padding:18px;position:relative;overflow:hidden}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.mc.cg::before{background:var(--green)}.mc.co::before{background:var(--orange)}.mc.cb::before{background:var(--blue)}.mc.cr::before{background:var(--red)}
-.mc-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
-.mc-l{font-size:12px;color:var(--gray3);font-weight:500}
-.tw{background:var(--white);border:1px solid var(--gray2);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
-.th{padding:14px 18px;border-bottom:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.ph-title{font-size:18px;font-weight:800;letter-spacing:-.3px}
+
+/* METRICS */
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:900px){.mg{grid-template-columns:repeat(2,1fr)}}
+.mc{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.mc.cb::before{background:var(--blue)}.mc.co::before{background:var(--orange)}.mc.cg::before{background:var(--green)}.mc.cr::before{background:var(--red)}
+.mc-n{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:3px}
+.mc-l{font-size:12px;color:var(--md)}
+
+/* TABLE */
+.tw{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.th{padding:12px 16px;border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .th-title{font-size:13px;font-weight:700}
-.tsearch{padding:7px 12px;border:1.5px solid var(--gray2);border-radius:7px;font-size:12px;outline:none;width:200px;transition:border-color .2s}
-.tsearch:focus{border-color:var(--black)}
+.tsearch{padding:7px 11px;border:1.5px solid var(--lt);border-radius:6px;font-size:12px;outline:none;width:200px;transition:border-color .2s}
+.tsearch:focus{border-color:var(--blue)}
 table{width:100%;border-collapse:collapse}
-th{font-size:10px;font-weight:700;color:var(--gray3);text-transform:uppercase;letter-spacing:.5px;padding:10px 16px;text-align:left;background:var(--gray);border-bottom:1px solid var(--gray2)}
-td{padding:12px 16px;font-size:13px;border-bottom:1px solid var(--gray2);vertical-align:middle}
+th{font-size:10px;font-weight:700;color:var(--md);text-transform:uppercase;letter-spacing:.5px;padding:9px 14px;text-align:left;background:var(--ltr);border-bottom:1px solid var(--lt)}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafaf8}
+tr:hover td{background:#fafbfc}
 .gname{font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* TAGS */
 .tag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap}
-.tg{background:var(--green-bg);color:var(--green-dark)}
+.tb{background:var(--blue-bg);color:var(--blue)}
 .to{background:var(--orange-bg);color:var(--orange)}
 .tr{background:var(--red-bg);color:var(--red)}
-.tc{background:var(--gray);color:#555;border:1px solid var(--gray2)}
+.tg{background:var(--green-bg);color:#16a34a}
+.tc{background:var(--ltr);color:var(--md);border:1px solid var(--lt)}
+
+/* BUTTONS */
 .acts{display:flex;gap:5px;flex-wrap:wrap}
 .bs{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap}
-.bg{background:var(--green-bg);color:var(--green-dark)}.bg:hover{background:var(--green);color:#fff}
+.bg{background:var(--green-bg);color:#16a34a}.bg:hover{background:var(--green);color:#fff}
+.bb{background:var(--blue-bg);color:var(--blue)}.bb:hover{background:var(--blue);color:#fff}
 .br{background:var(--red-bg);color:var(--red)}.br:hover{background:var(--red);color:#fff}
 .bo{background:var(--orange-bg);color:var(--orange)}.bo:hover{background:var(--orange);color:#fff}
-.btn-p{background:var(--black);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;transition:all .2s}
-.btn-p:hover{background:#222}
+.btn-p{background:var(--blue);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;transition:all .2s}
+.btn-p:hover{background:var(--blue-h)}
+.btn-g{background:var(--green);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;transition:all .2s}
+.btn-g:hover{background:#16a34a}
+.btn-r{background:var(--red);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;transition:all .2s}
+.btn-r:hover{background:#dc2626}
+
+/* EMPTY/LOADING */
+.lc{text-align:center;padding:32px;color:var(--md);font-size:13px}
+.spin{width:18px;height:18px;border:2px solid var(--lt);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* BAR CHART */
 .bar-wrap{display:flex;flex-direction:column;gap:8px}
 .bar-row{display:flex;align-items:center;gap:10px;font-size:12px}
-.bar-lbl{width:130px;color:var(--gray3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
-.bar-track{flex:1;height:8px;background:var(--gray);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;background:var(--green);transition:width .5s}
+.bar-lbl{width:130px;color:var(--md);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--ltr);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .5s}
 .bar-val{width:32px;text-align:right;font-weight:600;flex-shrink:0}
-.lc{text-align:center;padding:32px;color:var(--gray3);font-size:13px}
-.spin{width:18px;height:18px;border:2px solid var(--gray2);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 8px}
-@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CATEGORY CARD */
+.cat-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.cat-item{background:var(--white);border:1.5px solid var(--lt);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:10px;transition:border-color .2s}
+.cat-item:hover{border-color:var(--blue)}
+.cat-ic{width:34px;height:34px;border-radius:8px;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.cat-name{font-weight:600;font-size:13px;flex:1}
+.cat-count{font-size:11px;color:var(--md)}
+.cat-actions{display:flex;gap:4px}
+
+/* TOGGLE */
+.toggle{width:34px;height:18px;background:var(--lt);border-radius:9px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--blue)}
+.toggle::after{content:'';position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:19px}
+
+/* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:16px}
 .overlay.open{display:flex}
-.modal{background:var(--white);border-radius:16px;padding:24px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
+.modal{background:var(--white);border-radius:14px;padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
 .modal.sm{max-width:360px}
 @keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.mt{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
-.mcl{width:28px;height:28px;border-radius:7px;background:var(--gray);font-size:16px;color:var(--gray3);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mt{font-size:16px;font-weight:800}
+.mcl{width:28px;height:28px;border-radius:7px;background:var(--ltr);font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .fg{margin-bottom:13px}
-.lbl{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray3);margin-bottom:4px}
-.inp,.sel{width:100%;padding:9px 12px;border:1.5px solid var(--gray2);border-radius:var(--r-sm);font-size:13px;outline:none;color:var(--black);transition:border-color .2s}
-.inp:focus,.sel:focus{border-color:var(--black)}
+.lbl{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--md);margin-bottom:4px}
+.inp,.sel{width:100%;padding:9px 12px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:13px;outline:none;color:var(--dk);transition:border-color .2s}
+.inp:focus,.sel:focus{border-color:var(--blue)}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:6px}
+.emoji-opt{padding:6px;border-radius:6px;font-size:18px;cursor:pointer;text-align:center;transition:all .15s;border:2px solid transparent}
+.emoji-opt:hover{background:var(--ltr)}
+.emoji-opt.sel{background:var(--blue-bg);border-color:var(--blue)}
+
+/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;z-index:999;transition:all .25s;pointer-events:none;opacity:0;transform:translateY(6px)}
 .toast.show{opacity:1;transform:translateY(0)}
-.toast.ok{background:var(--green-dark);color:#fff}
+.toast.ok{background:#15803d;color:#fff}
 .toast.err{background:var(--red);color:#fff}
-.toast.info{background:var(--black);color:#fff}
+.toast.info{background:var(--dk);color:#fff}
 </style>
 </head>
 <body>
@@ -110,11 +164,9 @@ tr:hover td{background:#fafaf8}
     <div class="llogo">
       <div class="licon">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <circle cx="4" cy="9" r="2" fill="#fff"/>
-          <circle cx="14" cy="5" r="2" fill="#fff"/>
-          <circle cx="14" cy="13" r="2" fill="#fff"/>
-          <line x1="6" y1="8" x2="12" y2="6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="6" y1="10" x2="12" y2="12" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="4" cy="9" r="2" fill="#fff"/><circle cx="14" cy="5" r="2" fill="#fff"/><circle cx="14" cy="13" r="2" fill="#fff"/>
+          <line x1="6" y1="8" x2="12" y2="6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="12" y2="12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <span class="lname">Grupix</span>
@@ -122,7 +174,7 @@ tr:hover td{background:#fafaf8}
     <span class="lbadge">🔒 Painel Administrativo</span>
     <input class="linp" id="l-email" type="email" placeholder="Email de admin" onkeydown="if(event.key==='Enter')login()">
     <input class="linp" id="l-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
-    <button class="lbtn" id="lbtn" onclick="login()">Entrar</button>
+    <button class="lbtn" id="lbtn" onclick="login()">Entrar no painel</button>
     <div class="lerr" id="lerr">Email ou senha incorretos.</div>
   </div>
 </div>
@@ -133,17 +185,15 @@ tr:hover td{background:#fafaf8}
     <div class="tlogo">
       <div class="ticon">
         <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-          <circle cx="4" cy="9" r="2" fill="#fff"/>
-          <circle cx="14" cy="5" r="2" fill="#fff"/>
-          <circle cx="14" cy="13" r="2" fill="#fff"/>
-          <line x1="6" y1="8" x2="12" y2="6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="6" y1="10" x2="12" y2="12" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="4" cy="9" r="2" fill="#fff"/><circle cx="14" cy="5" r="2" fill="#fff"/><circle cx="14" cy="13" r="2" fill="#fff"/>
+          <line x1="6" y1="8" x2="12" y2="6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="12" y2="12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
       <span class="tname">Grupix</span>
       <span class="tbadge">ADMIN</span>
     </div>
-    <div class="tbtns">
+    <div class="tright">
       <button class="tbtn" onclick="window.open('/','_blank')">↗ Ver site</button>
       <button class="tbtn-red" onclick="logout()">Sair</button>
     </div>
@@ -153,12 +203,18 @@ tr:hover td{background:#fafaf8}
     <aside class="sidebar">
       <div class="sb-sec">Painel</div>
       <button class="sbi on" onclick="nav('dash',this)">📊 Dashboard</button>
+
       <div class="sb-sec">Grupos</div>
       <button class="sbi" onclick="nav('pendentes',this)" id="nav-pend">
         ⏳ Pendentes <span class="sbadge" id="nb-pend">0</span>
       </button>
       <button class="sbi" onclick="nav('grupos',this)">✅ Aprovados</button>
       <button class="sbi" onclick="nav('destaques',this)">⭐ Destaques</button>
+
+      <div class="sb-sec">Configuração</div>
+      <button class="sbi" onclick="nav('categorias',this)">🗂️ Categorias</button>
+      <button class="sbi" onclick="nav('planos',this)">💎 Planos</button>
+
       <div class="sb-sec">Financeiro</div>
       <button class="sbi" onclick="nav('pagamentos',this)">💳 Pagamentos</button>
     </aside>
@@ -167,14 +223,14 @@ tr:hover td{background:#fafaf8}
 
       <!-- DASHBOARD -->
       <div id="tab-dash" class="tab on">
-        <div class="page-header">
-          <div class="page-title">Dashboard</div>
+        <div class="ph">
+          <div class="ph-title">Dashboard</div>
           <button class="btn-p" onclick="loadAll()">↻ Atualizar</button>
         </div>
-        <div class="metrics">
-          <div class="mc cg"><div class="mc-n" id="m-total">—</div><div class="mc-l">Grupos aprovados</div></div>
+        <div class="mg">
+          <div class="mc cb"><div class="mc-n" id="m-total">—</div><div class="mc-l">Grupos aprovados</div></div>
           <div class="mc co"><div class="mc-n" id="m-pend">—</div><div class="mc-l">Pendentes</div></div>
-          <div class="mc cb"><div class="mc-n" id="m-feat">—</div><div class="mc-l">Em destaque</div></div>
+          <div class="mc cg"><div class="mc-n" id="m-feat">—</div><div class="mc-l">Em destaque</div></div>
           <div class="mc cr"><div class="mc-n" id="m-receita">R$0</div><div class="mc-l">Receita total</div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
@@ -191,19 +247,19 @@ tr:hover td{background:#fafaf8}
 
       <!-- PENDENTES -->
       <div id="tab-pendentes" class="tab">
-        <div class="page-header"><div class="page-title">Grupos pendentes</div></div>
+        <div class="ph"><div class="ph-title">Grupos pendentes</div></div>
         <div class="tw">
           <div class="th"><span class="th-title" id="pend-count">Aguardando aprovação</span></div>
           <table><thead><tr><th>Grupo</th><th>Categoria</th><th>Plataforma</th><th>Link</th><th>Data</th><th>Ações</th></tr></thead>
-          <tbody id="pend-tbody"><tr><td colspan="6" class="lc"><div class="spin"></div>Carregando...</td></tr></tbody></table>
+          <tbody id="pend-tbody"><tr><td colspan="6" class="lc"><div class="spin"></div></td></tr></tbody></table>
         </div>
       </div>
 
-      <!-- GRUPOS APROVADOS -->
+      <!-- GRUPOS -->
       <div id="tab-grupos" class="tab">
-        <div class="page-header">
-          <div class="page-title">Grupos aprovados</div>
-          <button class="btn-p" onclick="openAddGroup()">+ Adicionar</button>
+        <div class="ph">
+          <div class="ph-title">Grupos aprovados</div>
+          <button class="btn-p" onclick="openAddGroup()">+ Adicionar grupo</button>
         </div>
         <div class="tw">
           <div class="th">
@@ -217,30 +273,110 @@ tr:hover td{background:#fafaf8}
 
       <!-- DESTAQUES -->
       <div id="tab-destaques" class="tab">
-        <div class="page-header"><div class="page-title">Grupos em destaque</div></div>
+        <div class="ph"><div class="ph-title">Grupos em destaque</div></div>
         <div class="tw">
-          <div class="th"><span class="th-title">Destaques ativos</span></div>
-          <table><thead><tr><th>Grupo</th><th>Plano</th><th>Válido até</th><th>Dias restantes</th><th>Ações</th></tr></thead>
+          <div class="th"><span class="th-title">Destaques ativos agora</span></div>
+          <table><thead><tr><th>Grupo</th><th>Categoria</th><th>Válido até</th><th>Dias restantes</th><th>Ações</th></tr></thead>
           <tbody id="dest-tbody"><tr><td colspan="5" class="lc"><div class="spin"></div></td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- CATEGORIAS -->
+      <div id="tab-categorias" class="tab">
+        <div class="ph">
+          <div class="ph-title">Gerenciar Categorias</div>
+          <button class="btn-p" onclick="openAddCat()">+ Nova categoria</button>
+        </div>
+        <div class="cat-list" id="cat-list">
+          <div class="lc" style="grid-column:1/-1"><div class="spin"></div>Carregando...</div>
+        </div>
+        <div class="tw">
+          <div class="th"><span class="th-title">ℹ️ Como funciona</span></div>
+          <div style="padding:14px 16px;font-size:13px;color:var(--md);line-height:1.7">
+            As categorias aqui controlam o que aparece na <strong>sidebar do site</strong> e nas opções do formulário de cadastro de grupo.
+            Ao adicionar ou remover categorias, atualize o <code>index.html</code> no GitHub para refletir no site.
+          </div>
+        </div>
+      </div>
+
+      <!-- PLANOS -->
+      <div id="tab-planos" class="tab">
+        <div class="ph"><div class="ph-title">Planos de destaque</div></div>
+        <div class="tw" style="margin-bottom:14px">
+          <div class="th"><span class="th-title">💳 Planos configurados (Mercado Pago)</span></div>
+          <div style="padding:16px">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="planos-grid">
+              <div style="border:1.5px solid var(--lt);border-radius:var(--r);padding:16px">
+                <div style="font-size:11px;font-weight:700;background:#e5e7eb;color:#374151;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">BÁSICO</div>
+                <div style="font-size:22px;font-weight:800;margin-bottom:4px">R$14,90</div>
+                <div style="font-size:12px;color:var(--md);margin-bottom:4px">7 dias de destaque</div>
+                <div style="font-size:11px;color:var(--md)">R$2,13/dia</div>
+              </div>
+              <div style="border:2px solid var(--blue);border-radius:var(--r);padding:16px;background:var(--blue-bg)">
+                <div style="font-size:11px;font-weight:700;background:var(--blue);color:#fff;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">PRO ⭐ POPULAR</div>
+                <div style="font-size:22px;font-weight:800;margin-bottom:4px">R$24,90</div>
+                <div style="font-size:12px;color:var(--md);margin-bottom:4px">15 dias de destaque</div>
+                <div style="font-size:11px;font-weight:700;color:var(--blue)">🔥 R$1,66/dia</div>
+              </div>
+              <div style="border:2px solid #6366f1;border-radius:var(--r);padding:16px;background:#eef2ff">
+                <div style="font-size:11px;font-weight:700;background:#6366f1;color:#fff;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">VIP 👑</div>
+                <div style="font-size:11px;color:#9ca3af;text-decoration:line-through">R$79,90</div>
+                <div style="font-size:22px;font-weight:800;margin-bottom:4px">R$39,90</div>
+                <div style="font-size:12px;color:var(--md);margin-bottom:4px">30 dias de destaque</div>
+                <div style="font-size:11px;font-weight:700;color:#6366f1">🏆 R$1,33/dia</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--md);margin-top:14px;padding:10px 14px;background:var(--ltr);border-radius:8px">
+              💡 Para alterar os valores dos planos, atualize as variáveis no código da Edge Function <code>create-payment</code> no Supabase.
+              <a href="https://supabase.com/dashboard/project/qgrxbjvvzrzzpcubycol/functions" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">→ Abrir Edge Functions</a>
+            </p>
+          </div>
         </div>
       </div>
 
       <!-- PAGAMENTOS -->
       <div id="tab-pagamentos" class="tab">
-        <div class="page-header"><div class="page-title">Pagamentos PIX</div></div>
-        <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
+        <div class="ph"><div class="ph-title">Pagamentos PIX</div></div>
+        <div class="mg" style="grid-template-columns:repeat(3,1fr)">
           <div class="mc cg"><div class="mc-n" id="pay-total">R$0</div><div class="mc-l">Total aprovado</div></div>
           <div class="mc co"><div class="mc-n" id="pay-pend">0</div><div class="mc-l">Pendentes</div></div>
-          <div class="mc cb"><div class="mc-n" id="pay-qtd">0</div><div class="mc-l">Transações</div></div>
+          <div class="mc cb"><div class="mc-n" id="pay-qtd">0</div><div class="mc-l">Total transações</div></div>
         </div>
         <div class="tw">
-          <div class="th"><span class="th-title">Histórico completo</span></div>
-          <table><thead><tr><th>Grupo</th><th>Plano</th><th>Valor</th><th>Email</th><th>Status</th><th>Data</th></tr></thead>
+          <div class="th">
+            <span class="th-title">Histórico completo</span>
+            <div style="display:flex;gap:6px">
+              <button class="bs bb on-filter" id="pf-all" onclick="filterPay('all',this)">Todos</button>
+              <button class="bs bg" id="pf-appr" onclick="filterPay('approved',this)">Aprovados</button>
+              <button class="bs bo" id="pf-pend" onclick="filterPay('pending',this)">Pendentes</button>
+            </div>
+          </div>
+          <table><thead><tr><th>Grupo</th><th>Email</th><th>Plano</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
           <tbody id="pay-tbody"><tr><td colspan="6" class="lc"><div class="spin"></div></td></tr></tbody></table>
         </div>
       </div>
 
     </main>
+  </div>
+</div>
+
+<!-- MODAL EDITAR GRUPO -->
+<div class="overlay" id="m-edit" onclick="if(event.target===this)closeOv('m-edit')">
+  <div class="modal">
+    <div class="mh"><span class="mt" id="edit-title">Editar grupo</span><button class="mcl" onclick="closeOv('m-edit')">×</button></div>
+    <div class="fg"><label class="lbl">Nome *</label><input class="inp" id="e-name" type="text"></div>
+    <div class="fg"><label class="lbl">Link *</label><input class="inp" id="e-link" type="url"></div>
+    <div class="fg"><label class="lbl">Plataforma</label>
+      <select class="sel" id="e-plat"><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select>
+    </div>
+    <div class="fg"><label class="lbl">Categoria</label>
+      <select class="sel" id="e-cat"></select>
+    </div>
+    <div class="fg"><label class="lbl">Membros</label><input class="inp" id="e-mem" type="number" placeholder="0"></div>
+    <div style="display:flex;gap:14px;margin-bottom:14px">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="e-feat" style="accent-color:var(--blue)"> Em destaque</label>
+    </div>
+    <button class="btn-p" style="width:100%" onclick="saveEdit()">Salvar alterações</button>
   </div>
 </div>
 
@@ -253,19 +389,24 @@ tr:hover td{background:#fafaf8}
     <div class="fg"><label class="lbl">Plataforma</label>
       <select class="sel" id="a-plat"><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select>
     </div>
-    <div class="fg"><label class="lbl">Categoria</label>
-      <select class="sel" id="a-cat">
-        <option value="empreendedorismo">Empreendedorismo</option>
-        <option value="criptomoedas">Criptomoedas</option>
-        <option value="marketing">Marketing</option>
-        <option value="tecnologia">Tecnologia</option>
-        <option value="investimentos">Investimentos</option>
-        <option value="jogos">Jogos</option>
-        <option value="educacao">Educação</option>
-        <option value="renda-extra">Renda Extra</option>
-      </select>
-    </div>
+    <div class="fg"><label class="lbl">Categoria</label><select class="sel" id="a-cat"></select></div>
+    <div class="fg"><label class="lbl">Membros</label><input class="inp" id="a-mem" type="number" placeholder="0"></div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin-bottom:14px"><input type="checkbox" id="a-feat" style="accent-color:var(--blue)"> Publicar já em destaque</label>
     <button class="btn-p" style="width:100%" id="btn-add" onclick="addGroup()">Adicionar grupo</button>
+  </div>
+</div>
+
+<!-- MODAL ADD CATEGORIA -->
+<div class="overlay" id="m-addcat" onclick="if(event.target===this)closeOv('m-addcat')">
+  <div class="modal sm">
+    <div class="mh"><span class="mt" id="cat-modal-title">Nova categoria</span><button class="mcl" onclick="closeOv('m-addcat')">×</button></div>
+    <div class="fg"><label class="lbl">Nome da categoria *</label><input class="inp" id="c-name" type="text" placeholder="Ex: Saúde e Bem-estar"></div>
+    <div class="fg"><label class="lbl">Emoji / ícone *</label>
+      <input class="inp" id="c-emoji" type="text" placeholder="Ex: 🌿" maxlength="4" style="font-size:20px;text-align:center">
+      <div class="emoji-grid" id="emoji-grid"></div>
+    </div>
+    <input type="hidden" id="c-slug">
+    <button class="btn-p" style="width:100%;margin-top:8px" id="btn-save-cat" onclick="saveCat()">Salvar categoria</button>
   </div>
 </div>
 
@@ -273,10 +414,10 @@ tr:hover td{background:#fafaf8}
 <div class="overlay" id="m-confirm" onclick="if(event.target===this)closeOv('m-confirm')">
   <div class="modal sm">
     <div class="mh"><span class="mt" id="cf-title">Confirmar</span><button class="mcl" onclick="closeOv('m-confirm')">×</button></div>
-    <p id="cf-text" style="font-size:13px;color:var(--gray3);margin-bottom:18px"></p>
+    <p id="cf-text" style="font-size:13px;color:var(--md);margin-bottom:18px"></p>
     <div style="display:flex;gap:8px">
-      <button style="flex:1;padding:10px;border-radius:var(--r-sm);border:1.5px solid var(--gray2);font-size:13px;font-weight:600;cursor:pointer" onclick="closeOv('m-confirm')">Cancelar</button>
-      <button class="btn-p" style="flex:1;background:var(--red)" id="cf-ok">Confirmar</button>
+      <button style="flex:1;padding:10px;border-radius:var(--r-sm);border:1.5px solid var(--lt);font-size:13px;font-weight:600;cursor:pointer" onclick="closeOv('m-confirm')">Cancelar</button>
+      <button class="btn-r" style="flex:1" id="cf-ok">Confirmar</button>
     </div>
   </div>
 </div>
@@ -290,9 +431,31 @@ const SURL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
 const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
 const sb = createClient(SURL, SKEY)
 
-let groups=[], payments=[], pendentes=[]
+// Categorias padrão (editáveis no painel)
+const CATS_DEFAULT = [
+  {slug:'empreendedorismo',name:'Empreendedorismo',emoji:'💼'},
+  {slug:'criptomoedas',name:'Criptomoedas',emoji:'₿'},
+  {slug:'marketing',name:'Marketing',emoji:'📈'},
+  {slug:'tecnologia',name:'Tecnologia',emoji:'💻'},
+  {slug:'investimentos',name:'Investimentos',emoji:'📊'},
+  {slug:'jogos',name:'Jogos',emoji:'🎮'},
+  {slug:'educacao',name:'Educação',emoji:'📚'},
+  {slug:'renda-extra',name:'Renda Extra',emoji:'💰'},
+]
+const EMOJIS_SUGESTOES = ['💼','₿','📈','💻','📊','🎮','📚','💰','🌿','🏋️','🍕','🎵','❤️','🤝','🚀','⚽','🎨','📷','✈️','🏠','🐶','🌎','💊','👗','🎯','🔥','⭐','🎓']
 
-// ─── LOGIN ───
+let groups=[], payments=[], pendentes=[], cats=[], editId=null, catEditSlug=null, payFilter='all'
+
+// ── INIT CATS ──
+function initCats(){
+  const saved = localStorage.getItem('grupix_cats')
+  cats = saved ? JSON.parse(saved) : [...CATS_DEFAULT]
+}
+function saveCatStore(){
+  localStorage.setItem('grupix_cats', JSON.stringify(cats))
+}
+
+// ── LOGIN ──
 window.login=async function(){
   const email=document.getElementById('l-email').value.trim()
   const pass=document.getElementById('l-pass').value
@@ -302,27 +465,28 @@ window.login=async function(){
   if(!email||!pass){err.textContent='Preencha todos os campos.';err.style.display='block';return}
   btn.disabled=true;btn.textContent='Entrando...'
   const {data,error}=await sb.from('admins').select('*').eq('email',email).eq('password_hash',pass).single()
-  btn.disabled=false;btn.textContent='Entrar'
+  btn.disabled=false;btn.textContent='Entrar no painel'
   if(error||!data){err.textContent='Email ou senha incorretos.';err.style.display='block';return}
   document.getElementById('login').style.display='none'
   document.getElementById('app').style.display='block'
+  initCats()
   loadAll()
 }
-
 window.logout=function(){
   document.getElementById('app').style.display='none'
   document.getElementById('login').style.display='flex'
 }
 
-// ─── NAV ───
+// ── NAV ──
 window.nav=function(tab,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'))
   document.querySelectorAll('.sbi').forEach(b=>b.classList.remove('on'))
   document.getElementById('tab-'+tab).classList.add('on')
   el.classList.add('on')
+  if(tab==='categorias')renderCats()
 }
 
-// ─── LOAD ───
+// ── LOAD ──
 window.loadAll=async function(){
   const [{data:g},{data:p}]=await Promise.all([
     sb.from('groups').select('*').order('created_at',{ascending:false}),
@@ -330,11 +494,12 @@ window.loadAll=async function(){
   ])
   groups=g||[]; payments=p||[]
   pendentes=groups.filter(x=>!x.approved)
-  renderDash(); renderPendentes(); renderGroups(); renderDestaques(); renderPagamentos()
   document.getElementById('nb-pend').textContent=pendentes.length
+  renderDash(); renderPendentes(); renderGroups(); renderDestaques(); renderPagamentos()
+  populateCatSelects()
 }
 
-// ─── DASHBOARD ───
+// ── DASHBOARD ──
 function renderDash(){
   const approved=groups.filter(g=>g.approved)
   const feat=groups.filter(g=>g.is_featured)
@@ -348,49 +513,52 @@ function renderDash(){
   document.getElementById('top-views').innerHTML=topV.length?`<div class="bar-wrap">${topV.map(g=>`
     <div class="bar-row"><div class="bar-lbl">${esc(g.name)}</div>
     <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((g.views||0)/maxV)*100)}%"></div></div>
-    <div class="bar-val">${g.views||0}</div></div>`).join('')}</div>`:'<div style="color:var(--gray3);font-size:13px">Sem dados ainda</div>'
+    <div class="bar-val">${g.views||0}</div></div>`).join('')}</div>`:'<div style="font-size:13px;color:var(--md)">Sem dados ainda</div>'
   const lastP=payments.slice(0,5)
   document.getElementById('last-pays').innerHTML=lastP.length?lastP.map(p=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray2)">
-      <div><div style="font-size:12px;font-weight:600">${esc(p.group_id||'—')}</div><div style="font-size:11px;color:var(--gray3)">${p.email||'—'}</div></div>
-      <div style="text-align:right"><div style="font-weight:700;color:var(--green-dark)">R$${(p.amount||0).toFixed(2).replace('.',',')}</div>
-      <span class="tag ${p.status==='approved'?'tg':p.status==='pending'?'to':'tr'}">${p.status==='approved'?'Pago':p.status==='pending'?'Pendente':'Rejeitado'}</span></div>
-    </div>`).join(''):'<div style="color:var(--gray3);font-size:13px">Sem pagamentos ainda</div>'
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--lt)">
+      <div><div style="font-size:12px;font-weight:600">${esc(p.group_id?.slice(0,8)||'—')}...</div><div style="font-size:11px;color:var(--md)">${p.email||'—'}</div></div>
+      <div style="text-align:right">
+        <div style="font-weight:700;color:var(--blue)">R$${(p.amount||0).toFixed(2).replace('.',',')}</div>
+        <span class="tag ${p.status==='approved'?'tg':p.status==='pending'?'to':'tr'}">${p.status==='approved'?'Pago':p.status==='pending'?'Pendente':'Rejeitado'}</span>
+      </div>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--md)">Sem pagamentos ainda</div>'
 }
 
-// ─── PENDENTES ───
+// ── PENDENTES ──
 function renderPendentes(){
   document.getElementById('pend-count').textContent=`${pendentes.length} aguardando aprovação`
   document.getElementById('pend-tbody').innerHTML=pendentes.length?pendentes.map(g=>`<tr>
     <td><div class="gname">${esc(g.name)}</div></td>
-    <td><span class="tag tc">${g.category}</span></td>
-    <td><span class="tag ${g.platform==='telegram'?'':'tg'}">${g.platform==='telegram'?'Telegram':'WhatsApp'}</span></td>
-    <td><a href="${g.link}" target="_blank" style="color:var(--blue);font-size:12px;text-decoration:none">Ver link ↗</a></td>
-    <td style="font-size:12px;color:var(--gray3)">${fmtDate(g.created_at)}</td>
+    <td><span class="tag tc">${g.category||'—'}</span></td>
+    <td><span class="tag ${g.platform==='telegram'?'tb':'tg'}">${g.platform==='telegram'?'Telegram':'WhatsApp'}</span></td>
+    <td><a href="${esc(g.link)}" target="_blank" style="color:var(--blue);font-size:12px;text-decoration:none">Ver link ↗</a></td>
+    <td style="font-size:12px;color:var(--md)">${fmtDate(g.created_at)}</td>
     <td><div class="acts">
       <button class="bs bg" onclick="approveGroup('${g.id}')">✅ Aprovar</button>
       <button class="bs br" onclick="delGroup('${g.id}','${esc(g.name)}')">🗑️ Rejeitar</button>
     </div></td>
-  </tr>`).join(''):'<tr><td colspan="6" class="lc">Nenhum grupo pendente.</td></tr>'
+  </tr>`).join(''):'<tr><td colspan="6" class="lc">Nenhum grupo pendente. 🎉</td></tr>'
 }
 
-// ─── GRUPOS ───
+// ── GRUPOS ──
 window.renderGroups=function(){
   const q=(document.getElementById('grp-q')?.value||'').toLowerCase()
   let list=groups.filter(g=>g.approved)
   if(q)list=list.filter(g=>g.name.toLowerCase().includes(q))
   document.getElementById('grp-count').textContent=`${list.length} grupos`
+  const now=new Date()
   document.getElementById('grp-tbody').innerHTML=list.length?list.map(g=>{
-    const now=new Date()
     const until=g.featured_until?new Date(g.featured_until):null
     const destOk=g.is_featured&&until&&until>now
     return `<tr>
       <td><div class="gname">${esc(g.name)}</div></td>
-      <td><span class="tag tc">${g.category}</span></td>
-      <td><span class="tag tg">${g.platform==='telegram'?'Telegram':'WhatsApp'}</span></td>
+      <td><span class="tag tc">${g.category||'—'}</span></td>
+      <td><span class="tag ${g.platform==='telegram'?'tb':'tg'}">${g.platform==='telegram'?'Telegram':'WhatsApp'}</span></td>
       <td>${g.views||0}</td>
-      <td>${destOk?`<span class="tag to">⭐ até ${fmtDate(g.featured_until)}</span>`:'<span style="color:var(--gray3);font-size:12px">—</span>'}</td>
+      <td>${destOk?`<span class="tag to">⭐ até ${fmtDate(g.featured_until)}</span>`:'<span style="color:var(--md);font-size:12px">—</span>'}</td>
       <td><div class="acts">
+        <button class="bs bb" onclick="openEdit('${g.id}')">✏️ Editar</button>
         ${destOk
           ?`<button class="bs br" onclick="toggleFeat('${g.id}',false)">Remover</button>`
           :`<button class="bs bo" onclick="toggleFeat('${g.id}',true)">⭐ Destacar</button>`
@@ -400,19 +568,19 @@ window.renderGroups=function(){
     </tr>`}).join(''):'<tr><td colspan="6" class="lc">Nenhum grupo.</td></tr>'
 }
 
-// ─── DESTAQUES ───
+// ── DESTAQUES ──
 function renderDestaques(){
   const feat=groups.filter(g=>g.is_featured)
   const now=new Date()
   document.getElementById('dest-tbody').innerHTML=feat.length?feat.map(g=>{
     const until=g.featured_until?new Date(g.featured_until):null
-    const dias=until?Math.max(0,Math.ceil((until-now)/(86400000))):0
+    const dias=until?Math.max(0,Math.ceil((until-now)/86400000)):0
     const expired=until&&until<now
     return `<tr>
       <td><div class="gname">${esc(g.name)}</div></td>
-      <td>—</td>
-      <td>${fmtDate(g.featured_until)}</td>
-      <td><span style="font-weight:700;color:${expired?'var(--red)':dias<=3?'var(--orange)':'var(--green-dark)'}">${expired?'⚠️ Expirado':dias+' dias'}</span></td>
+      <td><span class="tag tc">${g.category||'—'}</span></td>
+      <td style="font-size:12px;color:var(--md)">${fmtDate(g.featured_until)}</td>
+      <td><span style="font-weight:700;color:${expired?'var(--red)':dias<=3?'var(--orange)':'var(--blue)'}">${expired?'⚠️ Expirado':dias+' dias'}</span></td>
       <td><div class="acts">
         <button class="bs bg" onclick="extendFeat('${g.id}')">+7 dias</button>
         <button class="bs br" onclick="toggleFeat('${g.id}',false)">Remover</button>
@@ -420,36 +588,128 @@ function renderDestaques(){
     </tr>`}).join(''):'<tr><td colspan="5" class="lc">Nenhum destaque ativo.</td></tr>'
 }
 
-// ─── PAGAMENTOS ───
+// ── CATEGORIAS ──
+function renderCats(){
+  const catCounts={}
+  groups.filter(g=>g.approved).forEach(g=>{catCounts[g.category]=(catCounts[g.category]||0)+1})
+  document.getElementById('cat-list').innerHTML=cats.map(c=>`
+    <div class="cat-item">
+      <div class="cat-ic">${c.emoji}</div>
+      <div style="flex:1">
+        <div class="cat-name">${esc(c.name)}</div>
+        <div class="cat-count">${catCounts[c.slug]||0} grupos</div>
+      </div>
+      <div class="cat-actions">
+        <button class="bs bb" onclick="openEditCat('${c.slug}')">✏️</button>
+        <button class="bs br" onclick="deleteCat('${c.slug}','${esc(c.name)}')">🗑️</button>
+      </div>
+    </div>`).join('')
+  if(!cats.length) document.getElementById('cat-list').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--md)">Nenhuma categoria. Adicione a primeira!</div>'
+}
+
+window.openAddCat=function(){
+  catEditSlug=null
+  document.getElementById('cat-modal-title').textContent='Nova categoria'
+  document.getElementById('c-name').value=''
+  document.getElementById('c-emoji').value=''
+  document.getElementById('c-slug').value=''
+  buildEmojiGrid()
+  document.getElementById('m-addcat').classList.add('open')
+}
+
+window.openEditCat=function(slug){
+  const c=cats.find(x=>x.slug===slug); if(!c)return
+  catEditSlug=slug
+  document.getElementById('cat-modal-title').textContent='Editar categoria'
+  document.getElementById('c-name').value=c.name
+  document.getElementById('c-emoji').value=c.emoji
+  document.getElementById('c-slug').value=slug
+  buildEmojiGrid(c.emoji)
+  document.getElementById('m-addcat').classList.add('open')
+}
+
+function buildEmojiGrid(selected=''){
+  document.getElementById('emoji-grid').innerHTML=EMOJIS_SUGESTOES.map(e=>`
+    <div class="emoji-opt${e===selected?' sel':''}" onclick="selectEmoji('${e}')">${e}</div>`).join('')
+}
+
+window.selectEmoji=function(e){
+  document.getElementById('c-emoji').value=e
+  document.querySelectorAll('.emoji-opt').forEach(el=>el.classList.toggle('sel',el.textContent===e))
+}
+
+window.saveCat=function(){
+  const name=document.getElementById('c-name').value.trim()
+  const emoji=document.getElementById('c-emoji').value.trim()
+  if(!name){toast('Nome obrigatório','err');return}
+  if(!emoji){toast('Escolha um emoji','err');return}
+  const slug=catEditSlug||name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')
+  if(catEditSlug){
+    const idx=cats.findIndex(x=>x.slug===catEditSlug)
+    if(idx>=0)cats[idx]={slug,name,emoji}
+  } else {
+    if(cats.find(x=>x.slug===slug)){toast('Categoria já existe','err');return}
+    cats.push({slug,name,emoji})
+  }
+  saveCatStore()
+  closeOv('m-addcat')
+  renderCats()
+  populateCatSelects()
+  toast(catEditSlug?'Categoria atualizada!':'Categoria criada!','ok')
+}
+
+window.deleteCat=function(slug,name){
+  confirm2(`Remover categoria "${name}"?`,'Os grupos com essa categoria não serão deletados.',()=>{
+    cats=cats.filter(c=>c.slug!==slug)
+    saveCatStore(); renderCats(); populateCatSelects()
+    toast('Categoria removida','info')
+  })
+}
+
+function populateCatSelects(){
+  const options=cats.map(c=>`<option value="${c.slug}">${c.emoji} ${c.name}</option>`).join('')
+  document.getElementById('e-cat').innerHTML=options
+  document.getElementById('a-cat').innerHTML=options
+}
+
+// ── PAGAMENTOS ──
+window.filterPay=function(f,el){
+  payFilter=f
+  document.querySelectorAll('#tab-pagamentos .bs').forEach(b=>b.classList.remove('on-filter'))
+  el.classList.add('on-filter')
+  renderPagamentos()
+}
 function renderPagamentos(){
   const appr=payments.filter(p=>p.status==='approved')
   const total=appr.reduce((s,p)=>s+(p.amount||0),0)
   document.getElementById('pay-total').textContent='R$'+total.toFixed(2).replace('.',',')
   document.getElementById('pay-pend').textContent=payments.filter(p=>p.status==='pending').length
   document.getElementById('pay-qtd').textContent=payments.length
-  document.getElementById('pay-tbody').innerHTML=payments.length?payments.map(p=>`<tr>
-    <td style="font-size:12px">${esc(p.group_id||'—')}</td>
+  let list=payments
+  if(payFilter==='approved')list=payments.filter(p=>p.status==='approved')
+  else if(payFilter==='pending')list=payments.filter(p=>p.status==='pending')
+  document.getElementById('pay-tbody').innerHTML=list.length?list.map(p=>`<tr>
+    <td style="font-size:12px">${esc(p.group_id?.slice(0,8)||'—')}...</td>
+    <td style="font-size:12px;color:var(--md)">${esc(p.email||'—')}</td>
     <td><span class="tag tc">${p.plan||'—'} · ${p.dias||0}d</span></td>
-    <td style="font-weight:700;color:var(--green-dark)">R$${(p.amount||0).toFixed(2).replace('.',',')}</td>
-    <td style="font-size:12px;color:var(--gray3)">${p.email||'—'}</td>
+    <td style="font-weight:700;color:var(--blue)">R$${(p.amount||0).toFixed(2).replace('.',',')}</td>
     <td><span class="tag ${p.status==='approved'?'tg':p.status==='pending'?'to':'tr'}">${p.status==='approved'?'✅ Pago':p.status==='pending'?'⏳ Pendente':'❌ Falhou'}</span></td>
-    <td style="font-size:12px;color:var(--gray3)">${fmtDate(p.created_at)}</td>
+    <td style="font-size:12px;color:var(--md)">${fmtDate(p.created_at)}</td>
   </tr>`).join(''):'<tr><td colspan="6" class="lc">Sem pagamentos.</td></tr>'
 }
 
-// ─── AÇÕES ───
+// ── AÇÕES GRUPOS ──
 window.approveGroup=async function(id){
   const {error}=await sb.from('groups').update({approved:true}).eq('id',id)
-  if(error){showToast('Erro: '+error.message,'err');return}
-  showToast('Grupo aprovado!','ok')
-  await loadAll()
+  if(error){toast('Erro: '+error.message,'err');return}
+  toast('Grupo aprovado! ✅','ok'); await loadAll()
 }
 
 window.toggleFeat=async function(id,val){
   const until=val?new Date(Date.now()+30*86400000).toISOString():null
   const {error}=await sb.from('groups').update({is_featured:val,featured_until:until}).eq('id',id)
-  if(error){showToast('Erro','err');return}
-  showToast(val?'⭐ Destaque ativado 30 dias!':'Destaque removido','ok')
+  if(error){toast('Erro','err');return}
+  toast(val?'⭐ Destaque ativado (30 dias)!':'Destaque removido','ok')
   await loadAll()
 }
 
@@ -458,50 +718,81 @@ window.extendFeat=async function(id){
   const cur=g.featured_until&&new Date(g.featured_until)>new Date()?new Date(g.featured_until):new Date()
   const until=new Date(cur.getTime()+7*86400000).toISOString()
   await sb.from('groups').update({is_featured:true,featured_until:until}).eq('id',id)
-  showToast('+7 dias adicionados!','ok')
-  await loadAll()
+  toast('+7 dias adicionados! ✅','ok'); await loadAll()
 }
 
-window.delGroup=function(id,name){
-  confirm2(`Remover "${name}"?`,'Esta ação não pode ser desfeita.',async()=>{
-    await sb.from('groups').delete().eq('id',id)
-    showToast('Removido','info')
-    await loadAll()
-  })
+window.openEdit=function(id){
+  const g=groups.find(x=>x.id===id); if(!g)return
+  editId=id
+  document.getElementById('edit-title').textContent='Editar: '+g.name
+  document.getElementById('e-name').value=g.name||''
+  document.getElementById('e-link').value=g.link||''
+  document.getElementById('e-plat').value=g.platform||'whatsapp'
+  document.getElementById('e-cat').value=g.category||cats[0]?.slug||''
+  document.getElementById('e-mem').value=g.members||''
+  document.getElementById('e-feat').checked=!!g.is_featured
+  document.getElementById('m-edit').classList.add('open')
+}
+
+window.saveEdit=async function(){
+  const name=document.getElementById('e-name').value.trim()
+  if(!name){toast('Nome obrigatório','err');return}
+  const feat=document.getElementById('e-feat').checked
+  const {error}=await sb.from('groups').update({
+    name, link:document.getElementById('e-link').value.trim(),
+    platform:document.getElementById('e-plat').value,
+    category:document.getElementById('e-cat').value,
+    members:parseInt(document.getElementById('e-mem').value)||null,
+    is_featured:feat,
+    featured_until:feat?new Date(Date.now()+30*86400000).toISOString():null
+  }).eq('id',editId)
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('m-edit'); toast('Salvo! ✅','ok'); await loadAll()
 }
 
 window.openAddGroup=function(){
   ;['a-name','a-link'].forEach(i=>document.getElementById(i).value='')
+  document.getElementById('a-mem').value=''
+  document.getElementById('a-feat').checked=false
   document.getElementById('m-add').classList.add('open')
 }
+
 window.addGroup=async function(){
   const name=document.getElementById('a-name').value.trim()
   const link=document.getElementById('a-link').value.trim()
-  if(!name||!link){showToast('Nome e link obrigatórios','err');return}
+  if(!name||!link){toast('Nome e link obrigatórios','err');return}
   const btn=document.getElementById('btn-add'); btn.disabled=true; btn.textContent='Adicionando...'
+  const feat=document.getElementById('a-feat').checked
   const {error}=await sb.from('groups').insert({
     name, link, platform:document.getElementById('a-plat').value,
-    category:document.getElementById('a-cat').value, approved:true, is_featured:false, views:0
+    category:document.getElementById('a-cat').value,
+    members:parseInt(document.getElementById('a-mem').value)||null,
+    is_featured:feat, featured_until:feat?new Date(Date.now()+30*86400000).toISOString():null,
+    approved:true, views:0
   })
   btn.disabled=false; btn.textContent='Adicionar grupo'
-  if(error){showToast('Erro: '+error.message,'err');return}
-  closeOv('m-add'); showToast('Grupo adicionado!','ok'); await loadAll()
+  if(error){toast('Erro: '+error.message,'err');return}
+  closeOv('m-add'); toast('Grupo adicionado! ✅','ok'); await loadAll()
 }
 
-// ─── HELPERS ───
+window.delGroup=function(id,name){
+  confirm2(`Remover "${name}"?`,'Essa ação não pode ser desfeita.',async()=>{
+    await sb.from('groups').delete().eq('id',id)
+    toast('Grupo removido','info'); await loadAll()
+  })
+}
+
+// ── HELPERS ──
 function confirm2(title,text,onOk){
   document.getElementById('cf-title').textContent=title
   document.getElementById('cf-text').textContent=text
   document.getElementById('cf-ok').onclick=()=>{closeOv('m-confirm');onOk()}
   document.getElementById('m-confirm').classList.add('open')
 }
-
 function fmtDate(iso){if(!iso)return '—';return new Date(iso).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-
 window.closeOv=id=>document.getElementById(id).classList.remove('open')
-
-window.showToast=function(msg,type='info'){
+window.toast=function(msg,type='info'){
   const t=document.getElementById('toast')
   t.textContent=msg;t.className='toast show '+type
   setTimeout(()=>t.classList.remove('show'),3000)
