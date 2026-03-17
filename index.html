@@ -282,10 +282,98 @@ footer a:hover{color:var(--text2)}
 
     <div class="sb-title" style="margin-top:4px">Ferramentas</div>
     <button class="sb-btn" id="btn-gerador" onclick="showGerador(this)"><span class="sb-ic">🔗</span> Gerador de Link WA</button>
+    <button class="sb-btn" id="btn-imggen" onclick="showImgGen(this)"><span class="sb-ic">🎨</span> Gerador de Imagens IA</button>
   </aside>
 
   <main class="main">
-    <!-- GERADOR DE LINK WHATSAPP -->
+
+    <!-- GERADOR DE IMAGENS IA -->
+    <div id="sec-imggen" style="display:none">
+      <div style="max-width:680px">
+        <div style="margin-bottom:20px">
+          <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px">🎨 Gerador de Imagens com IA</div>
+          <div style="font-size:13px;color:var(--text2)">Descreva qualquer coisa em português ou inglês e a IA cria a imagem na hora. Grátis e sem limite.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:16px">
+          <!-- Prompt -->
+          <div>
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">
+              <span style="width:18px;height:18px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0">1</span>
+              Descreva a imagem que quer criar *
+            </label>
+            <textarea id="img-prompt" rows="3" placeholder="Ex: Um grupo de amigos no WhatsApp, estilo cartoon colorido&#10;Ex: Logo moderno para grupo de investimentos&#10;Ex: Wallpaper dark roxo com estrelas" style="width:100%;border:1px solid var(--border2);border-radius:var(--r-sm);background:var(--surface2);color:var(--text);padding:11px 14px;font-size:13px;outline:none;resize:none;font-family:inherit;line-height:1.6"></textarea>
+          </div>
+          <!-- Estilo -->
+          <div>
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">
+              <span style="width:18px;height:18px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0">2</span>
+              Estilo da imagem
+            </label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="img-estilos">
+              <button onclick="selEstilo(this,'realistic')" class="estilo-btn sel-estilo" data-s="realistic" style="padding:8px;border:1.5px solid var(--primary);border-radius:var(--r-sm);background:var(--primary-bg);color:#a78bfa;font-size:12px;font-weight:600;cursor:pointer">🌄 Realista</button>
+              <button onclick="selEstilo(this,'cartoon')" class="estilo-btn" data-s="cartoon" style="padding:8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer">🎨 Cartoon</button>
+              <button onclick="selEstilo(this,'anime')" class="estilo-btn" data-s="anime" style="padding:8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer">⛩️ Anime</button>
+              <button onclick="selEstilo(this,'digital art')" class="estilo-btn" data-s="digital art" style="padding:8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer">💻 Digital Art</button>
+              <button onclick="selEstilo(this,'3d render')" class="estilo-btn" data-s="3d render" style="padding:8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer">🧊 3D</button>
+              <button onclick="selEstilo(this,'minimalist logo')" class="estilo-btn" data-s="minimalist logo" style="padding:8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer">✏️ Logo</button>
+            </div>
+          </div>
+
+          <!-- Formato -->
+          <div>
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">
+              <span style="width:18px;height:18px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0">3</span>
+              Formato / Tamanho
+            </label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <button onclick="selFormato(this,'square')" class="formato-btn" style="padding:10px 8px;border:1.5px solid var(--primary);border-radius:var(--r-sm);background:var(--primary-bg);color:#a78bfa;font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <span style="font-size:18px">⬛</span>
+                <span>Quadrado</span>
+                <span style="font-size:10px;color:var(--text3)">1080×1080</span>
+              </button>
+              <button onclick="selFormato(this,'tiktok')" class="formato-btn" style="padding:10px 8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <span style="font-size:18px">📱</span>
+                <span>TikTok</span>
+                <span style="font-size:10px;color:var(--text3)">1080×1920</span>
+              </button>
+              <button onclick="selFormato(this,'youtube')" class="formato-btn" style="padding:10px 8px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+                <span style="font-size:18px">🖥️</span>
+                <span>YouTube</span>
+                <span style="font-size:10px;color:var(--text3)">1920×1080</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Botão gerar -->
+          <button id="btn-gerar-img" onclick="gerarImagem()" style="width:100%;padding:13px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 2px 16px var(--primary-glow)">
+            <span id="btn-gerar-txt">✨ Gerar Imagem</span>
+          </button>
+        </div>
+
+        <!-- RESULTADO -->
+        <div id="img-result" style="display:none;margin-top:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden">
+            <div style="position:relative;background:var(--surface2);min-height:320px;display:flex;align-items:center;justify-content:center">
+              <div id="img-loading" style="display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text2)">
+                <div style="width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite"></div>
+                <span style="font-size:13px">Gerando sua imagem...</span>
+                <span style="font-size:11px;color:var(--text3)">Pode levar alguns segundos ✨</span>
+              </div>
+              <img id="img-gerada" style="display:none;width:100%;max-height:500px;object-fit:contain" alt="Imagem gerada">
+            </div>
+            <div id="img-actions" style="display:none;padding:14px;display:none;gap:8px;border-top:1px solid var(--border)">
+              <button onclick="downloadImg()" style="flex:1;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">⬇️ Baixar imagem</button>
+              <button onclick="gerarImagem()" style="flex:1;padding:11px;background:var(--surface2);color:var(--text2);border-radius:var(--r-sm);font-size:13px;font-weight:600;border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">🔄 Gerar outra</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dica -->
+        <div style="margin-top:14px;background:var(--primary-bg);border:1px solid rgba(109,40,217,.2);border-radius:var(--r-sm);padding:12px 16px;font-size:12px;color:#a78bfa;line-height:1.6">
+          💡 <b>Dica:</b> Quanto mais detalhada a descrição, melhor a imagem. Ex: "Logo minimalista para grupo de apostas esportivas, cores azul e dourado, fundo escuro"
+        </div>
+      </div>
+    </div>
     <div id="sec-gerador" style="display:none">
       <div style="max-width:560px">
         <div style="margin-bottom:20px">
@@ -293,32 +381,28 @@ footer a:hover{color:var(--text2)}
           <div style="font-size:13px;color:var(--text2)">Crie um link direto para qualquer número brasileiro. Compartilhe e a pessoa abre o WhatsApp já na conversa.</div>
         </div>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:16px">
-          <!-- Número -->
           <div>
             <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Número do WhatsApp (Brasil) *</label>
-            <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border2);border-radius:var(--r-sm);overflow:hidden">
+            <div style="display:flex;align-items:center;border:1px solid var(--border2);border-radius:var(--r-sm);overflow:hidden">
               <div style="background:var(--surface2);padding:10px 14px;font-size:13px;font-weight:700;color:var(--text2);border-right:1px solid var(--border2);white-space:nowrap">🇧🇷 +55</div>
               <input id="wa-numero" type="tel" maxlength="11" placeholder="11999998888" oninput="gerarLink()" style="flex:1;border:none;outline:none;background:transparent;padding:10px 14px;font-size:14px;color:var(--text)">
             </div>
             <div style="font-size:11px;color:var(--text3);margin-top:4px">DDD + número (ex: 11999998888 ou 65993517234)</div>
           </div>
-          <!-- Mensagem -->
           <div>
             <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Mensagem pré-definida (opcional)</label>
             <textarea id="wa-msg" rows="3" placeholder="Olá! Vi você no Grupix e quero conversar..." oninput="gerarLink()" style="width:100%;border:1px solid var(--border2);border-radius:var(--r-sm);background:var(--surface2);color:var(--text);padding:10px 14px;font-size:13px;outline:none;resize:none;font-family:inherit"></textarea>
           </div>
-          <!-- Link gerado -->
           <div id="wa-result" style="display:none">
             <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:6px">Link gerado</label>
             <div style="background:var(--surface2);border:1px solid rgba(109,40,217,.3);border-radius:var(--r-sm);padding:12px 14px;font-size:12px;font-family:monospace;color:#a78bfa;word-break:break-all" id="wa-link-text"></div>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <button onclick="copiarLink()" style="flex:1;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s">📋 Copiar link</button>
-              <button onclick="abrirLink()" style="flex:1;padding:11px;background:#25d366;color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s">✅ Testar link</button>
+              <button onclick="copiarLink()" style="flex:1;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer">📋 Copiar link</button>
+              <button onclick="abrirLink()" style="flex:1;padding:11px;background:#25d366;color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;border:none;cursor:pointer">✅ Testar link</button>
             </div>
           </div>
           <div id="wa-error" style="display:none;font-size:12px;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:var(--r-sm);padding:10px 14px"></div>
         </div>
-        <!-- Dica -->
         <div style="margin-top:14px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 16px;font-size:12px;color:var(--amber);line-height:1.6">
           💡 <b>Como usar:</b> Cole o link gerado em bio do Instagram, stories, site, ou qualquer lugar. Quem clicar vai abrir direto o WhatsApp com a mensagem pronta.
         </div>
@@ -527,9 +611,9 @@ window.render = function() {
 window.setCat = function(c, el) {
   cat = c
   document.querySelectorAll('.sb-btn').forEach(b => b.classList.toggle('on', b === el))
-  // garantir que seção de grupos está visível
   document.getElementById('sec-grupos').style.display = 'block'
   document.getElementById('sec-gerador').style.display = 'none'
+  document.getElementById('sec-imggen').style.display = 'none'
   render()
 }
 
@@ -628,13 +712,120 @@ window.toggleCats = function() {
   list.style.maxHeight = catsOpen ? list.scrollHeight + 'px' : '0'
   arrow.style.transform = catsOpen ? 'rotate(180deg)' : 'rotate(0deg)'
 }
-window.showGerador = function(el) {
-  // Marcar aba ativa
+
+// ── GERADOR DE IMAGENS IA ──
+let estiloSel = 'realistic'
+let formatoSel = 'square'
+const FORMATOS = {
+  square:  { w: 1080, h: 1080 },
+  tiktok:  { w: 608,  h: 1080 },
+  youtube: { w: 1280, h: 720  },
+}
+
+window.showImgGen = function(el) {
   document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'))
   el.classList.add('on')
-  // Mostrar seção gerador, esconder grupos
+  document.getElementById('sec-imggen').style.display = 'block'
+  document.getElementById('sec-gerador').style.display = 'none'
+  document.getElementById('sec-grupos').style.display = 'none'
+}
+
+window.selEstilo = function(el, s) {
+  estiloSel = s
+  document.querySelectorAll('.estilo-btn').forEach(b => {
+    b.style.border = '1.5px solid var(--border2)'
+    b.style.background = 'transparent'
+    b.style.color = 'var(--text2)'
+  })
+  el.style.border = '1.5px solid var(--primary)'
+  el.style.background = 'var(--primary-bg)'
+  el.style.color = '#a78bfa'
+}
+
+window.selFormato = function(el, f) {
+  formatoSel = f
+  document.querySelectorAll('.formato-btn').forEach(b => {
+    b.style.border = '1.5px solid var(--border2)'
+    b.style.background = 'transparent'
+    b.style.color = 'var(--text2)'
+    b.querySelector('span:last-child').style.color = 'var(--text3)'
+  })
+  el.style.border = '1.5px solid var(--primary)'
+  el.style.background = 'var(--primary-bg)'
+  el.style.color = '#a78bfa'
+}
+
+window.gerarImagem = async function() {
+  const prompt = document.getElementById('img-prompt').value.trim()
+  if (!prompt) { showToast('Descreva a imagem primeiro!', 'red'); return }
+  const btn = document.getElementById('btn-gerar-img')
+  const btnTxt = document.getElementById('btn-gerar-txt')
+  btn.disabled = true
+  btnTxt.innerHTML = '<div style="width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></div> Gerando...'
+  const result = document.getElementById('img-result')
+  const loading = document.getElementById('img-loading')
+  const imgEl = document.getElementById('img-gerada')
+  const actions = document.getElementById('img-actions')
+  result.style.display = 'block'
+  loading.style.display = 'flex'
+  loading.innerHTML = '<div style="width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite"></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:13px;color:var(--text2)">Gerando sua imagem com IA...</span><span style="font-size:11px;color:var(--text3)">Pode levar até 30 segundos ✨</span></div>'
+  imgEl.style.display = 'none'
+  actions.style.display = 'none'
+
+  const fmt = FORMATOS[formatoSel] || FORMATOS.square
+  const fullPrompt = encodeURIComponent(`${prompt}, ${estiloSel} style, high quality, detailed`)
+  const seed = Math.floor(Math.random() * 999999)
+  const url = `https://image.pollinations.ai/prompt/${fullPrompt}?width=${fmt.w}&height=${fmt.h}&seed=${seed}&nologo=true&enhance=true`
+
+  // Timeout de 45 segundos
+  let timedOut = false
+  const timeout = setTimeout(() => {
+    timedOut = true
+    imgEl.src = ''
+    loading.innerHTML = '<span style="font-size:12px;color:#fca5a5;text-align:center">⚠️ Demorou demais. Tente um prompt mais simples ou clique em Gerar novamente.</span>'
+    btn.disabled = false
+    btnTxt.innerHTML = '✨ Gerar Imagem'
+  }, 45000)
+
+  imgEl.onload = () => {
+    if (timedOut) return
+    clearTimeout(timeout)
+    loading.style.display = 'none'
+    imgEl.style.display = 'block'
+    actions.style.display = 'flex'
+    imgEl.dataset.url = url
+    btn.disabled = false
+    btnTxt.innerHTML = '✨ Gerar Imagem'
+    showToast('Imagem gerada! ✅', 'green')
+  }
+  imgEl.onerror = () => {
+    if (timedOut) return
+    clearTimeout(timeout)
+    loading.innerHTML = `<div style="text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
+      <span style="font-size:22px">⚠️</span>
+      <span style="font-size:13px;color:#fca5a5;font-weight:600">Não foi possível gerar a imagem</span>
+      <span style="font-size:12px;color:var(--text3);line-height:1.5">Possíveis motivos:<br>• Prompt bloqueado por conteúdo sensível<br>• Servidor ocupado — tente novamente<br>• Descreva diferente, ex: evite "realista + pessoa"</span>
+      <button onclick="gerarImagem()" style="padding:8px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px">🔄 Tentar novamente</button>
+    </div>`
+    btn.disabled = false
+    btnTxt.innerHTML = '✨ Gerar Imagem'
+  }
+  imgEl.src = url
+}
+
+window.downloadImg = function() {
+  const url = document.getElementById('img-gerada').dataset.url
+  if (!url) return
+  const a = document.createElement('a')
+  a.href = url; a.download = 'grupix-imagem.jpg'; a.target = '_blank'; a.click()
+  showToast('Baixando imagem... ⬇️', 'green')
+}
+window.showGerador = function(el) {
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'))
+  el.classList.add('on')
   document.getElementById('sec-gerador').style.display = 'block'
   document.getElementById('sec-grupos').style.display = 'none'
+  document.getElementById('sec-imggen').style.display = 'none'
   gerarLink()
 }
 
