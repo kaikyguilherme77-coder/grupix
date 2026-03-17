@@ -262,17 +262,44 @@ footer a:hover{color:var(--blue)}
   <aside class="sidebar" id="sidebar">
     <div class="sb-title">Início</div>
     <button class="sb-btn on" data-cat="todos" onclick="setCat('todos',this)">
-      <span class="sb-ic">🏠</span> Home <span class="sb-cnt" id="cnt-todos"></span>
+      <span class="sb-ic">🏠</span> Todos os grupos <span class="sb-cnt" id="cnt-todos"></span>
     </button>
-    <div class="sb-title">Categorias</div>
-    <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">💼</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
-    <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
-    <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing <span class="sb-cnt" id="cnt-marketing"></span></button>
-    <button class="sb-btn" data-cat="tecnologia" onclick="setCat('tecnologia',this)"><span class="sb-ic">💻</span> Tecnologia <span class="sb-cnt" id="cnt-tecnologia"></span></button>
+
+    <div class="sb-title">Negócios</div>
+    <button class="sb-btn" data-cat="network" onclick="setCat('network',this)"><span class="sb-ic">🤝</span> Network <span class="sb-cnt" id="cnt-network"></span></button>
+    <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">🚀</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
+    <button class="sb-btn" data-cat="negocios" onclick="setCat('negocios',this)"><span class="sb-ic">💼</span> Negócios e Startups <span class="sb-cnt" id="cnt-negocios"></span></button>
+    <button class="sb-btn" data-cat="empresarios" onclick="setCat('empresarios',this)"><span class="sb-ic">🏢</span> Empresários <span class="sb-cnt" id="cnt-empresarios"></span></button>
+    <button class="sb-btn" data-cat="vendas" onclick="setCat('vendas',this)"><span class="sb-ic">🛒</span> Vendas Online <span class="sb-cnt" id="cnt-vendas"></span></button>
+    <button class="sb-btn" data-cat="ecommerce" onclick="setCat('ecommerce',this)"><span class="sb-ic">🛍️</span> E-commerce <span class="sb-cnt" id="cnt-ecommerce"></span></button>
+    <button class="sb-btn" data-cat="freelancers" onclick="setCat('freelancers',this)"><span class="sb-ic">🧑‍💻</span> Freelancers <span class="sb-cnt" id="cnt-freelancers"></span></button>
+    <button class="sb-btn" data-cat="vagas" onclick="setCat('vagas',this)"><span class="sb-ic">📋</span> Vagas de Emprego <span class="sb-cnt" id="cnt-vagas"></span></button>
+
+    <div class="sb-title">Marketing</div>
+    <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing Digital <span class="sb-cnt" id="cnt-marketing"></span></button>
+    <button class="sb-btn" data-cat="social-media" onclick="setCat('social-media',this)"><span class="sb-ic">📱</span> Social Media <span class="sb-cnt" id="cnt-social-media"></span></button>
+    <button class="sb-btn" data-cat="trafego-pago" onclick="setCat('trafego-pago',this)"><span class="sb-ic">💰</span> Tráfego Pago <span class="sb-cnt" id="cnt-trafego-pago"></span></button>
+    <button class="sb-btn" data-cat="copywriting" onclick="setCat('copywriting',this)"><span class="sb-ic">✍️</span> Copywriting <span class="sb-cnt" id="cnt-copywriting"></span></button>
+    <button class="sb-btn" data-cat="afiliados" onclick="setCat('afiliados',this)"><span class="sb-ic">🤑</span> Afiliados <span class="sb-cnt" id="cnt-afiliados"></span></button>
+    <button class="sb-btn" data-cat="growth" onclick="setCat('growth',this)"><span class="sb-ic">🎯</span> Growth Marketing <span class="sb-cnt" id="cnt-growth"></span></button>
+
+    <div class="sb-title">Tecnologia</div>
+    <button class="sb-btn" data-cat="tecnologia" onclick="setCat('tecnologia',this)"><span class="sb-ic">💻</span> Tecnologia & TI <span class="sb-cnt" id="cnt-tecnologia"></span></button>
+    <button class="sb-btn" data-cat="programadores" onclick="setCat('programadores',this)"><span class="sb-ic">👨‍💻</span> Programadores <span class="sb-cnt" id="cnt-programadores"></span></button>
+    <button class="sb-btn" data-cat="designers" onclick="setCat('designers',this)"><span class="sb-ic">🎨</span> Designers <span class="sb-cnt" id="cnt-designers"></span></button>
+    <button class="sb-btn" data-cat="ux-ui" onclick="setCat('ux-ui',this)"><span class="sb-ic">🖥️</span> UX/UI <span class="sb-cnt" id="cnt-ux-ui"></span></button>
+    <button class="sb-btn" data-cat="devops" onclick="setCat('devops',this)"><span class="sb-ic">⚙️</span> DevOps <span class="sb-cnt" id="cnt-devops"></span></button>
+    <button class="sb-btn" data-cat="ti-suporte" onclick="setCat('ti-suporte',this)"><span class="sb-ic">🔧</span> TI & Suporte <span class="sb-cnt" id="cnt-ti-suporte"></span></button>
+
+    <div class="sb-title">Finanças</div>
     <button class="sb-btn" data-cat="investimentos" onclick="setCat('investimentos',this)"><span class="sb-ic">📊</span> Investimentos <span class="sb-cnt" id="cnt-investimentos"></span></button>
-    <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
-    <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
+    <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
     <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
+
+    <div class="sb-title">Outros</div>
+    <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
+    <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
+    <button class="sb-btn" data-cat="outros" onclick="setCat('outros',this)"><span class="sb-ic">⭐</span> Outros <span class="sb-cnt" id="cnt-outros"></span></button>
   </aside>
 
   <main class="main">
@@ -442,14 +469,42 @@ footer a:hover{color:var(--blue)}
       <div class="fg"><label class="lbl">Categoria *</label>
         <select class="sel" id="s-cat">
           <option value="">Selecione...</option>
-          <option value="empreendedorismo">💼 Empreendedorismo</option>
-          <option value="criptomoedas">₿ Criptomoedas</option>
-          <option value="marketing">📈 Marketing</option>
-          <option value="tecnologia">💻 Tecnologia</option>
-          <option value="investimentos">📊 Investimentos</option>
-          <option value="jogos">🎮 Jogos</option>
-          <option value="educacao">📚 Educação</option>
-          <option value="renda-extra">💰 Renda Extra</option>
+          <optgroup label="Negócios & Profissional">
+            <option value="network">🤝 Network</option>
+            <option value="empreendedorismo">🚀 Empreendedorismo</option>
+            <option value="negocios">💼 Negócios e Startups</option>
+            <option value="empresarios">🏢 Empresários</option>
+            <option value="vendas">🛒 Vendas Online</option>
+            <option value="ecommerce">🛍️ E-commerce</option>
+            <option value="freelancers">🧑‍💻 Freelancers</option>
+            <option value="vagas">📋 Vagas de Emprego</option>
+          </optgroup>
+          <optgroup label="Marketing & Vendas">
+            <option value="marketing">📈 Marketing Digital</option>
+            <option value="social-media">📱 Social Media</option>
+            <option value="trafego-pago">💰 Tráfego Pago</option>
+            <option value="copywriting">✍️ Copywriting</option>
+            <option value="afiliados">🤑 Afiliados</option>
+            <option value="growth">🎯 Growth Marketing</option>
+          </optgroup>
+          <optgroup label="Tecnologia">
+            <option value="tecnologia">💻 Tecnologia & TI</option>
+            <option value="programadores">👨‍💻 Programadores</option>
+            <option value="designers">🎨 Designers</option>
+            <option value="ux-ui">🖥️ UX/UI</option>
+            <option value="devops">⚙️ DevOps</option>
+            <option value="ti-suporte">🔧 TI & Suporte</option>
+          </optgroup>
+          <optgroup label="Finanças">
+            <option value="investimentos">📊 Investimentos</option>
+            <option value="criptomoedas">₿ Criptomoedas</option>
+            <option value="renda-extra">💰 Renda Extra</option>
+          </optgroup>
+          <optgroup label="Outros">
+            <option value="educacao">📚 Educação</option>
+            <option value="jogos">🎮 Jogos</option>
+            <option value="outros">⭐ Outros</option>
+          </optgroup>
         </select>
       </div>
 
@@ -553,7 +608,14 @@ const SURL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
 const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
 const sb = createClient(SURL, SKEY)
 
-const ICONS = {empreendedorismo:'💼',criptomoedas:'₿',marketing:'📈',tecnologia:'💻',investimentos:'📊',jogos:'🎮',educacao:'📚','renda-extra':'💰',outros:'⭐'}
+const ICONS = {
+  empreendedorismo:'🚀',criptomoedas:'₿',marketing:'📈',tecnologia:'💻',
+  investimentos:'📊',jogos:'🎮',educacao:'📚','renda-extra':'💰',
+  network:'🤝',negocios:'💼',empresarios:'🏢',vendas:'🛒',ecommerce:'🛍️',
+  freelancers:'🧑‍💻',vagas:'📋','social-media':'📱','trafego-pago':'💰',
+  copywriting:'✍️',afiliados:'🤑',growth:'🎯',programadores:'👨‍💻',
+  designers:'🎨','ux-ui':'🖥️',devops:'⚙️','ti-suporte':'🔧',outros:'⭐'
+}
 const BGS = {empreendedorismo:'#f0f9ff',criptomoedas:'#fffbeb',marketing:'#f0fdf4',tecnologia:'#f5f3ff',investimentos:'#eff6ff',jogos:'#fef2f2',educacao:'#ecfeff','renda-extra':'#f0fdf4',outros:'#f9fafb'}
 const WA = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
 const TG = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
@@ -595,7 +657,13 @@ async function load() {
 
 function updateCounts() {
   document.getElementById('cnt-todos').textContent = all.length
-  const cats = ['empreendedorismo','criptomoedas','marketing','tecnologia','investimentos','jogos','educacao','renda-extra']
+  const cats = [
+    'network','empreendedorismo','negocios','empresarios','vendas','ecommerce','freelancers','vagas',
+    'marketing','social-media','trafego-pago','copywriting','afiliados','growth',
+    'tecnologia','programadores','designers','ux-ui','devops','ti-suporte',
+    'investimentos','criptomoedas','renda-extra',
+    'educacao','jogos','outros'
+  ]
   cats.forEach(c => {
     const el = document.getElementById('cnt-' + c)
     if (el) el.textContent = all.filter(g => g.category === c).length || ''
