@@ -470,7 +470,10 @@ function renderFeatured() {
   document.getElementById('feat-strip').innerHTML = feat.map(g => `
     <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
       <div class="feat-av" style="background:${BGS[g.category]||'#f9fafb'}">
-        <span>${ICONS[g.category]||'⭐'}</span>
+        ${g.image_url
+          ? `<img src="${esc(g.image_url)}" alt="${esc(g.name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.innerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
+          : `<span>${ICONS[g.category]||'⭐'}</span>`
+        }
         <div class="feat-av-badge">⭐</div>
       </div>
       <div class="feat-name">${esc(g.name)}</div>
@@ -495,7 +498,12 @@ window.render = function() {
     <div class="card${g.is_featured ? ' featured' : ''}" style="animation-delay:${i * 0.04}s">
       ${g.is_featured ? '<div class="feat-ribbon">⭐ Destaque</div>' : ''}
       <div class="card-top">
-        <div class="card-av" style="background:${BGS[g.category]||'#f9fafb'}">${ICONS[g.category]||'⭐'}</div>
+        <div class="card-av" style="background:${BGS[g.category]||'#f9fafb'}">
+          ${g.image_url
+            ? `<img src="${esc(g.image_url)}" alt="${esc(g.name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.innerHTML='<span style=\\"font-size:22px\\">${ICONS[g.category]||'⭐'}</span>'">`
+            : `<span style="font-size:22px">${ICONS[g.category]||'⭐'}</span>`
+          }
+        </div>
         <div class="card-info">
           <div class="card-name">${esc(g.name)}</div>
           <div class="card-tags">
@@ -735,6 +743,43 @@ function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 
 // INICIAR
 load()
+</script>
+<!-- PROTEÇÃO DE CÓDIGO -->
+<script>
+(function(){
+  // Bloquear clique direito
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
+
+  // Bloquear atalhos de teclado
+  document.addEventListener('keydown', function(e){
+    // F12
+    if(e.key === 'F12' || e.keyCode === 123){ e.preventDefault(); return false; }
+    // Ctrl+U (ver código fonte)
+    if(e.ctrlKey && (e.key === 'u' || e.key === 'U')){ e.preventDefault(); return false; }
+    // Ctrl+Shift+I (DevTools)
+    if(e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')){ e.preventDefault(); return false; }
+    // Ctrl+Shift+J (Console)
+    if(e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')){ e.preventDefault(); return false; }
+    // Ctrl+Shift+C (Inspecionar)
+    if(e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')){ e.preventDefault(); return false; }
+    // Ctrl+S (salvar página)
+    if(e.ctrlKey && (e.key === 's' || e.key === 'S')){ e.preventDefault(); return false; }
+  });
+
+  // Detectar DevTools aberto e redirecionar
+  let devtools = false;
+  const threshold = 160;
+  setInterval(function(){
+    if(window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold){
+      if(!devtools){
+        devtools = true;
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Inter,sans-serif;flex-direction:column;gap:16px;background:#f0f2f5"><div style="font-size:48px">🔒</div><h2 style="font-size:20px;font-weight:700;color:#111">Acesso não permitido</h2><p style="color:#6b7280;font-size:14px">Feche as ferramentas de desenvolvimento e recarregue a página.</p><button onclick="location.reload()" style="background:#2563eb;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer">Recarregar</button></div>';
+      }
+    } else {
+      devtools = false;
+    }
+  }, 1000);
+})();
 </script>
 </body>
 </html>
