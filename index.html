@@ -336,7 +336,7 @@ footer a:hover{color:var(--dk)}
       </div>
 
       <button class="btn-prim" id="btn-send" onclick="submitGroup()">Publicar grupo agora</button>
-      <p style="font-size:11px;color:var(--md);text-align:center;margin-top:10px">Após aprovação, seu grupo aparecerá gratuitamente.</p>
+      <p style="font-size:11px;color:var(--md);text-align:center;margin-top:10px">Seu grupo aparecerá no diretório imediatamente! 🚀</p>
     </div>
   </div>
 </div>
@@ -617,7 +617,7 @@ window.submitGroup = async function() {
   const { error } = await sb.from('groups').insert({
     name, link, category: cat_, platform,
     image_url: fetchedMeta.imageUrl || null,
-    approved: false, is_featured: false
+    approved: true, is_featured: false
   })
   btn.disabled = false; btn.textContent = 'Publicar grupo agora'
   if (error) { showToast('Erro: ' + error.message, 'red'); return }
@@ -626,7 +626,7 @@ window.submitGroup = async function() {
   document.getElementById('s-name').value = ''
   document.getElementById('s-cat').value  = ''
   hideMetaPanels()
-  showToast('Grupo enviado! Aguarde aprovação ✅', 'green')
+  showToast('Grupo publicado com sucesso! 🎉', 'green')
 }
 
 // BOOST / PAGAMENTO
