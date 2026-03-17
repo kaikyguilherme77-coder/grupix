@@ -253,23 +253,33 @@ footer a:hover{color:var(--text2)}
     <button class="sb-btn on" data-cat="todos" onclick="setCat('todos',this)">
       <span class="sb-ic">🏠</span> Home <span class="sb-cnt" id="cnt-todos"></span>
     </button>
-    <div class="sb-title" style="margin-top:4px">Categorias</div>
-    <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">💼</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
-    <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
-    <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing <span class="sb-cnt" id="cnt-marketing"></span></button>
-    <button class="sb-btn" data-cat="tecnologia" onclick="setCat('tecnologia',this)"><span class="sb-ic">💻</span> Tecnologia <span class="sb-cnt" id="cnt-tecnologia"></span></button>
-    <button class="sb-btn" data-cat="investimentos" onclick="setCat('investimentos',this)"><span class="sb-ic">📊</span> Investimentos <span class="sb-cnt" id="cnt-investimentos"></span></button>
-    <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
-    <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
-    <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
-    <button class="sb-btn" data-cat="achadinhos" onclick="setCat('achadinhos',this)"><span class="sb-ic">🛍️</span> Achadinhos <span class="sb-cnt" id="cnt-achadinhos"></span></button>
-    <button class="sb-btn" data-cat="apostas" onclick="setCat('apostas',this)"><span class="sb-ic">⚽</span> Apostas & Esportes <span class="sb-cnt" id="cnt-apostas"></span></button>
-    <button class="sb-btn" data-cat="relacionamento" onclick="setCat('relacionamento',this)"><span class="sb-ic">💞</span> Relacionamento <span class="sb-cnt" id="cnt-relacionamento"></span></button>
-    <button class="sb-btn" data-cat="amizade" onclick="setCat('amizade',this)"><span class="sb-ic">🤝</span> Amizade <span class="sb-cnt" id="cnt-amizade"></span></button>
-    <button class="sb-btn" data-cat="figurinhas" onclick="setCat('figurinhas',this)"><span class="sb-ic">😂</span> Figurinhas <span class="sb-cnt" id="cnt-figurinhas"></span></button>
-    <button class="sb-btn" data-cat="network" onclick="setCat('network',this)"><span class="sb-ic">🌐</span> Network <span class="sb-cnt" id="cnt-network"></span></button>
-    <button class="sb-btn" data-cat="vendas" onclick="setCat('vendas',this)"><span class="sb-ic">💸</span> Vendas Online <span class="sb-cnt" id="cnt-vendas"></span></button>
-    <button class="sb-btn" data-cat="+18" onclick="setCat('+18',this)"><span class="sb-ic">🔞</span> +18 <span class="sb-cnt" id="cnt-+18"></span></button>
+
+    <!-- CATEGORIAS COLAPSÁVEL -->
+    <button class="sb-title sb-collapsible" onclick="toggleCats()" id="cats-toggle" style="margin-top:4px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 18px 8px;cursor:pointer;background:transparent;border:none;color:var(--text3)">
+      <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px">Categorias</span>
+      <svg id="cats-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" style="transition:transform .2s;transform:rotate(0deg)">
+        <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div id="cats-list" style="overflow:hidden;max-height:0;transition:max-height .3s ease">
+      <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">💼</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
+      <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
+      <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing <span class="sb-cnt" id="cnt-marketing"></span></button>
+      <button class="sb-btn" data-cat="tecnologia" onclick="setCat('tecnologia',this)"><span class="sb-ic">💻</span> Tecnologia <span class="sb-cnt" id="cnt-tecnologia"></span></button>
+      <button class="sb-btn" data-cat="investimentos" onclick="setCat('investimentos',this)"><span class="sb-ic">📊</span> Investimentos <span class="sb-cnt" id="cnt-investimentos"></span></button>
+      <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
+      <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
+      <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
+      <button class="sb-btn" data-cat="achadinhos" onclick="setCat('achadinhos',this)"><span class="sb-ic">🛍️</span> Achadinhos <span class="sb-cnt" id="cnt-achadinhos"></span></button>
+      <button class="sb-btn" data-cat="apostas" onclick="setCat('apostas',this)"><span class="sb-ic">⚽</span> Apostas & Esportes <span class="sb-cnt" id="cnt-apostas"></span></button>
+      <button class="sb-btn" data-cat="relacionamento" onclick="setCat('relacionamento',this)"><span class="sb-ic">💞</span> Relacionamento <span class="sb-cnt" id="cnt-relacionamento"></span></button>
+      <button class="sb-btn" data-cat="amizade" onclick="setCat('amizade',this)"><span class="sb-ic">🤝</span> Amizade <span class="sb-cnt" id="cnt-amizade"></span></button>
+      <button class="sb-btn" data-cat="figurinhas" onclick="setCat('figurinhas',this)"><span class="sb-ic">😂</span> Figurinhas <span class="sb-cnt" id="cnt-figurinhas"></span></button>
+      <button class="sb-btn" data-cat="network" onclick="setCat('network',this)"><span class="sb-ic">🌐</span> Network <span class="sb-cnt" id="cnt-network"></span></button>
+      <button class="sb-btn" data-cat="vendas" onclick="setCat('vendas',this)"><span class="sb-ic">💸</span> Vendas Online <span class="sb-cnt" id="cnt-vendas"></span></button>
+      <button class="sb-btn" data-cat="+18" onclick="setCat('+18',this)"><span class="sb-ic">🔞</span> +18 <span class="sb-cnt" id="cnt-+18"></span></button>
+    </div>
+
     <div class="sb-title" style="margin-top:4px">Ferramentas</div>
     <button class="sb-btn" id="btn-gerador" onclick="showGerador(this)"><span class="sb-ic">🔗</span> Gerador de Link WA</button>
   </aside>
@@ -609,7 +619,15 @@ window.submitGroup = async function() {
 window.openModal = id => document.getElementById(id).classList.add('open')
 window.closeModal = id => document.getElementById(id).classList.remove('open')
 
-// ── GERADOR DE LINK WHATSAPP ──
+// ── CATEGORIAS COLAPSÁVEL ──
+let catsOpen = false
+window.toggleCats = function() {
+  catsOpen = !catsOpen
+  const list = document.getElementById('cats-list')
+  const arrow = document.getElementById('cats-arrow')
+  list.style.maxHeight = catsOpen ? list.scrollHeight + 'px' : '0'
+  arrow.style.transform = catsOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+}
 window.showGerador = function(el) {
   // Marcar aba ativa
   document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'))
