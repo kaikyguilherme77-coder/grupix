@@ -1,1 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupix — Descubra Grupos de WhatsApp e Telegram</title>
+<meta name="description" content="O maior diretório de grupos de WhatsApp e Telegram do Brasil. +500 grupos verificados em 26 categorias: Marketing, Tecnologia, Investimentos, Network e muito mais.">
 
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://grupix.site">
+<meta property="og:title" content="Grupix — Descubra Grupos de WhatsApp e Telegram">
+<meta property="og:description" content="O maior diretório de grupos do Brasil. +500 grupos verificados em 26 categorias: Marketing Digital, Tecnologia, Investimentos, Network e muito mais. 100% gratuito!">
+<meta property="og:image" content="https://grupix.site/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Grupix">
+<meta property="og:locale" content="pt_BR">
+
+<!-- WhatsApp específico -->
+<meta property="og:image:type" content="image/png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Grupix — Descubra Grupos de WhatsApp e Telegram">
+<meta name="twitter:description" content="O maior diretório de grupos do Brasil. +500 grupos verificados. 100% gratuito!">
+<meta name="twitter:image" content="https://grupix.site/og-image.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2322c55e'/><circle cx='9' cy='16' r='4' fill='white'/><circle cx='23' cy='10' r='4' fill='white'/><circle cx='23' cy='22' r='4' fill='white'/><line x1='13' y1='14' x2='19' y2='11' stroke='white' stroke-width='2' stroke-linecap='round'/><line x1='13' y1='18' x2='19' y2='21' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#2563eb;--blue-h:#1d4ed8;--blue-bg:#eff6ff;--blue-mid:#dbeafe;
+  --orange:#f97316;--orange-h:#ea6c0a;--orange-bg:#fff7ed;
+  --white:#fff;--bg:#f0f2f5;--dk:#111827;--md:#6b7280;--lt:#e5e7eb;--ltr:#f3f4f6;
+  --r:12px;--r-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dk);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+button{cursor:pointer;font-family:'Inter',sans-serif;border:none;outline:none}
+input,select,textarea{font-family:'Inter',sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:var(--white);border-bottom:1px solid var(--lt);display:flex;align-items:center;justify-content:space-between;padding:0 20px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
+.logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-text{font-weight:800;font-size:18px;color:var(--dk);letter-spacing:-.5px}
+.logo-text span{color:var(--blue)}
+.btn-add-group{background:var(--blue);color:#fff;padding:8px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn-add-group:hover{background:var(--blue-h)}
+.btn-menu{display:none;background:transparent;padding:4px;border-radius:6px}
+
+/* LAYOUT */
+.shell{display:flex;padding-top:56px;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:220px;flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;background:var(--white);border-right:1px solid var(--lt);overflow-y:auto;padding:12px 0}
+.sb-title{font-size:11px;font-weight:700;color:var(--md);text-transform:uppercase;letter-spacing:.6px;padding:14px 16px 6px;display:flex;align-items:center;gap:6px}
+.sb-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 16px;background:transparent;color:var(--md);font-size:13px;font-weight:500;text-align:left;transition:all .15s;border-left:3px solid transparent;cursor:pointer;border:none;outline:none}
+.sb-btn:hover{background:var(--ltr);color:var(--dk)}
+.sb-btn.on{background:var(--blue-bg);color:var(--blue);font-weight:700;border-left:3px solid var(--blue)}
+.sb-ic{width:22px;height:22px;border-radius:6px;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.sb-btn.on .sb-ic{background:var(--blue-mid)}
+.sb-cnt{margin-left:auto;font-size:11px;color:#d1d5db}
+.sb-btn.on .sb-cnt{color:#93c5fd}
+
+/* MAIN */
+.main{margin-left:220px;flex:1;padding:20px;max-width:calc(100% - 220px)}
+
+/* SEARCH */
+.search-bar{background:var(--white);border-radius:var(--r);border:1.5px solid var(--lt);padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;max-width:560px;transition:border-color .2s}
+.search-bar:focus-within{border-color:var(--blue)}
+.search-bar input{flex:1;border:none;outline:none;font-size:14px;color:var(--dk);background:transparent}
+.search-bar input::placeholder{color:#9ca3af}
+.search-bar button{background:var(--blue);color:#fff;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;transition:all .15s}
+.search-bar button:hover{background:var(--blue-h)}
+
+/* FEATURED */
+.feat-sec{background:var(--white);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;border:1px solid var(--lt)}
+.sec-lbl{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.feat-strip{display:flex;gap:18px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.feat-strip::-webkit-scrollbar{display:none}
+.feat-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;transition:transform .15s}
+.feat-item:hover{transform:translateY(-2px)}
+.feat-av{width:62px;height:62px;border-radius:50%;border:2.5px solid var(--orange);background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0;position:relative}
+.feat-av img{width:62px;height:62px;object-fit:cover;display:block;border-radius:50%}
+.feat-av-badge{position:absolute;bottom:0;right:0;width:18px;height:18px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;border:1.5px solid var(--white)}
+.feat-name{font-size:11px;font-weight:700;max-width:64px;text-align:center;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* GRID */
+.grid-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.grid-title{font-size:14px;font-weight:700}
+.grid-count{font-size:12px;color:var(--md)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;transition:all .2s;position:relative;overflow:hidden;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
+.card.featured{border-color:#fed7aa;background:linear-gradient(135deg,#fffbf7,#fff)}
+.feat-ribbon{position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:4px 12px;border-radius:0 var(--r) 0 10px}
+.card-top{display:flex;align-items:flex-start;gap:12px}
+.card-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
+.card-av img{width:64px;height:64px;object-fit:contain;display:block;border-radius:50%;background:#fff;padding:3px}
+.card-info{flex:1;min-width:0}
+.card-name{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.tag-wa{background:#dcfce7;color:#15803d}
+.tag-tg{background:#dbeafe;color:#1d4ed8}
+.tag-cat{background:var(--ltr);color:var(--md);border:1px solid var(--lt)}
+.card-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
+.cs-open{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a}
+.cs-closed{background:#fef2f2;border:1px solid #fecaca;color:#dc2626}
+.mode-row{display:flex;gap:10px}
+.mode-btn{flex:1;padding:10px 12px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s;border:1.5px solid var(--lt);background:var(--white);color:var(--md)}
+.mode-btn.open-on{border-color:#22c55e;background:#f0fdf4;color:#16a34a}
+.mode-btn.close-on{border-color:#ef4444;background:#fef2f2;color:#dc2626}
+.mode-hint{font-size:10px;color:#9ca3af;margin-top:6px;text-align:center}
+.cs-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#22c55e}
+.card-actions{display:flex;flex-direction:column;gap:8px}
+.btn-enter{width:100%;padding:10px;background:var(--blue);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-enter:hover{background:var(--blue-h)}
+.btn-boost{width:100%;padding:10px;background:var(--orange-bg);color:var(--orange);border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-boost:hover{background:var(--orange);color:#fff}
+.btn-boosted{width:100%;padding:10px;background:#fff7ed;color:var(--orange);border-radius:var(--r-sm);font-size:13px;font-weight:700;border:1.5px solid #fed7aa;display:flex;align-items:center;justify-content:center;gap:6px;cursor:default}
+.skel{background:var(--white);border:1px solid var(--lt);border-radius:var(--r);height:210px;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--md);font-size:14px}
+
+/* FOOTER */
+footer{margin-top:40px;border-top:1px solid var(--lt);background:var(--white)}
+footer a{color:var(--md);text-decoration:none}
+footer a:hover{color:var(--blue)}
+.ft-stats{display:flex;justify-content:center;gap:40px;padding:24px 40px;background:#f8faff;border-bottom:1px solid var(--lt);flex-wrap:wrap}
+.ft-stat{text-align:center}
+.ft-stat-n{display:block;font-size:20px;font-weight:800;color:var(--blue);letter-spacing:-.5px}
+.ft-stat-l{font-size:11px;color:var(--md);margin-top:2px}
+.ft-main{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:32px;padding:32px 40px;max-width:1200px;margin:0 auto}
+.ft-logo{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ft-logo-mark{width:26px;height:26px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.ft-logo-name{font-weight:800;font-size:16px;letter-spacing:-.3px}
+.ft-desc{font-size:12px;color:var(--md);line-height:1.7;margin-bottom:10px}
+.ft-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.ft-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px}
+.ft-badge-wa{background:#dcfce7;color:#16a34a}
+.ft-badge-tg{background:#dbeafe;color:#1d4ed8}
+.ft-title{font-size:11px;font-weight:700;color:var(--dk);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ft-links li a{font-size:12px;color:var(--md);transition:color .15s}
+.ft-links li a:hover{color:var(--blue)}
+.ft-btn{width:100%;padding:10px;background:var(--blue);color:#fff;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:opacity .15s}
+.ft-btn:hover{opacity:.9}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;padding:14px 40px;border-top:1px solid var(--lt);font-size:11px;color:var(--md);flex-wrap:wrap;gap:8px;max-width:1200px;margin:0 auto;width:100%}
+.ft-bottom-links{display:flex;gap:16px}
+.ft-bottom-links a{font-size:11px;color:var(--md)}
+.ft-bottom-links a:hover{color:var(--blue)}
+@media(max-width:900px){.ft-main{grid-template-columns:1fr 1fr;gap:24px;padding:24px 20px}.ft-stats{gap:24px;padding:20px}}
+@media(max-width:600px){.ft-main{grid-template-columns:1fr;padding:20px 16px}.ft-stats{gap:16px;padding:16px}.ft-bottom{padding:12px 16px;flex-direction:column;text-align:center}}
+
+/* DRAWER MOBILE */
+.drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300}
+.drawer-ov.open{display:block}
+.drawer{position:fixed;top:0;left:-240px;bottom:0;width:230px;background:var(--white);z-index:301;transition:left .25s;overflow-y:auto}
+.drawer.open{left:0}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--lt)}
+.drawer-logo{font-weight:800;font-size:16px}
+.drawer-cl{background:var(--ltr);border:none;width:28px;height:28px;border-radius:7px;font-size:18px;cursor:pointer}
+
+/* MODAIS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:18px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;animation:mIn .22s cubic-bezier(.34,1.56,.64,1)}
+.modal-sm{max-width:400px}
+@keyframes mIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mh{padding:22px 22px 0;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mt{font-size:16px;font-weight:800}
+.mcl{width:28px;height:28px;border-radius:7px;background:var(--ltr);font-size:16px;color:var(--md);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.mcl:hover{background:var(--lt)}
+.mb{padding:0 22px 22px}
+.fg{margin-bottom:13px}
+.lbl{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--md);margin-bottom:4px}
+.inp,.sel{width:100%;padding:10px 13px;border:1.5px solid var(--lt);border-radius:var(--r-sm);font-size:13px;outline:none;color:var(--dk);transition:border-color .2s}
+.inp:focus,.sel:focus{border-color:var(--blue)}
+.btn-prim{width:100%;padding:12px;background:var(--blue);color:#fff;border-radius:var(--r);font-size:14px;font-weight:700;transition:all .2s;margin-top:6px}
+.btn-prim:hover{background:var(--blue-h)}
+.btn-prim:disabled{opacity:.5;cursor:not-allowed}
+
+/* MODAL DESTAQUE */
+.dest-modal{max-width:500px;padding:0;border-radius:20px;overflow:hidden}
+.dest-header{background:linear-gradient(135deg,var(--blue-bg),#e0e7ff);padding:22px 24px 18px;text-align:center;position:relative}
+.dest-group-card{background:var(--white);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;margin-top:12px}
+.dest-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.dest-ben{background:var(--ltr);border-radius:12px;padding:12px 8px;text-align:center}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.plan{border:2px solid var(--lt);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s;position:relative;text-align:center}
+.plan:hover{border-color:var(--blue)}
+.plan.sel{border-color:var(--blue);background:var(--blue-bg);transform:scale(1.03)}
+.plan.pop::before{content:'⭐ Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.plan-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;text-transform:uppercase}
+.plan-price{font-size:22px;font-weight:800;margin-bottom:2px}
+.plan-days{font-size:11px;color:var(--md);margin-bottom:2px}
+.plan-dprice{font-size:10px;font-weight:600;color:var(--blue)}
+.btn-mp{width:100%;padding:14px;background:#009ee3;color:#fff;font-size:14px;font-weight:800;border-radius:var(--r);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-mp:hover{background:#007dbf}
+.btn-mp:disabled{opacity:.6;cursor:not-allowed}
+
+/* PIX */
+.qrbox{background:var(--ltr);border-radius:var(--r);padding:20px;margin:14px 0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.qrimg{width:180px;height:180px;border-radius:12px;background:var(--white);display:flex;align-items:center;justify-content:center}
+.pixcopy{background:var(--blue-bg);border:1.5px solid var(--blue-mid);border-radius:var(--r-sm);padding:10px 13px;font-size:11px;font-family:monospace;color:var(--blue);cursor:pointer;word-break:break-all;text-align:left;transition:all .15s;width:100%}
+.pixcopy:hover{background:var(--blue-mid)}
+.pix-st{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;font-weight:600;margin-top:8px}
+.pix-wait{background:#fffbeb;color:#92400e}
+.pix-ok{background:#f0fdf4;color:#16a34a}
+
+/* BOTÃO SUPORTE */
+.btn-suporte{position:fixed;bottom:24px;right:24px;z-index:400;background:#25d366;color:#fff;border-radius:50px;padding:12px 20px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .2s;text-decoration:none}
+.btn-suporte:hover{background:#128c7e;transform:translateY(-2px)}
+@media(max-width:720px){.btn-suporte{padding:14px;border-radius:50%}.btn-suporte span{display:none}}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dk);color:#fff;padding:11px 22px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:999;pointer-events:none;opacity:0;transition:all .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.green{background:#16a34a}
+.toast.red{background:#dc2626}
+
+/* MOBILE */
+@media(max-width:720px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:14px;max-width:100%}
+  .btn-menu{display:flex;align-items:center;justify-content:center}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card{padding:12px;gap:10px}
+  .plans{grid-template-columns:1fr}
+}
+@media(max-width:440px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="btn-menu" onclick="toggleDrawer()">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <line x1="3" y1="6" x2="19" y2="6" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="3" y1="11" x2="19" y2="11" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="3" y1="16" x2="19" y2="16" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <a class="logo" href="/">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="4" cy="9" r="2" fill="#fff"/>
+          <circle cx="14" cy="5" r="2" fill="#fff"/>
+          <circle cx="14" cy="13" r="2" fill="#fff"/>
+          <line x1="6" y1="8" x2="12" y2="6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="10" x2="12" y2="12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Grupi<span>x</span></span>
+    </a>
+  </div>
+  <button class="btn-add-group" onclick="openModal('m-submit')">
+    + Adicionar seu grupo
+  </button>
+</header>
+
+<!-- DRAWER MOBILE -->
+<div class="drawer-ov" id="drawer-ov" onclick="toggleDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <span class="drawer-logo">Grupix</span>
+    <button class="drawer-cl" onclick="toggleDrawer()">×</button>
+  </div>
+  <div id="drawer-cats"></div>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-title">Início</div>
+    <button class="sb-btn on" data-cat="todos" onclick="setCat('todos',this)">
+      <span class="sb-ic">🏠</span> Home <span class="sb-cnt" id="cnt-todos"></span>
+    </button>
+    <div class="sb-title">Negócios</div>
+    <button class="sb-btn" data-cat="network" onclick="setCat('network',this)"><span class="sb-ic">🤝</span> Network <span class="sb-cnt" id="cnt-network"></span></button>
+    <button class="sb-btn" data-cat="empreendedorismo" onclick="setCat('empreendedorismo',this)"><span class="sb-ic">🚀</span> Empreendedorismo <span class="sb-cnt" id="cnt-empreendedorismo"></span></button>
+    <button class="sb-btn" data-cat="negocios" onclick="setCat('negocios',this)"><span class="sb-ic">💼</span> Negócios e Startups <span class="sb-cnt" id="cnt-negocios"></span></button>
+    <button class="sb-btn" data-cat="empresarios" onclick="setCat('empresarios',this)"><span class="sb-ic">🏢</span> Empresários <span class="sb-cnt" id="cnt-empresarios"></span></button>
+    <button class="sb-btn" data-cat="vendas" onclick="setCat('vendas',this)"><span class="sb-ic">🛒</span> Vendas Online <span class="sb-cnt" id="cnt-vendas"></span></button>
+    <button class="sb-btn" data-cat="ecommerce" onclick="setCat('ecommerce',this)"><span class="sb-ic">🛍️</span> E-commerce <span class="sb-cnt" id="cnt-ecommerce"></span></button>
+    <button class="sb-btn" data-cat="freelancers" onclick="setCat('freelancers',this)"><span class="sb-ic">🧑‍💻</span> Freelancers <span class="sb-cnt" id="cnt-freelancers"></span></button>
+    <button class="sb-btn" data-cat="vagas" onclick="setCat('vagas',this)"><span class="sb-ic">📋</span> Vagas de Emprego <span class="sb-cnt" id="cnt-vagas"></span></button>
+    <div class="sb-title">Marketing</div>
+    <button class="sb-btn" data-cat="marketing" onclick="setCat('marketing',this)"><span class="sb-ic">📈</span> Marketing Digital <span class="sb-cnt" id="cnt-marketing"></span></button>
+    <button class="sb-btn" data-cat="social-media" onclick="setCat('social-media',this)"><span class="sb-ic">📱</span> Social Media <span class="sb-cnt" id="cnt-social-media"></span></button>
+    <button class="sb-btn" data-cat="trafego-pago" onclick="setCat('trafego-pago',this)"><span class="sb-ic">💰</span> Tráfego Pago <span class="sb-cnt" id="cnt-trafego-pago"></span></button>
+    <button class="sb-btn" data-cat="copywriting" onclick="setCat('copywriting',this)"><span class="sb-ic">✍️</span> Copywriting <span class="sb-cnt" id="cnt-copywriting"></span></button>
+    <button class="sb-btn" data-cat="afiliados" onclick="setCat('afiliados',this)"><span class="sb-ic">🤑</span> Afiliados <span class="sb-cnt" id="cnt-afiliados"></span></button>
+    <button class="sb-btn" data-cat="growth" onclick="setCat('growth',this)"><span class="sb-ic">🎯</span> Growth Marketing <span class="sb-cnt" id="cnt-growth"></span></button>
+    <div class="sb-title">Tecnologia</div>
+    <button class="sb-btn" data-cat="tecnologia" onclick="setCat('tecnologia',this)"><span class="sb-ic">💻</span> Tecnologia & TI <span class="sb-cnt" id="cnt-tecnologia"></span></button>
+    <button class="sb-btn" data-cat="programadores" onclick="setCat('programadores',this)"><span class="sb-ic">👨‍💻</span> Programadores <span class="sb-cnt" id="cnt-programadores"></span></button>
+    <button class="sb-btn" data-cat="designers" onclick="setCat('designers',this)"><span class="sb-ic">🎨</span> Designers <span class="sb-cnt" id="cnt-designers"></span></button>
+    <button class="sb-btn" data-cat="ux-ui" onclick="setCat('ux-ui',this)"><span class="sb-ic">🖥️</span> UX/UI <span class="sb-cnt" id="cnt-ux-ui"></span></button>
+    <button class="sb-btn" data-cat="devops" onclick="setCat('devops',this)"><span class="sb-ic">⚙️</span> DevOps <span class="sb-cnt" id="cnt-devops"></span></button>
+    <button class="sb-btn" data-cat="ti-suporte" onclick="setCat('ti-suporte',this)"><span class="sb-ic">🔧</span> TI & Suporte <span class="sb-cnt" id="cnt-ti-suporte"></span></button>
+    <div class="sb-title">Finanças</div>
+    <button class="sb-btn" data-cat="investimentos" onclick="setCat('investimentos',this)"><span class="sb-ic">📊</span> Investimentos <span class="sb-cnt" id="cnt-investimentos"></span></button>
+    <button class="sb-btn" data-cat="criptomoedas" onclick="setCat('criptomoedas',this)"><span class="sb-ic">₿</span> Criptomoedas <span class="sb-cnt" id="cnt-criptomoedas"></span></button>
+    <button class="sb-btn" data-cat="renda-extra" onclick="setCat('renda-extra',this)"><span class="sb-ic">💰</span> Renda Extra <span class="sb-cnt" id="cnt-renda-extra"></span></button>
+    <div class="sb-title">Outros</div>
+    <button class="sb-btn" data-cat="educacao" onclick="setCat('educacao',this)"><span class="sb-ic">📚</span> Educação <span class="sb-cnt" id="cnt-educacao"></span></button>
+    <button class="sb-btn" data-cat="jogos" onclick="setCat('jogos',this)"><span class="sb-ic">🎮</span> Jogos <span class="sb-cnt" id="cnt-jogos"></span></button>
+    <button class="sb-btn" data-cat="outros" onclick="setCat('outros',this)"><span class="sb-ic">⭐</span> Outros <span class="sb-cnt" id="cnt-outros"></span></button>
+  </aside>
+
+  <main class="main">
+    <div class="search-bar">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#9ca3af" stroke-width="1.5"/><line x1="10" y1="10" x2="14" y2="14" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input id="q" type="text" placeholder="Buscar grupos por nome..." oninput="render()">
+      <button onclick="render()">Buscar</button>
+    </div>
+
+    <div id="feat-sec" style="display:none">
+      <div class="feat-sec">
+        <div class="sec-lbl">⭐ Grupos em Destaque <span class="sec-badge">IMPULSIONADOS</span></div>
+        <div class="feat-strip" id="feat-strip"></div>
+      </div>
+    </div>
+
+    <div class="grid-hd">
+      <span class="grid-title" id="grid-title">Todos os grupos</span>
+      <span class="grid-count" id="g-count"></span>
+    </div>
+    <div class="grid" id="grid">
+      <div class="skel"></div><div class="skel"></div>
+      <div class="skel"></div><div class="skel"></div>
+      <div class="skel"></div><div class="skel"></div>
+    </div>
+
+    <footer>
+      <div class="ft-stats">
+        <div class="ft-stat"><span class="ft-stat-n" id="ft-total">0</span><span class="ft-stat-l">grupos ativos</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">26</span><span class="ft-stat-l">categorias</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">100%</span><span class="ft-stat-l">verificados</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">Grátis</span><span class="ft-stat-l">para cadastrar</span></div>
+      </div>
+      <div class="ft-main">
+        <div>
+          <div class="ft-logo">
+            <div class="ft-logo-mark">
+              <svg width="13" height="13" viewBox="0 0 18 18" fill="none">
+                <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
+                <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
+                <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
+                <line x1="6.5" y1="7.9" x2="11.5" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+                <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="ft-logo-name">Grupix</span>
+          </div>
+          <p class="ft-desc">O maior diretório de grupos de WhatsApp e Telegram do Brasil. Comunidades verificadas e atualizadas diariamente em todas as categorias profissionais.</p>
+          <div class="ft-badges">
+            <span class="ft-badge ft-badge-wa"><svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg> WhatsApp</span>
+            <span class="ft-badge ft-badge-tg"><svg width="11" height="11" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg> Telegram</span>
+          </div>
+        </div>
+        <div>
+          <div class="ft-title">Categorias</div>
+          <ul class="ft-links">
+            <li><a href="#" onclick="goCat('network');return false">🤝 Network</a></li>
+            <li><a href="#" onclick="goCat('empreendedorismo');return false">🚀 Empreendedorismo</a></li>
+            <li><a href="#" onclick="goCat('marketing');return false">📈 Marketing Digital</a></li>
+            <li><a href="#" onclick="goCat('trafego-pago');return false">💰 Tráfego Pago</a></li>
+            <li><a href="#" onclick="goCat('tecnologia');return false">💻 Tecnologia</a></li>
+            <li><a href="#" onclick="goCat('programadores');return false">👨‍💻 Programadores</a></li>
+            <li><a href="#" onclick="goCat('investimentos');return false">📊 Investimentos</a></li>
+            <li><a href="#" onclick="goCat('criptomoedas');return false">₿ Criptomoedas</a></li>
+            <li><a href="#" onclick="goCat('vagas');return false">📋 Vagas de Emprego</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-title">Mais Categorias</div>
+          <ul class="ft-links">
+            <li><a href="#" onclick="goCat('social-media');return false">📱 Social Media</a></li>
+            <li><a href="#" onclick="goCat('copywriting');return false">✍️ Copywriting</a></li>
+            <li><a href="#" onclick="goCat('afiliados');return false">🤑 Afiliados</a></li>
+            <li><a href="#" onclick="goCat('designers');return false">🎨 Designers</a></li>
+            <li><a href="#" onclick="goCat('freelancers');return false">🧑‍💻 Freelancers</a></li>
+            <li><a href="#" onclick="goCat('ecommerce');return false">🛍️ E-commerce</a></li>
+            <li><a href="#" onclick="goCat('renda-extra');return false">💰 Renda Extra</a></li>
+            <li><a href="#" onclick="goCat('educacao');return false">📚 Educação</a></li>
+            <li><a href="#" onclick="goCat('jogos');return false">🎮 Jogos</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-title">Tem um grupo?</div>
+          <p class="ft-desc">Cadastre grátis e alcance milhares de pessoas buscando grupos agora mesmo.</p>
+          <button class="ft-btn" onclick="openModal('m-submit')" style="margin-bottom:16px">+ Cadastrar meu grupo grátis</button>
+          <div class="ft-title">Destaque seu grupo</div>
+          <p class="ft-desc">Apareça no topo e receba 3x mais membros com nossos planos a partir de R$10.</p>
+        </div>
+      </div>
+      <div class="ft-bottom">
+        <span>© 2025 Grupix · O maior diretório de grupos do Brasil</span>
+        <div class="ft-bottom-links">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos de uso</a>
+          <a href="/cdn-cgi/l/email-protection#7f1c10110b1e0b103f180d0a0f1607510c160b1a">Contato</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- MODAL ENVIAR GRUPO -->
+<div class="overlay" id="m-submit" onclick="if(event.target===this)closeModal('m-submit')">
+  <div class="modal">
+    <div class="mh"><span class="mt">Adicionar grupo</span><button class="mcl" onclick="closeModal('m-submit')">×</button></div>
+    <div class="mb">
+      <div class="fg">
+        <label class="lbl">Link do grupo *</label>
+        <div style="position:relative">
+          <input class="inp" id="s-link" type="url" placeholder="https://chat.whatsapp.com/... ou t.me/..." oninput="onLinkInput(this.value)" style="padding-right:44px">
+          <span id="plat-detect" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;display:none"></span>
+        </div>
+      </div>
+
+      <!-- LOADING -->
+      <div id="meta-loading" style="display:none;background:var(--ltr);border-radius:10px;padding:12px 14px;margin-bottom:13px;display:none;align-items:center;gap:10px">
+        <div style="width:16px;height:16px;border:2px solid var(--lt);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0"></div>
+        <span style="font-size:13px;color:var(--md)">Carregando dados do grupo...</span>
+      </div>
+
+      <!-- PREVIEW (aparece após carregar) -->
+      <div id="meta-preview" style="display:none;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:12px 14px;margin-bottom:13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <div style="width:18px;height:18px;background:#16a34a;border-radius:50%;display:flex;align-items:center;justify-content:center">
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <span style="font-size:12px;font-weight:700;color:#16a34a">Dados carregados com sucesso!</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:8px;padding:8px 10px">
+          <img id="meta-img" src="" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid #e5e7eb;flex-shrink:0;display:none">
+          <div id="meta-img-placeholder" style="width:40px;height:40px;border-radius:50%;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💬</div>
+          <div>
+            <div id="meta-name-show" style="font-size:13px;font-weight:700;line-height:1.3"></div>
+            <div id="meta-plat-show" style="font-size:11px;color:var(--md);margin-top:2px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERRO -->
+      <div id="meta-error" style="display:none;background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;padding:10px 14px;margin-bottom:13px;font-size:12px;color:#dc2626"></div>
+
+      <!-- Nome (preenchido auto, editável) -->
+      <div class="fg"><label class="lbl">Nome do grupo *</label><input class="inp" id="s-name" type="text" placeholder="Será preenchido automaticamente..."></div>
+
+      <div class="fg">
+        <label class="lbl">Modo de mensagens</label>
+        <div class="mode-row">
+          <button class="mode-btn open-on" id="btn-open" onclick="setGroupMode('aberto')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Grupo Aberto
+          </button>
+          <button class="mode-btn" id="btn-closed" onclick="setGroupMode('fechado')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="5" x2="11" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Grupo Fechado
+          </button>
+        </div>
+        <div class="mode-hint">Escolha a opção correta; grupos indebidos serão removidos!</div>
+        <input type="hidden" id="s-mode" value="aberto">
+      </div>
+
+      <div class="fg"><label class="lbl">Categoria *</label>
+        <select class="sel" id="s-cat">
+          <option value="">Selecione...</option>
+          <optgroup label="Negócios">
+            <option value="network">🤝 Network</option>
+            <option value="empreendedorismo">🚀 Empreendedorismo</option>
+            <option value="negocios">💼 Negócios e Startups</option>
+            <option value="empresarios">🏢 Empresários</option>
+            <option value="vendas">🛒 Vendas Online</option>
+            <option value="ecommerce">🛍️ E-commerce</option>
+            <option value="freelancers">🧑‍💻 Freelancers</option>
+            <option value="vagas">📋 Vagas de Emprego</option>
+          </optgroup>
+          <optgroup label="Marketing">
+            <option value="marketing">📈 Marketing Digital</option>
+            <option value="social-media">📱 Social Media</option>
+            <option value="trafego-pago">💰 Tráfego Pago</option>
+            <option value="copywriting">✍️ Copywriting</option>
+            <option value="afiliados">🤑 Afiliados</option>
+            <option value="growth">🎯 Growth Marketing</option>
+          </optgroup>
+          <optgroup label="Tecnologia">
+            <option value="tecnologia">💻 Tecnologia & TI</option>
+            <option value="programadores">👨‍💻 Programadores</option>
+            <option value="designers">🎨 Designers</option>
+            <option value="ux-ui">🖥️ UX/UI</option>
+            <option value="devops">⚙️ DevOps</option>
+            <option value="ti-suporte">🔧 TI & Suporte</option>
+          </optgroup>
+          <optgroup label="Finanças">
+            <option value="investimentos">📊 Investimentos</option>
+            <option value="criptomoedas">₿ Criptomoedas</option>
+            <option value="renda-extra">💰 Renda Extra</option>
+          </optgroup>
+          <optgroup label="Outros">
+            <option value="educacao">📚 Educação</option>
+            <option value="jogos">🎮 Jogos</option>
+            <option value="outros">⭐ Outros</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 12px;margin-bottom:13px;font-size:12px;color:#92400e;line-height:1.5">
+        💡 <b>Dica:</b> Após adicionar, você poderá destacar seu grupo para receber muito mais cliques e membros!
+      </div>
+
+      <button class="btn-prim" id="btn-send" onclick="submitGroup()">Publicar grupo agora</button>
+      <p style="font-size:11px;color:var(--md);text-align:center;margin-top:10px">Seu grupo aparecerá no diretório imediatamente! 🚀</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DESTAQUE -->
+<div class="overlay" id="m-boost" onclick="if(event.target===this)closeModal('m-boost')">
+  <div class="modal dest-modal">
+    <div class="dest-header">
+      <button class="mcl" onclick="closeModal('m-boost')" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.08)">×</button>
+      <div id="dest-emoji" style="width:52px;height:52px;background:var(--white);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px;box-shadow:0 2px 10px rgba(0,0,0,.08)">⚡</div>
+      <h2 style="font-size:17px;font-weight:800;margin-bottom:3px">Destaque seu grupo.</h2>
+      <p style="font-size:12px;font-weight:700;color:var(--blue)">Multiplique seus membros.</p>
+      <div class="dest-group-card">
+        <div id="dest-av" style="width:34px;height:34px;background:var(--blue-bg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⭐</div>
+        <div style="flex:1;min-width:0"><div id="dest-gname" style="font-size:13px;font-weight:700">Seu grupo</div></div>
+      </div>
+    </div>
+    <div class="mb" style="padding-top:18px">
+      <div class="dest-benefits">
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">🎯</div><div style="font-size:10px;font-weight:600;line-height:1.4">No topo da página</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">📈</div><div style="font-size:10px;font-weight:600;line-height:1.4">3x mais cliques</div></div>
+        <div class="dest-ben"><div style="font-size:20px;margin-bottom:5px">✅</div><div style="font-size:10px;font-weight:600;line-height:1.4">Selo Verificado</div></div>
+      </div>
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--md);text-align:center;margin-bottom:12px">Escolha seu plano:</p>
+      <div class="plans">
+        <div class="plan" id="pl-starter" onclick="selPlan('starter')">
+          <span class="plan-badge" style="background:#e5e7eb;color:#374151">Básico</span>
+          <div class="plan-price">R$14,90</div>
+          <div class="plan-days">7 dias</div>
+          <div class="plan-dprice">R$2,13/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:1.5px solid var(--lt);background:transparent;font-size:11px;font-weight:700;color:var(--md);cursor:pointer">Escolher</button>
+        </div>
+        <div class="plan pop sel" id="pl-pro" onclick="selPlan('pro')">
+          <span class="plan-badge" style="background:var(--blue);color:#fff">PRO</span>
+          <div class="plan-price">R$24,90</div>
+          <div class="plan-days">15 dias</div>
+          <div class="plan-dprice">🔥 R$1,66/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:var(--blue);color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+        <div class="plan" id="pl-vip" onclick="selPlan('vip')">
+          <span class="plan-badge" style="background:#6366f1;color:#fff">VIP</span>
+          <div style="font-size:10px;color:#9ca3af;text-decoration:line-through">R$79,90</div>
+          <div class="plan-price">R$39,90</div>
+          <div class="plan-days">30 dias</div>
+          <div class="plan-dprice" style="color:#6366f1">🏆 R$1,33/dia</div>
+          <button style="margin-top:8px;width:100%;padding:6px;border-radius:7px;border:none;background:#6366f1;color:#fff;font-size:11px;font-weight:700;cursor:pointer">Escolher</button>
+        </div>
+      </div>
+      <div class="fg"><label class="lbl">Seu email para recibo *</label>
+        <input class="inp" id="b-email" type="email" placeholder="seuemail@gmail.com">
+      </div>
+      <input type="hidden" id="b-gid">
+      <input type="hidden" id="b-gname">
+      <button class="btn-mp" id="btn-pay" onclick="createPayment()">
+        Pagar com PIX · Mercado Pago
+      </button>
+      <p style="text-align:center;font-size:11px;color:var(--md);margin-top:8px">🔒 Pagamento 100% seguro · Ativação automática</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PIX -->
+<div class="overlay" id="m-pix" onclick="if(event.target===this)closeModal('m-pix')">
+  <div class="modal modal-sm" style="text-align:center">
+    <div class="mh"><span class="mt">💚 Pagar com PIX</span><button class="mcl" onclick="closeModal('m-pix')">×</button></div>
+    <div class="mb">
+      <div id="pix-lbl" style="background:var(--blue-bg);border-radius:var(--r-sm);padding:10px 14px;font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px"></div>
+      <div class="qrbox">
+        <p style="font-size:12px;color:var(--md);font-weight:600">Escaneie o QR Code:</p>
+        <div class="qrimg" id="pix-qr"><div style="color:var(--md)"><div style="font-size:28px">⏳</div><div style="font-size:11px;margin-top:4px">Gerando...</div></div></div>
+        <p style="font-size:11px;color:var(--md)">ou copie o código:</p>
+        <button class="pixcopy" onclick="copyPix()"><span id="pix-code">Aguarde...</span></button>
+      </div>
+      <div class="pix-st pix-wait" id="pix-st">⏳ Aguardando pagamento... <span style="font-weight:800;color:var(--orange)" id="pix-timer">10:00</span></div>
+      <p style="font-size:11px;color:var(--md);margin-top:10px">Destaque ativado automaticamente após confirmação.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO SUPORTE WHATSAPP -->
+<a class="btn-suporte" href="https://wa.me/5565993517234?text=Olá!%20Preciso%20de%20suporte%20no%20Grupix" target="_blank">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>Suporte</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const SURL = 'https://qgrxbjvvzrzzpcubycol.supabase.co'
+const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFncnhianZ2enJ6enBjdWJ5Y29sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0OTcyMjMsImV4cCI6MjA4OTA3MzIyM30.p4wl-bDx0GxjR8iRuXb8upDUB_eBd-lwIYyJSL_SR0E'
+const sb = createClient(SURL, SKEY)
+
+const ICONS = {network:'🤝',empreendedorismo:'🚀',negocios:'💼',empresarios:'🏢',vendas:'🛒',ecommerce:'🛍️',freelancers:'🧑‍💻',vagas:'📋',marketing:'📈','social-media':'📱','trafego-pago':'💰',copywriting:'✍️',afiliados:'🤑',growth:'🎯',tecnologia:'💻',programadores:'👨‍💻',designers:'🎨','ux-ui':'🖥️',devops:'⚙️','ti-suporte':'🔧',investimentos:'📊',criptomoedas:'₿','renda-extra':'💰',educacao:'📚',jogos:'🎮',outros:'⭐'}
+const BGS = {empreendedorismo:'#f0f9ff',criptomoedas:'#fffbeb',marketing:'#f0fdf4',tecnologia:'#f5f3ff',investimentos:'#eff6ff',jogos:'#fef2f2',educacao:'#ecfeff','renda-extra':'#f0fdf4',outros:'#f9fafb'}
+const WA = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>`
+const TG = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>`
+
+let all = [], cat = 'todos', plan = 'pro', pixTimer = null
+
+// CARREGAR GRUPOS
+async function load() {
+  const { data, error } = await sb
+    .from('groups')
+    .select('*')
+    .eq('approved', true)
+    .order('is_featured', { ascending: false })
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Erro ao carregar:', error)
+    document.getElementById('grid').innerHTML = '<div class="empty">Erro ao carregar grupos. Tente recarregar a página.</div>'
+    return
+  }
+
+  all = data || []
+  updateCounts()
+  const ftTotal = document.getElementById('ft-total')
+  if (ftTotal) ftTotal.textContent = '+' + all.length
+  renderFeatured()
+  render()
+}
+
+function updateCounts() {
+  document.getElementById('cnt-todos').textContent = all.length
+  const cats = ['network','empreendedorismo','negocios','empresarios','vendas','ecommerce','freelancers','vagas','marketing','social-media','trafego-pago','copywriting','afiliados','growth','tecnologia','programadores','designers','ux-ui','devops','ti-suporte','investimentos','criptomoedas','renda-extra','educacao','jogos','outros']
+  cats.forEach(c => {
+    const el = document.getElementById('cnt-' + c)
+    if (el) el.textContent = all.filter(g => g.category === c).length || ''
+  })
+}
+
+function renderFeatured() {
+  const feat = all.filter(g => g.is_featured)
+  const sec = document.getElementById('feat-sec')
+  if (!feat.length) { sec.style.display = 'none'; return }
+  sec.style.display = 'block'
+  document.getElementById('feat-strip').innerHTML = feat.map(g => `
+    <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
+      <div class="feat-av" style="background:${BGS[g.category]||'#f9fafb'}">
+        ${g.image_url
+          ? `<img src="${esc(g.image_url)}" alt="" style="width:62px;height:62px;object-fit:cover;display:block;border-radius:50%" onerror="this.parentElement.innerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
+          : `<span>${ICONS[g.category]||'⭐'}</span>`
+        }
+        <div class="feat-av-badge">⭐</div>
+      </div>
+      <div class="feat-name">${esc(g.name)}</div>
+    </div>`).join('')
+}
+
+window.render = function() {
+  const q = document.getElementById('q').value.toLowerCase().trim()
+  let list = all
+  if (cat !== 'todos') list = list.filter(g => g.category === cat)
+  if (q) list = list.filter(g => g.name.toLowerCase().includes(q) || (g.description||'').toLowerCase().includes(q))
+
+  document.getElementById('g-count').textContent = `${list.length} grupo${list.length !== 1 ? 's' : ''}`
+  document.getElementById('grid-title').textContent = cat === 'todos' ? 'Todos os grupos' : `Grupos de ${cat}`
+
+  if (!list.length) {
+    document.getElementById('grid').innerHTML = '<div class="empty">Nenhum grupo encontrado.</div>'
+    return
+  }
+
+  document.getElementById('grid').innerHTML = list.map((g, i) => `
+    <div class="card${g.is_featured ? ' featured' : ''}" style="animation-delay:${i * 0.04}s">
+      ${g.is_featured ? '<div class="feat-ribbon">⭐ Destaque</div>' : ''}
+      <div class="card-top">
+        <div class="card-av" style="background:${g.image_url ? '#fff' : BGS[g.category]||'#f9fafb'};padding:0;overflow:hidden">
+          ${g.image_url
+            ? `<img src="${esc(g.image_url)}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;padding:3px;background:#fff" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\"font-size:26px\\">${ICONS[g.category]||'⭐'}</span>')">`
+            : `<span style="font-size:26px">${ICONS[g.category]||'⭐'}</span>`
+          }
+        </div>
+        <div class="card-info">
+          <div class="card-name">${esc(g.name)}</div>
+          <div class="card-tags">
+            ${g.platform === 'telegram' ? `<span class="tag tag-tg">${TG} Telegram</span>` : `<span class="tag tag-wa">${WA} WhatsApp</span>`}
+          </div>
+        </div>
+      </div>
+      <div class="card-status cs-open">
+        <span class="cs-dot"></span>
+        <span>Grupo Aberto</span>
+        <span style="color:#9ca3af;font-size:10px;font-weight:400;margin-left:2px">Qualquer membro pode enviar mensagem.</span>
+      </div>
+      ${g.description ? `<p style="font-size:12px;color:var(--md);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(g.description)}</p>` : ''}
+      <div class="card-actions">
+        <button class="btn-enter" onclick="enterGroup('${g.id}','${esc(g.link)}')">
+          ${g.platform === 'telegram' ? TG : WA} Entrar no Grupo
+        </button>
+        ${g.is_featured
+          ? '<button class="btn-boosted">⭐ Grupo em destaque</button>'
+          : `<button class="btn-boost" onclick="openBoost('${g.id}','${esc(g.name)}')">⭐ Destacar Grupo</button>`
+        }
+      </div>
+    </div>`).join('')
+}
+
+window.setCat = function(c, el) {
+  cat = c
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.toggle('on', b === el))
+  render()
+}
+
+window.enterGroup = function(id, link) {
+  if (!link) { showToast('Link indisponível', 'red'); return }
+  sb.from('groups').update({ views: (all.find(g => g.id === id)?.views || 0) + 1 }).eq('id', id)
+  window.open(link, '_blank')
+}
+
+window.toggleDrawer = function() {
+  document.getElementById('drawer').classList.toggle('open')
+  document.getElementById('drawer-ov').classList.toggle('open')
+  const dc = document.getElementById('drawer-cats')
+  if (!dc.innerHTML) dc.innerHTML = document.getElementById('sidebar').innerHTML
+}
+
+// ── SUBMIT GRUPO COM AUTO-FETCH DE METADADOS ──
+let metaFetchTimeout = null
+let fetchedMeta = { name: '', imageUrl: null, platform: 'whatsapp' }
+
+window.onLinkInput = function(v) {
+  const icon = document.getElementById('plat-detect')
+  const isWA = v.includes('chat.whatsapp.com') || v.includes('whatsapp.com')
+  const isTG = v.includes('t.me/') || v.includes('telegram')
+  icon.textContent = isWA ? '💬' : isTG ? '✈️' : ''
+  icon.style.display = (isWA || isTG) ? 'block' : 'none'
+  hideMetaPanels()
+  if (!v.startsWith('http') || v.length < 20 || (!isWA && !isTG)) return
+  clearTimeout(metaFetchTimeout)
+  metaFetchTimeout = setTimeout(() => fetchMeta(v), 800)
+}
+
+async function fetchMeta(url) {
+  const loading = document.getElementById('meta-loading')
+  const preview = document.getElementById('meta-preview')
+  const errEl  = document.getElementById('meta-error')
+  loading.style.display = 'flex'
+  preview.style.display = 'none'
+  errEl.style.display   = 'none'
+  try {
+    const r = await fetch(`${SURL}/functions/v1/fetch-group-meta`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({ url })
+    })
+    const d = await r.json()
+    loading.style.display = 'none'
+    if (d.error) { errEl.textContent = '⚠️ ' + d.error; errEl.style.display = 'block'; return }
+
+    fetchedMeta = { name: d.name || '', imageUrl: d.imageUrl || null, platform: d.platform || 'whatsapp' }
+    document.getElementById('s-name').value = d.name || ''
+
+    document.getElementById('meta-name-show').textContent = d.name || ''
+    document.getElementById('meta-plat-show').innerHTML = d.platform === 'telegram'
+      ? TG + ' <span>Telegram</span>' : WA + ' <span>WhatsApp</span>'
+
+    const img = document.getElementById('meta-img')
+    const ph  = document.getElementById('meta-img-placeholder')
+    if (d.imageUrl) {
+      img.src = d.imageUrl; img.style.display = 'block'; ph.style.display = 'none'
+      img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex' }
+    } else {
+      img.style.display = 'none'; ph.style.display = 'flex'
+      ph.textContent = d.platform === 'telegram' ? '✈️' : '💬'
+    }
+    preview.style.display = 'block'
+  } catch(e) {
+    loading.style.display = 'none'
+    errEl.textContent = '⚠️ Não foi possível carregar os dados. Preencha o nome manualmente.'
+    errEl.style.display = 'block'
+  }
+}
+
+function hideMetaPanels() {
+  ;['meta-loading','meta-preview','meta-error'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none'
+  })
+  fetchedMeta = { name: '', imageUrl: null, platform: 'whatsapp' }
+}
+
+window.submitGroup = async function() {
+  const link  = document.getElementById('s-link').value.trim()
+  const name  = document.getElementById('s-name').value.trim()
+  const cat_  = document.getElementById('s-cat').value
+  if (!link || !name || !cat_) { showToast('Preencha todos os campos obrigatórios', 'red'); return }
+  if (!link.startsWith('http')) { showToast('Link inválido', 'red'); return }
+
+  // ── RATE LIMIT: 1 grupo por hora por navegador ──
+  const RL_KEY = 'grupix_last_submit'
+  const last = localStorage.getItem(RL_KEY)
+  if (last && Date.now() - parseInt(last) < 60 * 60 * 1000) {
+    const min = Math.ceil((60 * 60 * 1000 - (Date.now() - parseInt(last))) / 60000)
+    showToast(`Aguarde ${min} minuto${min !== 1 ? 's' : ''} para adicionar outro grupo.`, 'red')
+    return
+  }
+
+  const platform = fetchedMeta.platform || (link.includes('t.me/') || link.includes('telegram') ? 'telegram' : 'whatsapp')
+  const btn = document.getElementById('btn-send')
+  btn.disabled = true; btn.textContent = 'Verificando...'
+
+  // ── VERIFICA LINK DUPLICADO no banco ──
+  const { data: existing } = await sb
+    .from('groups')
+    .select('id')
+    .eq('link', link)
+    .limit(1)
+
+  if (existing && existing.length > 0) {
+    btn.disabled = false; btn.textContent = 'Publicar grupo agora'
+    showToast('Este grupo já está cadastrado no Grupix!', 'red')
+    return
+  }
+
+  btn.textContent = 'Publicando...'
+  const { error } = await sb.from('groups').insert({
+    name, link, category: cat_, platform,
+    image_url: fetchedMeta.imageUrl || null,
+    is_open: (document.getElementById('s-mode').value || 'aberto') === 'aberto',
+    approved: true, is_featured: false
+  })
+  btn.disabled = false; btn.textContent = 'Publicar grupo agora'
+  if (error) { showToast('Erro: ' + error.message, 'red'); return }
+
+  // Salva timestamp do último envio
+  localStorage.setItem(RL_KEY, Date.now().toString())
+
+  closeModal('m-submit')
+  document.getElementById('s-link').value = ''
+  document.getElementById('s-name').value = ''
+  document.getElementById('s-cat').value  = ''
+  document.getElementById('s-mode').value = 'aberto'
+  setGroupMode('aberto')
+  hideMetaPanels()
+  showToast('Grupo publicado com sucesso! 🎉', 'green')
+}
+
+// BOOST / PAGAMENTO
+window.goCat = function(k) {
+  const btn = document.querySelector('[data-cat="' + k + '"]')
+  if (btn) { setCat(k, btn); window.scrollTo({top:0,behavior:'smooth'}) }
+}
+
+window.setGroupMode = function(mode) {
+  document.getElementById('s-mode').value = mode
+  const btnOpen   = document.getElementById('btn-open')
+  const btnClosed = document.getElementById('btn-closed')
+  if (mode === 'aberto') {
+    btnOpen.className   = 'mode-btn open-on'
+    btnClosed.className = 'mode-btn'
+  } else {
+    btnClosed.className = 'mode-btn close-on'
+    btnOpen.className   = 'mode-btn'
+  }
+}
+
+window.openBoost = function(id, name) {
+  document.getElementById('b-gid').value = id
+  document.getElementById('b-gname').value = name
+  document.getElementById('dest-gname').textContent = name
+  const g = all.find(x => x.id === id)
+  const icon = ICONS[g?.category || 'outros'] || '⭐'
+  document.getElementById('dest-av').textContent = icon
+  document.getElementById('dest-emoji').textContent = icon
+  document.getElementById('b-email').value = ''
+  selPlan('pro')
+  openModal('m-boost')
+}
+
+window.selPlan = function(p) {
+  plan = p
+  ;['starter', 'pro', 'vip'].forEach(k => {
+    document.getElementById('pl-' + k).className = 'plan' + (k === 'pro' ? ' pop' : '') + (k === p ? ' sel' : '')
+  })
+}
+
+window.createPayment = async function() {
+  const gid = document.getElementById('b-gid').value
+  const gname = document.getElementById('b-gname').value
+  const email = document.getElementById('b-email').value.trim()
+  if (!email || !email.includes('@')) { showToast('Email inválido', 'red'); return }
+  const btn = document.getElementById('btn-pay')
+  btn.disabled = true; btn.innerHTML = '⏳ Gerando PIX...'
+  try {
+    const r = await fetch(`${SURL}/functions/v1/create-payment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({ groupId: gid, groupName: gname, email, plan })
+    })
+    const d = await r.json()
+    if (d.error) { showToast('Erro: ' + d.error, 'red'); btn.disabled = false; btn.innerHTML = 'Pagar com PIX · Mercado Pago'; return }
+    closeModal('m-boost')
+    openPix(d)
+  } catch(e) {
+    showToast('Erro de conexão. Tente novamente.', 'red')
+    btn.disabled = false; btn.innerHTML = 'Pagar com PIX · Mercado Pago'
+  }
+}
+
+function openPix(d) {
+  const labels = { starter: 'Starter · 7 dias · R$14,90', pro: 'Pro · 15 dias · R$24,90', vip: 'VIP · 30 dias · R$39,90' }
+  document.getElementById('pix-lbl').textContent = labels[plan]
+  const qr = document.getElementById('pix-qr')
+  if (d.qrCodeBase64) {
+    qr.innerHTML = `<img src="data:image/png;base64,${d.qrCodeBase64}" style="width:180px;height:180px;border-radius:10px">`
+  } else {
+    qr.innerHTML = '<div style="font-size:28px">📋</div>'
+  }
+  const code = document.getElementById('pix-code')
+  code.textContent = d.qrCode || 'Código indisponível'
+  code.dataset.code = d.qrCode || ''
+  document.getElementById('pix-st').className = 'pix-st pix-wait'
+  document.getElementById('pix-st').innerHTML = '⏳ Aguardando pagamento... <span style="font-weight:800;color:var(--orange)" id="pix-timer">10:00</span>'
+  openModal('m-pix')
+  startPoll(d.paymentId)
+}
+
+window.copyPix = function() {
+  const c = document.getElementById('pix-code').dataset.code
+  if (c) navigator.clipboard.writeText(c).then(() => showToast('Código PIX copiado ✅', 'green'))
+}
+
+function startPoll(pid) {
+  if (pixTimer) clearInterval(pixTimer)
+  let elapsed = 0
+  pixTimer = setInterval(async () => {
+    elapsed += 10
+    const rem = 600 - elapsed
+    if (rem <= 0) { clearInterval(pixTimer); return }
+    const tm = document.getElementById('pix-timer')
+    if (tm) tm.textContent = `${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')}`
+    try {
+      const r = await fetch(`${SURL}/functions/v1/check-payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+        body: JSON.stringify({ paymentId: pid })
+      })
+      const d = await r.json()
+      if (d.status === 'approved') {
+        clearInterval(pixTimer)
+        document.getElementById('pix-st').className = 'pix-st pix-ok'
+        document.getElementById('pix-st').textContent = '✅ PIX confirmado! Ativando destaque...'
+        showToast('Pagamento confirmado! Grupo em destaque 🎉', 'green')
+        setTimeout(() => { closeModal('m-pix'); load() }, 2000)
+      }
+    } catch(e) {}
+  }, 10000)
+}
+
+// HELPERS
+window.openModal = id => document.getElementById(id).classList.add('open')
+window.closeModal = id => document.getElementById(id).classList.remove('open')
+window.showToast = function(msg, type = '') {
+  const t = document.getElementById('toast')
+  t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : '')
+  setTimeout(() => t.classList.remove('show'), 3500)
+}
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+// INICIAR
+load()
+</script>
+<!-- Proteção: bloqu
