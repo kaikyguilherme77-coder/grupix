@@ -773,51 +773,47 @@ window.gerarImagem = async function() {
   actions.style.display = 'none'
 
   const fmt = FORMATOS[formatoSel] || FORMATOS.square
-  const fullPrompt = encodeURIComponent(`${prompt}, ${estiloSel} style, high quality, detailed`)
-  const seed = Math.floor(Math.random() * 999999)
-  const url = `https://image.pollinations.ai/prompt/${fullPrompt}?width=${fmt.w}&height=${fmt.h}&seed=${seed}&nologo=true&enhance=true`
+  const fullPrompt = `${prompt}, ${estiloSel} style, high quality, detailed, sharp focus`
 
-  // Timeout de 45 segundos
-  let timedOut = false
-  const timeout = setTimeout(() => {
-    timedOut = true
-    imgEl.src = ''
-    loading.innerHTML = '<span style="font-size:12px;color:#fca5a5;text-align:center">⚠️ Demorou demais. Tente um prompt mais simples ou clique em Gerar novamente.</span>'
-    btn.disabled = false
-    btnTxt.innerHTML = '✨ Gerar Imagem'
-  }, 45000)
-
-  imgEl.onload = () => {
-    if (timedOut) return
-    clearTimeout(timeout)
-    loading.style.display = 'none'
-    imgEl.style.display = 'block'
-    actions.style.display = 'flex'
-    imgEl.dataset.url = url
-    btn.disabled = false
-    btnTxt.innerHTML = '✨ Gerar Imagem'
-    showToast('Imagem gerada! ✅', 'green')
-  }
-  imgEl.onerror = () => {
-    if (timedOut) return
-    clearTimeout(timeout)
+  const showErr = (msg) => {
     loading.innerHTML = `<div style="text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
       <span style="font-size:22px">⚠️</span>
-      <span style="font-size:13px;color:#fca5a5;font-weight:600">Não foi possível gerar a imagem</span>
-      <span style="font-size:12px;color:var(--text3);line-height:1.5">Possíveis motivos:<br>• Prompt bloqueado por conteúdo sensível<br>• Servidor ocupado — tente novamente<br>• Descreva diferente, ex: evite "realista + pessoa"</span>
+      <span style="font-size:13px;color:#fca5a5;font-weight:600">${msg}</span>
       <button onclick="gerarImagem()" style="padding:8px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px">🔄 Tentar novamente</button>
     </div>`
     btn.disabled = false
     btnTxt.innerHTML = '✨ Gerar Imagem'
   }
-  imgEl.src = url
+
+  try {
+    const r = await fetch(`${SURL}/functions/v1/gerar-imagem`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({ prompt: fullPrompt, width: fmt.w, height: fmt.h })
+    })
+    const d = await r.json()
+    if (!r.ok || d.error) { showErr(d.error || 'Erro ao gerar imagem'); return }
+    imgEl.onload = () => {
+      loading.style.display = 'none'
+      imgEl.style.display = 'block'
+      actions.style.display = 'flex'
+      imgEl.dataset.b64 = d.image
+      btn.disabled = false
+      btnTxt.innerHTML = '✨ Gerar Imagem'
+      showToast('Imagem gerada! ✅', 'green')
+    }
+    imgEl.src = d.image
+  } catch(e) {
+    showErr('Erro de conexão. Tente novamente.')
+  }
 }
 
 window.downloadImg = function() {
-  const url = document.getElementById('img-gerada').dataset.url
-  if (!url) return
+  const img = document.getElementById('img-gerada')
+  const b64 = img.dataset.b64 || img.src
+  if (!b64) return
   const a = document.createElement('a')
-  a.href = url; a.download = 'grupix-imagem.jpg'; a.target = '_blank'; a.click()
+  a.href = b64; a.download = 'grupix-imagem.jpg'; a.click()
   showToast('Baixando imagem... ⬇️', 'green')
 }
 window.showGerador = function(el) {
