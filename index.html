@@ -83,7 +83,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .feat-ribbon{position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:4px 12px;border-radius:0 var(--r) 0 10px}
 .card-top{display:flex;align-items:flex-start;gap:12px}
 .card-av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:2px solid var(--lt);overflow:hidden;background:var(--ltr)}
-.card-av img{width:100%;height:100%;object-fit:cover}
+.card-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .card-info{flex:1;min-width:0}
 .card-name{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-tags{display:flex;gap:5px;flex-wrap:wrap}
@@ -471,7 +471,7 @@ function renderFeatured() {
     <div class="feat-item" onclick="enterGroup('${g.id}','${esc(g.link)}')">
       <div class="feat-av" style="background:${BGS[g.category]||'#f9fafb'}">
         ${g.image_url
-          ? `<img src="${esc(g.image_url)}" alt="${esc(g.name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.innerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
+          ? `<img src="${esc(g.image_url)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.outerHTML='<span>${ICONS[g.category]||'⭐'}</span>'">`
           : `<span>${ICONS[g.category]||'⭐'}</span>`
         }
         <div class="feat-av-badge">⭐</div>
@@ -500,7 +500,7 @@ window.render = function() {
       <div class="card-top">
         <div class="card-av" style="background:${BGS[g.category]||'#f9fafb'}">
           ${g.image_url
-            ? `<img src="${esc(g.image_url)}" alt="${esc(g.name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.innerHTML='<span style=\\"font-size:22px\\">${ICONS[g.category]||'⭐'}</span>'">`
+            ? `<img src="${esc(g.image_url)}" alt="" onerror="this.outerHTML='<span style=\\"font-size:22px\\">${ICONS[g.category]||'⭐'}</span>'">`
             : `<span style="font-size:22px">${ICONS[g.category]||'⭐'}</span>`
           }
         </div>
@@ -744,42 +744,9 @@ function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 // INICIAR
 load()
 </script>
-<!-- PROTEÇÃO DE CÓDIGO -->
+<!-- Proteção: bloquear clique direito -->
 <script>
-(function(){
-  // Bloquear clique direito
-  document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
-
-  // Bloquear atalhos de teclado
-  document.addEventListener('keydown', function(e){
-    // F12
-    if(e.key === 'F12' || e.keyCode === 123){ e.preventDefault(); return false; }
-    // Ctrl+U (ver código fonte)
-    if(e.ctrlKey && (e.key === 'u' || e.key === 'U')){ e.preventDefault(); return false; }
-    // Ctrl+Shift+I (DevTools)
-    if(e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')){ e.preventDefault(); return false; }
-    // Ctrl+Shift+J (Console)
-    if(e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')){ e.preventDefault(); return false; }
-    // Ctrl+Shift+C (Inspecionar)
-    if(e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')){ e.preventDefault(); return false; }
-    // Ctrl+S (salvar página)
-    if(e.ctrlKey && (e.key === 's' || e.key === 'S')){ e.preventDefault(); return false; }
-  });
-
-  // Detectar DevTools aberto e redirecionar
-  let devtools = false;
-  const threshold = 160;
-  setInterval(function(){
-    if(window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold){
-      if(!devtools){
-        devtools = true;
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Inter,sans-serif;flex-direction:column;gap:16px;background:#f0f2f5"><div style="font-size:48px">🔒</div><h2 style="font-size:20px;font-weight:700;color:#111">Acesso não permitido</h2><p style="color:#6b7280;font-size:14px">Feche as ferramentas de desenvolvimento e recarregue a página.</p><button onclick="location.reload()" style="background:#2563eb;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer">Recarregar</button></div>';
-      }
-    } else {
-      devtools = false;
-    }
-  }, 1000);
-})();
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
 </script>
 </body>
 </html>
