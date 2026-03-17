@@ -626,59 +626,39 @@ window.submitGroup = async function() {
   const name  = document.getElementById('s-name').value.trim()
   const cat_  = document.getElementById('s-cat').value
   if (!link || !name || !cat_) { showToast('Preencha todos os campos obrigatórios', 'red'); return }
-  if (!link.startsWith('http')) { showToast('Link inválido', 'red'); return }
 
-  // Validar que é link real de WhatsApp ou Telegram
-  const isWA = link.includes('chat.whatsapp.com/')
-  const isTG = link.includes('t.me/') || link.includes('telegram.me/')
-  if (!isWA && !isTG) { showToast('Use apenas links do WhatsApp ou Telegram', 'red'); return }
-
-  // Bloqueio mínimo de tamanho do nome (evita lixo)
-  if (name.trim().length < 3) { showToast('Nome muito curto', 'red'); return }
-
-  // Rate limit: máx 3 envios por hora por dispositivo
-  const fp = btoa(navigator.userAgent + screen.width + screen.height).slice(0, 32)
-  const { data: logs } = await sb.from('submissions_log')
-    .select('created_at')
-    .eq('fingerprint', fp)
-    .gte('created_at', new Date(Date.now() - 3600000).toISOString())
-  if ((logs?.length || 0) >= 3) {
-    showToast('Limite de 3 grupos por hora atingido. Tente mais tarde.', 'red')
-    return
-  }
-
-  const platform = fetchedMeta.platform || (isTG ? 'telegram' : 'whatsapp')
   const btn = document.getElementById('btn-send')
   btn.disabled = true; btn.textContent = 'Publicando...'
 
-  // Verificar link duplicado
-  const { data: existing } = await sb.from('groups').select('id').eq('link', link).single()
-  if (existing) { showToast('Este grupo já está cadastrado!', 'red'); btn.disabled=false; btn.textContent='Publicar grupo agora'; return }
+  // Fingerprint do dispositivo para rate limit
+  const fp = btoa(navigator.userAgent + screen.width + screen.height).slice(0, 32)
 
-  const { error } = await sb.from('groups').insert({
-    name, link, category: cat_, platform,
-    image_url: fetchedMeta.imageUrl || null,
-    approved: true, is_featured: false
-  })
+  try {
+    const r = await fetch(`${SURL}/functions/v1/add-group`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({
+        name, link, category: cat_,
+        platform: fetchedMeta.platform || (link.includes('t.me') ? 'telegram' : 'whatsapp'),
+        image_url: fetchedMeta.imageUrl || null,
+        fingerprint: fp
+      })
+    })
+    const d = await r.json()
+    if (!r.ok) { showToast(d.error || 'Erro ao publicar', 'red'); btn.disabled=false; btn.textContent='Publicar grupo agora'; return }
 
-  if (error) {
-    if (error.code === '23505') { showToast('Este grupo já está cadastrado!', 'red') }
-    else { showToast('Erro: ' + error.message, 'red') }
     btn.disabled = false; btn.textContent = 'Publicar grupo agora'
-    return
+    closeModal('m-submit')
+    document.getElementById('s-link').value = ''
+    document.getElementById('s-name').value = ''
+    document.getElementById('s-cat').value  = ''
+    hideMetaPanels()
+    showToast('Grupo publicado com sucesso! 🎉', 'green')
+    setTimeout(() => load(), 1000)
+  } catch(e) {
+    showToast('Erro de conexão. Tente novamente.', 'red')
+    btn.disabled = false; btn.textContent = 'Publicar grupo agora'
   }
-
-  // Registrar no log anti-spam
-  await sb.from('submissions_log').insert({ fingerprint: fp })
-
-  btn.disabled = false; btn.textContent = 'Publicar grupo agora'
-  closeModal('m-submit')
-  document.getElementById('s-link').value = ''
-  document.getElementById('s-name').value = ''
-  document.getElementById('s-cat').value  = ''
-  hideMetaPanels()
-  showToast('Grupo publicado com sucesso! 🎉', 'green')
-  setTimeout(() => load(), 1000)
 }
 
 // BOOST / PAGAMENTO
