@@ -105,9 +105,42 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--md);font-size:14px}
 
 /* FOOTER */
-footer{margin-top:40px;border-top:1px solid var(--lt);padding:20px;text-align:center;font-size:12px;color:var(--md)}
-footer a{color:var(--md);text-decoration:none;margin:0 6px}
-footer a:hover{color:var(--dk)}
+footer{margin-top:40px;border-top:1px solid var(--lt);background:var(--white)}
+footer a{color:var(--md);text-decoration:none}
+footer a:hover{color:var(--blue)}
+
+/* FOOTER STATS */
+.ft-stats{display:flex;justify-content:center;gap:48px;padding:28px 40px;background:#f8faff;border-bottom:1px solid var(--lt);flex-wrap:wrap}
+.ft-stat{text-align:center}
+.ft-stat-n{display:block;font-size:22px;font-weight:800;color:var(--blue);letter-spacing:-.5px}
+.ft-stat-l{font-size:11px;color:var(--md);margin-top:2px}
+
+/* FOOTER MAIN */
+.ft-main{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;padding:40px;max-width:1200px;margin:0 auto}
+.ft-col{}
+.ft-logo{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.ft-logo-mark{width:28px;height:28px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ft-logo-name{font-weight:800;font-size:17px;letter-spacing:-.5px}
+.ft-desc{font-size:12px;color:var(--md);line-height:1.7;margin-bottom:12px}
+.ft-badges{display:flex;gap:8px;flex-wrap:wrap}
+.ft-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+.ft-badge-wa{background:#dcfce7;color:#16a34a}
+.ft-badge-tg{background:#dbeafe;color:#1d4ed8}
+.ft-title{font-size:12px;font-weight:700;color:var(--dk);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ft-links li a{font-size:13px;color:var(--md);transition:color .15s;display:flex;align-items:center;gap:6px}
+.ft-links li a:hover{color:var(--blue)}
+.ft-btn-add{width:100%;padding:11px;background:var(--blue);color:#fff;border-radius:8px;font-size:13px;font-weight:700;transition:all .15s;border:none;cursor:pointer}
+.ft-btn-add:hover{opacity:.9}
+
+/* FOOTER BOTTOM */
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-top:1px solid var(--lt);font-size:12px;color:var(--md);flex-wrap:wrap;gap:8px;max-width:1200px;margin:0 auto;width:100%}
+.ft-bottom-links{display:flex;gap:20px}
+.ft-bottom-links a{font-size:12px;color:var(--md);transition:color .15s}
+.ft-bottom-links a:hover{color:var(--blue)}
+
+@media(max-width:900px){.ft-main{grid-template-columns:1fr 1fr;gap:28px;padding:28px 20px}}
+@media(max-width:600px){.ft-main{grid-template-columns:1fr;padding:24px 16px}.ft-stats{gap:24px;padding:20px 16px}.ft-bottom{padding:14px 16px;flex-direction:column;text-align:center}}
 
 /* DRAWER MOBILE */
 .drawer-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300}
@@ -266,13 +299,99 @@ footer a:hover{color:var(--dk)}
       <div class="skel"></div><div class="skel"></div>
     </div>
 
-    <footer>
-      <p>© 2025 Grupix · Diretório de grupos de WhatsApp e Telegram ·
-        <a href="#" onclick="setCat('empreendedorismo',document.querySelector('[data-cat=empreendedorismo]'));return false">Empreendedorismo</a>
-        <a href="#" onclick="setCat('criptomoedas',document.querySelector('[data-cat=criptomoedas]'));return false">Criptomoedas</a>
-        <a href="#" onclick="setCat('marketing',document.querySelector('[data-cat=marketing]'));return false">Marketing</a>
-        <a href="#" onclick="setCat('tecnologia',document.querySelector('[data-cat=tecnologia]'));return false">Tecnologia</a>
-      </p>
+    <footer id="site-footer">
+      <!-- STATS -->
+      <div class="ft-stats">
+        <div class="ft-stat"><span class="ft-stat-n" id="ft-total">0</span><span class="ft-stat-l">grupos ativos</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">100%</span><span class="ft-stat-l">verificados</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">Grátis</span><span class="ft-stat-l">para cadastrar</span></div>
+        <div class="ft-stat"><span class="ft-stat-n">24/7</span><span class="ft-stat-l">atualizado</span></div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="ft-main">
+
+        <!-- SOBRE -->
+        <div class="ft-col ft-about">
+          <div class="ft-logo">
+            <div class="ft-logo-mark">
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+                <circle cx="4.5" cy="9" r="2.2" fill="#fff"/>
+                <circle cx="13.5" cy="5" r="2.2" fill="#fff"/>
+                <circle cx="13.5" cy="13" r="2.2" fill="#fff"/>
+                <line x1="6.5" y1="7.9" x2="11.5" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+                <line x1="6.5" y1="10.1" x2="11.5" y2="12" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="ft-logo-name">Grupix</span>
+          </div>
+          <p class="ft-desc">O maior diretório de grupos de WhatsApp e Telegram do Brasil. Encontre comunidades ativas, verificadas e atualizadas diariamente em todas as categorias.</p>
+          <div class="ft-badges">
+            <span class="ft-badge ft-badge-wa">
+              <svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#25D366"/><path d="M5 8.5c1 2 4.5 3 6 1-.5-1-1.5-1.5-2-1l-.5.5c-.5-.3-1.3-1-1.5-1.5l.5-.5c.5-.5 0-1.5-1-2-2 1.5-1.5 2.5-1.5 3.5z" fill="#fff"/></svg>
+              WhatsApp
+            </span>
+            <span class="ft-badge ft-badge-tg">
+              <svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#2CA5E0"/><path d="M4 8l2 1.5L11 5.5 7 10l-.5 2L5.5 10 4 8z" fill="#fff"/></svg>
+              Telegram
+            </span>
+          </div>
+        </div>
+
+        <!-- CATEGORIAS PROFISSIONAIS -->
+        <div class="ft-col">
+          <h4 class="ft-title">Categorias Profissionais</h4>
+          <ul class="ft-links">
+            <li><a href="#" onclick="goCat('marketing');return false">📈 Marketing Digital</a></li>
+            <li><a href="#" onclick="goCat('empreendedorismo');return false">🚀 Empreendedorismo</a></li>
+            <li><a href="#" onclick="goCat('tecnologia');return false">💻 Tecnologia & TI</a></li>
+            <li><a href="#" onclick="goCat('investimentos');return false">📊 Investimentos</a></li>
+            <li><a href="#" onclick="goCat('criptomoedas');return false">₿ Criptomoedas</a></li>
+            <li><a href="#" onclick="goCat('renda-extra');return false">💰 Renda Extra</a></li>
+            <li><a href="#" onclick="goCat('jogos');return false">🎮 Jogos</a></li>
+            <li><a href="#" onclick="goCat('educacao');return false">📚 Educação</a></li>
+          </ul>
+        </div>
+
+        <!-- SEO LINKS -->
+        <div class="ft-col">
+          <h4 class="ft-title">Grupos por Plataforma</h4>
+          <ul class="ft-links">
+            <li><a href="#" onclick="filterPlat('whatsapp');return false">Grupos de WhatsApp</a></li>
+            <li><a href="#" onclick="filterPlat('telegram');return false">Grupos de Telegram</a></li>
+            <li><a href="#" onclick="goCat('marketing');return false">Grupos de Marketing</a></li>
+            <li><a href="#" onclick="goCat('tecnologia');return false">Grupos de Programação</a></li>
+            <li><a href="#" onclick="goCat('investimentos');return false">Grupos de Investimentos</a></li>
+            <li><a href="#" onclick="goCat('empreendedorismo');return false">Grupos de Negócios</a></li>
+            <li><a href="#" onclick="goCat('renda-extra');return false">Grupos de Renda Extra</a></li>
+            <li><a href="#" onclick="goCat('outros');return false">Outros Grupos</a></li>
+          </ul>
+        </div>
+
+        <!-- ADICIONAR -->
+        <div class="ft-col">
+          <h4 class="ft-title">Tem um grupo?</h4>
+          <p class="ft-desc" style="margin-bottom:14px">Cadastre grátis e alcance milhares de pessoas buscando grupos agora mesmo.</p>
+          <button class="ft-btn-add" onclick="document.getElementById('btn-add-top')?.click()||openModal('m-add')">
+            + Cadastrar meu grupo grátis
+          </button>
+          <div style="margin-top:16px">
+            <h4 class="ft-title" style="margin-bottom:8px">Destaque seu grupo</h4>
+            <p class="ft-desc">Apareça no topo e receba 3x mais membros com nossos planos de destaque.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="ft-bottom">
+        <span>© 2025 Grupix · O maior diretório de grupos do Brasil</span>
+        <div class="ft-bottom-links">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos de uso</a>
+          <a href="mailto:contato@grupix.site">Contato</a>
+        </div>
+      </div>
     </footer>
   </main>
 </div>
@@ -441,6 +560,15 @@ const TG = `<svg width="13" height="13" viewBox="0 0 16 16"><circle cx="8" cy="8
 
 let all = [], cat = 'todos', plan = 'pro', pixTimer = null
 
+// ── FOOTER HELPERS ──
+window.goCat = function(k) {
+  const btn = document.querySelector(`[data-cat="${k}"]`)
+  if (btn) { setCat(k, btn); window.scrollTo({top:0,behavior:'smooth'}) }
+}
+window.filterPlat = function(p) {
+  window.scrollTo({top:0,behavior:'smooth'})
+}
+
 // CARREGAR GRUPOS
 async function load() {
   const { data, error } = await sb
@@ -458,6 +586,9 @@ async function load() {
 
   all = data || []
   updateCounts()
+  // Atualiza contador do footer
+  const ftTotal = document.getElementById('ft-total')
+  if (ftTotal) ftTotal.textContent = '+' + all.length
   renderFeatured()
   render()
 }
