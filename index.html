@@ -93,6 +93,12 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:va
 .tag-cat{background:var(--ltr);color:var(--md);border:1px solid var(--lt)}
 .card-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:11px;font-weight:600}
 .cs-open{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a}
+.cs-closed{background:#fef2f2;border:1px solid #fecaca;color:#dc2626}
+.mode-row{display:flex;gap:10px}
+.mode-btn{flex:1;padding:10px 12px;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s;border:1.5px solid var(--lt);background:var(--white);color:var(--md)}
+.mode-btn.open-on{border-color:#22c55e;background:#f0fdf4;color:#16a34a}
+.mode-btn.close-on{border-color:#ef4444;background:#fef2f2;color:#dc2626}
+.mode-hint{font-size:10px;color:#9ca3af;margin-top:6px;text-align:center}
 .cs-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#22c55e}
 .card-actions{display:flex;flex-direction:column;gap:8px}
 .btn-enter{width:100%;padding:10px;background:var(--blue);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:700;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
@@ -319,6 +325,24 @@ footer a:hover{color:var(--dk)}
 
       <!-- Nome (preenchido auto, editável) -->
       <div class="fg"><label class="lbl">Nome do grupo *</label><input class="inp" id="s-name" type="text" placeholder="Será preenchido automaticamente..."></div>
+
+      <div class="fg">
+        <label class="lbl">Modo de mensagens</label>
+        <div class="mode-row">
+          <button class="mode-btn open-on" id="btn-open" onclick="setGroupMode('aberto')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Grupo Aberto
+          </button>
+          <button class="mode-btn" id="btn-closed" onclick="setGroupMode('fechado')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="7" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="5" x2="11" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span style="width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Grupo Fechado
+          </button>
+        </div>
+        <div class="mode-hint">Escolha a opção correta; grupos indebidos serão removidos!</div>
+        <input type="hidden" id="s-mode" value="aberto">
+      </div>
 
       <div class="fg"><label class="lbl">Categoria *</label>
         <select class="sel" id="s-cat">
@@ -633,6 +657,7 @@ window.submitGroup = async function() {
   const { error } = await sb.from('groups').insert({
     name, link, category: cat_, platform,
     image_url: fetchedMeta.imageUrl || null,
+    is_open: (document.getElementById('s-mode').value || 'aberto') === 'aberto',
     approved: true, is_featured: false
   })
   btn.disabled = false; btn.textContent = 'Publicar grupo agora'
@@ -641,11 +666,26 @@ window.submitGroup = async function() {
   document.getElementById('s-link').value = ''
   document.getElementById('s-name').value = ''
   document.getElementById('s-cat').value  = ''
+  document.getElementById('s-mode').value = 'aberto'
+  setGroupMode('aberto')
   hideMetaPanels()
   showToast('Grupo publicado com sucesso! 🎉', 'green')
 }
 
 // BOOST / PAGAMENTO
+window.setGroupMode = function(mode) {
+  document.getElementById('s-mode').value = mode
+  const btnOpen   = document.getElementById('btn-open')
+  const btnClosed = document.getElementById('btn-closed')
+  if (mode === 'aberto') {
+    btnOpen.className   = 'mode-btn open-on'
+    btnClosed.className = 'mode-btn'
+  } else {
+    btnClosed.className = 'mode-btn close-on'
+    btnOpen.className   = 'mode-btn'
+  }
+}
+
 window.openBoost = function(id, name) {
   document.getElementById('b-gid').value = id
   document.getElementById('b-gname').value = name
