@@ -282,12 +282,41 @@ footer a:hover{color:var(--dk)}
       <div class="fg">
         <label class="lbl">Link do grupo *</label>
         <div style="position:relative">
-          <input class="inp" id="s-link" type="url" placeholder="https://chat.whatsapp.com/... ou t.me/..." oninput="detectPlatform(this.value)" style="padding-right:40px">
+          <input class="inp" id="s-link" type="url" placeholder="https://chat.whatsapp.com/... ou t.me/..." oninput="onLinkInput(this.value)" style="padding-right:44px">
           <span id="plat-detect" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;display:none"></span>
         </div>
-        <div id="plat-badge" style="display:none;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px"></div>
       </div>
-      <div class="fg"><label class="lbl">Nome do grupo *</label><input class="inp" id="s-name" type="text" placeholder="Ex: Marketing Digital Brasil"></div>
+
+      <!-- LOADING -->
+      <div id="meta-loading" style="display:none;background:var(--ltr);border-radius:10px;padding:12px 14px;margin-bottom:13px;display:none;align-items:center;gap:10px">
+        <div style="width:16px;height:16px;border:2px solid var(--lt);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0"></div>
+        <span style="font-size:13px;color:var(--md)">Carregando dados do grupo...</span>
+      </div>
+
+      <!-- PREVIEW (aparece após carregar) -->
+      <div id="meta-preview" style="display:none;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:12px 14px;margin-bottom:13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <div style="width:18px;height:18px;background:#16a34a;border-radius:50%;display:flex;align-items:center;justify-content:center">
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <span style="font-size:12px;font-weight:700;color:#16a34a">Dados carregados com sucesso!</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:8px;padding:8px 10px">
+          <img id="meta-img" src="" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid #e5e7eb;flex-shrink:0;display:none">
+          <div id="meta-img-placeholder" style="width:40px;height:40px;border-radius:50%;background:var(--ltr);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💬</div>
+          <div>
+            <div id="meta-name-show" style="font-size:13px;font-weight:700;line-height:1.3"></div>
+            <div id="meta-plat-show" style="font-size:11px;color:var(--md);margin-top:2px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERRO -->
+      <div id="meta-error" style="display:none;background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;padding:10px 14px;margin-bottom:13px;font-size:12px;color:#dc2626"></div>
+
+      <!-- Nome (preenchido auto, editável) -->
+      <div class="fg"><label class="lbl">Nome do grupo *</label><input class="inp" id="s-name" type="text" placeholder="Será preenchido automaticamente..."></div>
+
       <div class="fg"><label class="lbl">Categoria *</label>
         <select class="sel" id="s-cat">
           <option value="">Selecione...</option>
@@ -301,6 +330,11 @@ footer a:hover{color:var(--dk)}
           <option value="renda-extra">💰 Renda Extra</option>
         </select>
       </div>
+
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 12px;margin-bottom:13px;font-size:12px;color:#92400e;line-height:1.5">
+        💡 <b>Dica:</b> Após adicionar, você poderá destacar seu grupo para receber muito mais cliques e membros!
+      </div>
+
       <button class="btn-prim" id="btn-send" onclick="submitGroup()">Publicar grupo agora</button>
       <p style="font-size:11px;color:var(--md);text-align:center;margin-top:10px">Após aprovação, seu grupo aparecerá gratuitamente.</p>
     </div>
@@ -507,41 +541,91 @@ window.toggleDrawer = function() {
   if (!dc.innerHTML) dc.innerHTML = document.getElementById('sidebar').innerHTML
 }
 
-// SUBMIT GRUPO
-window.detectPlatform = function(v) {
-  const badge = document.getElementById('plat-badge')
+// ── SUBMIT GRUPO COM AUTO-FETCH DE METADADOS ──
+let metaFetchTimeout = null
+let fetchedMeta = { name: '', imageUrl: null, platform: 'whatsapp' }
+
+window.onLinkInput = function(v) {
   const icon = document.getElementById('plat-detect')
-  if (v.includes('chat.whatsapp.com') || v.includes('whatsapp.com')) {
-    icon.textContent = '✅'; icon.style.display = 'block'
-    badge.style.cssText = 'display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dcfce7;color:#15803d;align-items:center;gap:5px'
-    badge.innerHTML = WA + ' WhatsApp detectado'
-  } else if (v.includes('t.me/') || v.includes('telegram')) {
-    icon.textContent = '✅'; icon.style.display = 'block'
-    badge.style.cssText = 'display:inline-flex;margin-top:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;align-items:center;gap:5px'
-    badge.innerHTML = TG + ' Telegram detectado'
-  } else {
-    icon.style.display = 'none'; badge.style.display = 'none'
+  const isWA = v.includes('chat.whatsapp.com') || v.includes('whatsapp.com')
+  const isTG = v.includes('t.me/') || v.includes('telegram')
+  icon.textContent = isWA ? '💬' : isTG ? '✈️' : ''
+  icon.style.display = (isWA || isTG) ? 'block' : 'none'
+  hideMetaPanels()
+  if (!v.startsWith('http') || v.length < 20 || (!isWA && !isTG)) return
+  clearTimeout(metaFetchTimeout)
+  metaFetchTimeout = setTimeout(() => fetchMeta(v), 800)
+}
+
+async function fetchMeta(url) {
+  const loading = document.getElementById('meta-loading')
+  const preview = document.getElementById('meta-preview')
+  const errEl  = document.getElementById('meta-error')
+  loading.style.display = 'flex'
+  preview.style.display = 'none'
+  errEl.style.display   = 'none'
+  try {
+    const r = await fetch(`${SURL}/functions/v1/fetch-group-meta`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SKEY}` },
+      body: JSON.stringify({ url })
+    })
+    const d = await r.json()
+    loading.style.display = 'none'
+    if (d.error) { errEl.textContent = '⚠️ ' + d.error; errEl.style.display = 'block'; return }
+
+    fetchedMeta = { name: d.name || '', imageUrl: d.imageUrl || null, platform: d.platform || 'whatsapp' }
+    document.getElementById('s-name').value = d.name || ''
+
+    document.getElementById('meta-name-show').textContent = d.name || ''
+    document.getElementById('meta-plat-show').innerHTML = d.platform === 'telegram'
+      ? TG + ' <span>Telegram</span>' : WA + ' <span>WhatsApp</span>'
+
+    const img = document.getElementById('meta-img')
+    const ph  = document.getElementById('meta-img-placeholder')
+    if (d.imageUrl) {
+      img.src = d.imageUrl; img.style.display = 'block'; ph.style.display = 'none'
+      img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex' }
+    } else {
+      img.style.display = 'none'; ph.style.display = 'flex'
+      ph.textContent = d.platform === 'telegram' ? '✈️' : '💬'
+    }
+    preview.style.display = 'block'
+  } catch(e) {
+    loading.style.display = 'none'
+    errEl.textContent = '⚠️ Não foi possível carregar os dados. Preencha o nome manualmente.'
+    errEl.style.display = 'block'
   }
 }
 
+function hideMetaPanels() {
+  ;['meta-loading','meta-preview','meta-error'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none'
+  })
+  fetchedMeta = { name: '', imageUrl: null, platform: 'whatsapp' }
+}
+
 window.submitGroup = async function() {
-  const link = document.getElementById('s-link').value.trim()
-  const name = document.getElementById('s-name').value.trim()
-  const cat_ = document.getElementById('s-cat').value
+  const link  = document.getElementById('s-link').value.trim()
+  const name  = document.getElementById('s-name').value.trim()
+  const cat_  = document.getElementById('s-cat').value
   if (!link || !name || !cat_) { showToast('Preencha todos os campos obrigatórios', 'red'); return }
   if (!link.startsWith('http')) { showToast('Link inválido', 'red'); return }
-  const platform = link.includes('t.me/') || link.includes('telegram') ? 'telegram' : 'whatsapp'
+  const platform = fetchedMeta.platform || (link.includes('t.me/') || link.includes('telegram') ? 'telegram' : 'whatsapp')
   const btn = document.getElementById('btn-send')
   btn.disabled = true; btn.textContent = 'Enviando...'
-  const { error } = await sb.from('groups').insert({ name, link, category: cat_, platform, approved: false, is_featured: false })
+  const { error } = await sb.from('groups').insert({
+    name, link, category: cat_, platform,
+    image_url: fetchedMeta.imageUrl || null,
+    approved: false, is_featured: false
+  })
   btn.disabled = false; btn.textContent = 'Publicar grupo agora'
   if (error) { showToast('Erro: ' + error.message, 'red'); return }
   closeModal('m-submit')
   document.getElementById('s-link').value = ''
   document.getElementById('s-name').value = ''
-  document.getElementById('s-cat').value = ''
-  document.getElementById('plat-badge').style.display = 'none'
-  document.getElementById('plat-detect').style.display = 'none'
+  document.getElementById('s-cat').value  = ''
+  hideMetaPanels()
   showToast('Grupo enviado! Aguarde aprovação ✅', 'green')
 }
 
